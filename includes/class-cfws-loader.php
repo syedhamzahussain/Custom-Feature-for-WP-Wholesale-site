@@ -1,7 +1,6 @@
 <?php
 /**
  * CFWS_LOADER loader Class File.
- *
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,17 +21,16 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 		public function __construct() {
 
 			$this->includes();
-			
+
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_assets' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_assets' ) );
 
-			add_shortcode('cfws_customization', array( $this, 'customization_shortcode' ) );
+			add_shortcode( 'cfws_customization', array( $this, 'customization_shortcode' ) );
 			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 
 		}
 
 		public function includes() {
-
 
 		}
 
@@ -46,23 +44,29 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 			wp_enqueue_script( 'cfws-front-script', CFWS_ASSETS_DIR_URL . '/js/script.js', array( 'jquery' ), rand() );
 
 			// bootstrap
-			wp_register_script('cfws-bootstrap-script', 
-				'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js', 
-				array ('jquery'), 
-				false, false);
+			wp_register_script(
+				'cfws-bootstrap-script',
+				'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js',
+				array( 'jquery' ),
+				false,
+				false
+			);
 
 			wp_register_style( 'cfws-bootstrap-style', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' );
 
-			wp_enqueue_script('cfws-sweetalert2-script', 
-				'//cdn.jsdelivr.net/npm/sweetalert2@11', 
-				array ('jquery'), 
-				false, false);
+			wp_enqueue_script(
+				'cfws-sweetalert2-script',
+				'//cdn.jsdelivr.net/npm/sweetalert2@11',
+				array( 'jquery' ),
+				false,
+				false
+			);
 
 			wp_localize_script(
 				'cfws-front-script',
 				'cfws_obj',
 				array(
-					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'ajaxurl'   => admin_url( 'admin-ajax.php' ),
 					'is_logged' => is_user_logged_in(),
 				)
 			);
@@ -70,10 +74,10 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 
 		public function customization_shortcode() {
 
-			if( is_admin() ){
+			if ( is_admin() ) {
 				return;
 			}
-			
+
 			require_once CFWS_TEMP_DIR . '/registration-shortcode.php';
 		}
 

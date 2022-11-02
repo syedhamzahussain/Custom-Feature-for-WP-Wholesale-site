@@ -19,7 +19,7 @@ if ( ! defined( 'CFWS_PLUGIN_DIR' ) ) {
 }
 
 if ( ! defined( 'CFWS_BASENAME' ) ) {
-    define( 'CFWS_BASENAME', dirname( __FILE__ ) );
+	define( 'CFWS_BASENAME', dirname( __FILE__ ) );
 }
 
 if ( ! defined( 'CFWS_PLUGIN_DIR_URL' ) ) {
