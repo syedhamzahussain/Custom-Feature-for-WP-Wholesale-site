@@ -27,7 +27,8 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_assets' ) );
 
 			add_shortcode('cfws_customization', array( $this, 'customization_shortcode' ) );
-			
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+
 		}
 
 		public function includes() {
