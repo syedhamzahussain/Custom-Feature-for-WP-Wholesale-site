@@ -161,12 +161,12 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 						<p>
 							<span>
 								<label for="cfws_min_qty">Min Unit Qty</label>
-								<input type="number" name="" id="cfws_min_qty" required>
+								<input type="number" name="" id="cfws_min_qty" min="0">
 							</span>
 							
 							<span>
 								<label for="cfws_max_qty">Max Unit Qty</label>
-								<input type="number" name="" id="cfws_max_qty" required>
+								<input type="number" name="" id="cfws_max_qty" min="1">
 							</span>
 							
 							<span>
@@ -180,7 +180,7 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 							
 							<span>
 								<label for="cfws_discount">Discount</label>
-								<input type="number" name="" id="cfws_discount" required>
+								<input type="number" name="" id="cfws_discount" >
 							</span>
 							
 							<span>
