@@ -155,9 +155,6 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 
 						$variations_array = array();
 
-						foreach ( $product->get_variation_attributes() as $key => $value ) {
-							array_push( $variations_array, $key );
-						}
 
                         $packages = get_post_meta( $post->ID, 'cfws_packages', true );
                         ?>
