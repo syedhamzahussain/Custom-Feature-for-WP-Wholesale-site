@@ -147,7 +147,7 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 			global $post;
 
 			$product = wc_get_product( $post->ID );
-			if ( 'variable' === $product->get_type() ) {
+			
 				?>
 				<div id='packages_tab' class='panel '>
 					<div class='packages_table_group'>
@@ -225,7 +225,7 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 				</div>
 				<?php
                 
-			}
+			
 		}
 
 		/**
