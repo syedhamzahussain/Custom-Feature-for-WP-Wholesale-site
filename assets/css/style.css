@@ -1,5 +1,15 @@
 .cfws_wrapper{
 	max-width: 300px;
 	min-height: 500px;
-	background: grey;
+	background: rgb(255, 222, 222);
+	padding: 30px;
+}
+.cfws_div_1,.cfws_div_2{
+	
+	width: 49%;
+	justify-content: space-between;
+	display: inline-block;
+}
+.cfws_div_2{
+	text-align: right;
 }
