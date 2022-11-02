@@ -160,18 +160,18 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 						?>
 						<div>
 							<label for="cfws_min_qty">Min Unit Qty</label>
-							<input type="number" name="" id="cfws_min_qty" required>
+							<input type="number" name="" id="cfws_min_qty">
 						</div>
 						<br>
 						<div>
 							<label for="cfws_max_qty">Max Unit Qty</label>
-							<input type="number" name="" id="cfws_max_qty" required>
+							<input type="number" name="" id="cfws_max_qty">
 						</div>
 						<br>
 						<div>
 							<label for="cfws_discount_type">Discount Type</label>
 							<select name="" id="cfws_discount_type">
-								<option value="" disabled selected >Choose Discount Type</option>
+								<option value="null" selected >Choose Discount Type</option>
 								<option value="percent"  >Percent</option>
 								<option value="fixed"  >Fixed Value</option>
 							</select>
@@ -179,7 +179,7 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 						<br>
 						<div>
 							<label for="cfws_discount">Discount</label>
-							<input type="number" name="" id="cfws_discount" required>
+							<input type="number" name="" id="cfws_discount">
 						</div>
 						<br>
 						<div>
@@ -187,15 +187,16 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 						</div>
 						
 					</div>
-
+					<br>
 					<div class="cfws_package_table">
 
-						<table border="1">
+						<table border="1" width="50%">
 							<thead>
 								<th>Min Unit</th>
 								<th>Max Unit</th>
 								<th>Type</th>
 								<th>Discount</th>
+								<th>Action</th>
 							</thead>
 							<tbody id="cfws_package_table">
 							<?php
@@ -203,11 +204,21 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 
 								foreach ( $packages as $package ) {
 									?>
+									
 										<tr>
+											<input type='hidden' name='cfws_min_unit[]' value='<?= $package["min"] ?>'/>
+											<input type='hidden' name='cfws_max_unit[]' value='<?= $package["max"] ?>'/>
+											<input type='hidden' name='cfws_discount_type[]' value='<?= $package["discount_type"] ?>'/>
+											<input type='hidden' name='cfws_discount[]' value='<?= $package["discount"] ?>'/>
+
 											<td><?php echo $package['min']; ?></td>
 											<td><?php echo $package['max']; ?></td>
 											<td><?php echo $package['discount_type']; ?></td>
 											<td><?php echo $package['discount']; ?></td>
+											<td>
+												<button id="cfws_edit_button" type="button" onclick="editPackage(this)">Edit</button>
+												<button id="cfws_delete_button" type="button" onclick="deletePackage(this)">Delete</button>
+											</td>
 										</tr>
 									<?php
 								}
