@@ -13,3 +13,14 @@
 .cfws_div_2{
 	text-align: right;
 }
+hr.cfws_hr{
+	border-bottom: 1px dotted black;
+}
+.mb-0{
+	margin-bottom: 0px !important;
+}
+.cfws_unit_quantity{
+	border: 1px solid black;
+	border-radius: 15px;
+	padding:5px 20px;
+}
