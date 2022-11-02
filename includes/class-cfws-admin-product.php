@@ -158,33 +158,35 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 
 						$packages = get_post_meta( $post->ID, 'cfws_packages', true );
 						?>
-						<div>
-							<label for="cfws_min_qty">Min Unit Qty</label>
-							<input type="number" name="" id="cfws_min_qty">
-						</div>
-						<br>
-						<div>
-							<label for="cfws_max_qty">Max Unit Qty</label>
-							<input type="number" name="" id="cfws_max_qty">
-						</div>
-						<br>
-						<div>
-							<label for="cfws_discount_type">Discount Type</label>
-							<select name="" id="cfws_discount_type">
-								<option value="null" selected >Choose Discount Type</option>
-								<option value="percent"  >Percent</option>
-								<option value="fixed"  >Fixed Value</option>
-							</select>
-						</div>
-						<br>
-						<div>
-							<label for="cfws_discount">Discount</label>
-							<input type="number" name="" id="cfws_discount">
-						</div>
-						<br>
-						<div>
-							<button type="button" id="cfws_add_package" onclick="addPackage()">Add Package</button>
-						</div>
+						<p>
+							<span>
+								<label for="cfws_min_qty">Min Unit Qty</label>
+								<input type="number" name="" id="cfws_min_qty" required>
+							</span>
+							
+							<span>
+								<label for="cfws_max_qty">Max Unit Qty</label>
+								<input type="number" name="" id="cfws_max_qty" required>
+							</span>
+							
+							<span>
+								<label for="cfws_discount_type">Discount Type</label>
+								<select name="" id="cfws_discount_type">
+									<option value="" disabled selected >Choose Discount Type</option>
+									<option value="percent"  >Percent</option>
+									<option value="fixed"  >Fixed Value</option>
+								</select>
+							</span>
+							
+							<span>
+								<label for="cfws_discount">Discount</label>
+								<input type="number" name="" id="cfws_discount" required>
+							</span>
+							
+							<span>
+								<button type="button" id="cfws_add_package" class="button"  onclick="addPackage()">Add Package</button>
+							</span>
+						</p>
 						
 					</div>
 					<br>
