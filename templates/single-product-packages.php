@@ -68,4 +68,5 @@ $price = $product->get_price();
 	<div>
 		<?php echo do_shortcode( '[add_to_cart id='.$post->ID.' show_price=false]' ); ?>
 	</div>
+	<div><input type="hidden" name="cfws_get_product_price" value="<?= $product->get_price(); ?>"></div>
 </div>
