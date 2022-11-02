@@ -129,12 +129,12 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 			global $post;
 			$product = wc_get_product( $post->ID );
 
-			if ( 'variable' === $product->get_type() ) {
+			
 				$product_data_tabs['cfws-tab-4'] = array(
 					'label'  => __( 'Packages Table', 'cfws_wc_product_page_enhancement' ),
 					'target' => 'packages_tab',
 				);
-			}
+			
 
 			return $product_data_tabs;
 		}
