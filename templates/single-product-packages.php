@@ -36,6 +36,15 @@ $price = $product->get_price();
 		<div class="cfws_div_1">More than <?php echo $maxValue ?></div>
 		<div class="cfws_div_2">REQUEST QUOTATION</div>
 	</div>
+	<div>
+		<?php woocommerce_quantity_input(
+			array(
+				'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+				'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+				'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+			)
+		); ?>
+	</div>
 	<div class="cfws_quantity">
 		<div class="cfws_offered_price">
 			<h4>Quantity</h4>
@@ -55,5 +64,8 @@ $price = $product->get_price();
 	</div>
 	<div class="cfws_final total">
 		
+	</div>
+	<div>
+		<?php echo do_shortcode( '[add_to_cart id='.$post->ID.' show_price=false]' ); ?>
 	</div>
 </div>
