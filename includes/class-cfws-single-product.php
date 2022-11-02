@@ -21,8 +21,6 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 		public function __construct() {
 
 			add_shortcode( 'cfws_single_product', array( $this, 'single_product_shortcode_callback' ) );
-			
-			
 			add_action( 'wp', array( $this, 'front_hooks' ) );
 		}
 

@@ -58,8 +58,6 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 				false,
 				false
 			);
-			
-			global $post;
 
 			wp_localize_script(
 				'cfws-front-script',
@@ -67,7 +65,6 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 				array(
 					'ajaxurl'   => admin_url( 'admin-ajax.php' ),
 					'is_logged' => is_user_logged_in(),
-					'product_id' => $post->ID,
 				)
 			);
 		}

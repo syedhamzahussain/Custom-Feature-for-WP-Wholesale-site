@@ -4,9 +4,9 @@ global $post, $product;
 $packages    = get_post_meta( $post->ID, 'cfws_packages', true );
 $costPerItem = get_post_meta( $post->ID, 'cfws_unit_cost', true );
 $unitQunatity = get_post_meta( $post->ID, 'cfws_unit_quantity', true );
-$profit = $product->regular_price-$costPerItem;
 $maxValue = $packages[count($packages)-1]['max'];
 $price = $product->get_price();
+$profit = $price-$costPerItem;
 ?>
 <div class="cfws_wrapper">
 	<div class="cfws_sale_unit">
@@ -46,21 +46,20 @@ $price = $product->get_price();
 		); ?>
 	</div>
 	<div class="cfws_quantity">
-		<div class="cfws_offered_price">
-			<h4>Quantity</h4>
-			<div class="cfws_div_1">Unit quantity Package</div>
-			<div class="cfws_div_2"><strong class="cfws_unit_quantity"><?php echo $unitQunatity ?></strong></div>
-			<hr />
-			<div class="cfws_div_1">Quantity</div>
-			<div class="cfws_div_2"><strong id="cfws_product_quantity">1</strong></div>
-			<hr class="mb-0" />
-			<div class="cfws_div_1">Unit price</div>
-			<div class="cfws_div_2"><strong id="cfws_product_unit_price"><?php echo $price ?></strong></div>
-			<hr class="mb-0" />
-			<div class="cfws_div_1">Total</div>
-			<div class="cfws_div_2"><strong id="cfws_product_total_price"><?php echo $price ?></strong></div>
-			<hr class="mb-0" />
-		</div>
+		<div class="cfws_offered_price"></div>
+		<h4>Quantity</h4> 
+		<div class="cfws_div_1">Unit quantity Package</div>
+		<div class="cfws_div_2"><strong class="cfws_unit_quantity"><?php echo $unitQunatity ?></strong></div>
+		<hr />
+		<div class="cfws_div_1">Quantity</div>
+		<div class="cfws_div_2"><strong id="cfws_product_quantity">1</strong></div>
+		<hr class="mb-0" />
+		<div class="cfws_div_1">Unit price</div>
+		<div class="cfws_div_2"><strong id="cfws_product_unit_price"><?php echo getPriceByQuantity(1,$post->ID) ?></strong></div>
+		<hr class="mb-0" />
+		<div class="cfws_div_1">Total</div>
+		<div class="cfws_div_2"><strong id="cfws_product_total_price"><?php echo getPriceByQuantity(1,$post->ID) ?></strong></div>
+		<hr class="mb-0" />
 	</div>
 	<div class="cfws_final total">
 		
