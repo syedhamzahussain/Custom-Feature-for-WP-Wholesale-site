@@ -55,17 +55,17 @@ $profit = $price-$costPerItem;
 		<div class="cfws_div_2"><strong id="cfws_product_quantity">1</strong></div>
 		<hr class="mb-0" />
 		<div class="cfws_div_1">Unit price</div>
-		<div class="cfws_div_2"><strong id="cfws_product_unit_price"><?php echo getPriceByQuantity(1,$post->ID) ?></strong></div>
+		<div class="cfws_div_2"><strong id="cfws_product_unit_price"><?php echo cfws_get_price_by_quantity(1,$post->ID) ?></strong></div>
 		<hr class="mb-0" />
 		<div class="cfws_div_1">Total</div>
-		<div class="cfws_div_2"><strong id="cfws_product_total_price"><?php echo getPriceByQuantity(1,$post->ID) ?></strong></div>
+		<div class="cfws_div_2"><strong id="cfws_product_total_price"><?php echo cfws_get_price_by_quantity(1,$post->ID) ?></strong></div>
 		<hr class="mb-0" />
 	</div>
 	<div class="cfws_final total">
 		
 	</div>
 	<div>
-		<?php echo do_shortcode( '[add_to_cart id='.$post->ID.' show_price=false]' ); ?>
+		<?php echo do_shortcode( '[add_to_cart id='.$post->ID.' style=”border:none; padding: 10px;”  show_price=false]' ); ?>
 	</div>
 	<div><input type="hidden" name="cfws_get_product_price" value="<?= $product->get_price(); ?>"></div>
 </div>

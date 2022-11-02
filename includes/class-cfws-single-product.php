@@ -22,6 +22,10 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 
 			add_shortcode( 'cfws_single_product', array( $this, 'single_product_shortcode_callback' ) );
 			add_action( 'wp', array( $this, 'front_hooks' ) );
+			
+
+			add_action( 'wp_ajax_cfws_get_price_by_quantity_ajax',  'cfws_get_price_by_quantity_ajax' ) ;
+			add_action( 'wp_ajax_nopriv_cfws_get_price_by_quantity_ajax',  'cfws_get_price_by_quantity_ajax' ) ;
 		}
 
 		public function front_hooks() {
