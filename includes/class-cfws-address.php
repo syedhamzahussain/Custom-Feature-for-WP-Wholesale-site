@@ -21,9 +21,23 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 		public function __construct() {
 
 			add_action( "woocommerce_customer_save_address", array( $this,'custom_validation'),10,2); 
+			add_filter( 'woocommerce_locate_template', array( $this,'intercept_wc_template'), 10, 3 );
+
 
 
 		}
+
+        function intercept_wc_template( $template, $template_name, $template_path ) {
+
+            if ( 'my-address.php' === basename( $template ) ) {
+                $template = CFWS_TEMP_DIR . '/woocommerce/myaccount/my-address.php';
+            }elseif('form-edit-address.php' === basename( $template )){
+                $template = CFWS_TEMP_DIR . '/woocommerce/myaccount/form-edit-address.php';
+            }
+        
+            return $template;
+        
+        }
 
         public function update_fields($post_req, $slug){
             $updated_address = [];

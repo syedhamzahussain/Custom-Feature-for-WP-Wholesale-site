@@ -20,16 +20,13 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 		 */
 		public function __construct() {
 
-			$this->includes();
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_assets' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_assets' ) );
 
 		}
 
-		public function includes() {
-
-		}
+		
 
 		public function admin_assets() {
 			wp_enqueue_style( 'cfws-admin-style', CFWS_ASSETS_DIR_URL . '/css/admin/admin.css' );
