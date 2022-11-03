@@ -24,6 +24,8 @@ function cfws_get_price_by_quantity($quantity,$product_id){
 			}
 		}
 	}
+	$price = number_format((float)$price, 2, '.', '');
+	
 	return $price;
 	
 	wp_die();
@@ -39,9 +41,9 @@ function cfws_get_price_by_quantity_ajax(){
 		$product = wc_get_product($product_id);
 		$price = $product->get_price();
 		$profit = $price-$costPerItem;
-
+		$allPkgMax = [];
 		foreach($packages as $package){
-
+			$allPkgMax[] = $package['max'];
 			if($package['min'] <= $quantity && $package['max'] >= $quantity){
 				
 				if($package['discount_type'] == 'percent'){
@@ -54,7 +56,9 @@ function cfws_get_price_by_quantity_ajax(){
 		}
 		
 	}
-	wp_send_json($price);
+	$price = number_format((float)$price, 2, '.', '');
+	$response = ['price'=>$price,'max_package'=>max($allPkgMax)];
+	wp_send_json($response);
 	
 	wp_die();
 }
