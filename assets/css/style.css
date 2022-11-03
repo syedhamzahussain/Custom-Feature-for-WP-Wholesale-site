@@ -1,9 +1,11 @@
 .cfws_wrapper{
-	max-width: 300px;
+	max-width: 400px;
 	min-height: 500px;
-	background: rgb(255, 222, 222);
+	background: #fff;
 	padding: 30px;
 	border-radius: 10px;
+	box-shadow: 1px 1px 3px 3px;
+	font-size: 16px;
 }
 .cfws_div_1,.cfws_div_2{
 	
@@ -24,4 +26,43 @@ hr.cfws_hr{
 	border: 1px solid black;
 	border-radius: 15px;
 	padding:5px 20px;
+}
+.cfws_font_bold{
+	font-weight: bold;
+}
+.cfws_gray_color{
+	color: #c7c7c7;
+}
+.cfws_border_dot{
+	border: 1px dotted #ccc;
+}
+.cfws_fs12{
+	font-size: 12px;
+}
+.cfws_fs18{
+	font-size: 18px !important;
+}
+.cfws_sale{
+    font-size: 20px;
+    font-weight: bold;
+    color: #9a9a9a;
+}
+.cfws_d_inline, .quantity{
+	display: inline;
+	margin-top: 10px;
+}
+.quantity{
+	float:right;
+}
+#offered_price{
+	float: right;
+}
+#offered_price,.qty{
+	background: white;
+	border-radius: 25px;
+	border: 1px solid black;
+	width: 70px;
+}
+.mt10{
+	margin-top: 10px;
 }
