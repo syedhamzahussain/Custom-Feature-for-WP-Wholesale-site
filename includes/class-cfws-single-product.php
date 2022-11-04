@@ -22,10 +22,9 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 
 			add_shortcode( 'cfws_single_product', array( $this, 'single_product_shortcode_callback' ) );
 			add_action( 'wp', array( $this, 'front_hooks' ) );
-			
 
-			add_action( 'wp_ajax_cfws_get_price_by_quantity_ajax',  'cfws_get_price_by_quantity_ajax' ) ;
-			add_action( 'wp_ajax_nopriv_cfws_get_price_by_quantity_ajax',  'cfws_get_price_by_quantity_ajax' ) ;
+			add_action( 'wp_ajax_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
+			add_action( 'wp_ajax_nopriv_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
 		}
 
 		public function front_hooks() {
@@ -34,12 +33,12 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			// remove price.
 			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 
-			add_action( 'woocommerce_product_meta_start', array( $this, 'show_packages_info' ),10 );
+			add_action( 'woocommerce_product_meta_start', array( $this, 'show_packages_info' ), 10 );
 		}
 
 		public function show_packages_info() {
-			
-			do_shortcode('[cfws_single_product]');
+
+			do_shortcode( '[cfws_single_product]' );
 		}
 
 		public function single_product_shortcode_callback() {

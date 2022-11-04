@@ -147,7 +147,7 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 
 			global $post;
 
-			$product = wc_get_product( $post->ID );
+			$product      = wc_get_product( $post->ID );
 			$cfws_heading = get_post_meta( $post->ID, 'cfws_heading', true ) ? get_post_meta( $post->ID, 'cfws_heading', true ) : 'Package';
 
 			?>
@@ -155,7 +155,7 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 					
 				<span>
 					<label for="cfws_heading">Heading</label>
-					<input type="text" name="cfws_heading" id="cfws_heading" value="<?= $cfws_heading ?>"  >
+					<input type="text" name="cfws_heading" id="cfws_heading" value="<?php echo $cfws_heading; ?>"  >
 				</span>
 
 					<div class='packages_table_group'>
@@ -215,10 +215,10 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 									?>
 									
 										<tr>
-											<input type='hidden' name='cfws_min_unit[]' value='<?= $package["min"] ?>'/>
-											<input type='hidden' name='cfws_max_unit[]' value='<?= $package["max"] ?>'/>
-											<input type='hidden' name='cfws_discount_type[]' value='<?= $package["discount_type"] ?>'/>
-											<input type='hidden' name='cfws_discount[]' value='<?= $package["discount"] ?>'/>
+											<input type='hidden' name='cfws_min_unit[]' value='<?php echo $package['min']; ?>'/>
+											<input type='hidden' name='cfws_max_unit[]' value='<?php echo $package['max']; ?>'/>
+											<input type='hidden' name='cfws_discount_type[]' value='<?php echo $package['discount_type']; ?>'/>
+											<input type='hidden' name='cfws_discount[]' value='<?php echo $package['discount']; ?>'/>
 
 											<td><?php echo $package['min']; ?></td>
 											<td><?php echo $package['max']; ?></td>

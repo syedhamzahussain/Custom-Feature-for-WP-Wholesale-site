@@ -20,13 +20,12 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 		 */
 		public function __construct() {
 
-
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_assets' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_assets' ) );
 
 		}
 
-		
+
 
 		public function admin_assets() {
 			wp_enqueue_style( 'cfws-admin-style', CFWS_ASSETS_DIR_URL . '/css/admin/admin.css' );
@@ -56,13 +55,13 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 				false
 			);
 			global $post;
-			$product_id = isset($post) ?  $post->ID : false;
+			$product_id = isset( $post ) ? $post->ID : false;
 			wp_localize_script(
 				'cfws-front-script',
 				'cfws_obj',
 				array(
-					'ajaxurl'   => admin_url( 'admin-ajax.php' ),
-					'is_logged' => is_user_logged_in(),
+					'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+					'is_logged'  => is_user_logged_in(),
 					'product_id' => $product_id,
 				)
 			);

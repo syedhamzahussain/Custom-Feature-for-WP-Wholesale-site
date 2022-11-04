@@ -17,29 +17,26 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$page_title = ( 'billing' === $load_address ) ? esc_html__( 'Billing address', 'woocommerce' ) : esc_html__( 'Shipping address', 'woocommerce' );
-$customer_id = get_current_user_id();
-$filtered_address = [];
-if( 'billing' === $load_address ){
-	if($_GET['id'] !== NULL){
-		
-		$billings = get_user_meta($customer_id,'billing_address');
-	
-		foreach($billings[0] as $billing){
-			if($billing['id'] == $_GET['id']){
-				$filtered_address = $billing;	
-			}
-			
-		}
-		
-	}
-	
-}elseif('shipping' === $load_address){
-	if ($_GET['id'] !== null) {
-		$shippings = get_user_meta($customer_id, 'shipping_address');
+$page_title       = ( 'billing' === $load_address ) ? esc_html__( 'Billing address', 'woocommerce' ) : esc_html__( 'Shipping address', 'woocommerce' );
+$customer_id      = get_current_user_id();
+$filtered_address = array();
+if ( 'billing' === $load_address ) {
+	if ( $_GET['id'] !== null ) {
 
-		foreach ($shippings[0] as $shipping) {
-			if ($shipping['id'] == $_GET['id']) {
+		$billings = get_user_meta( $customer_id, 'billing_address' );
+
+		foreach ( $billings[0] as $billing ) {
+			if ( $billing['id'] == $_GET['id'] ) {
+				$filtered_address = $billing;
+			}
+		}
+	}
+} elseif ( 'shipping' === $load_address ) {
+	if ( $_GET['id'] !== null ) {
+		$shippings = get_user_meta( $customer_id, 'shipping_address' );
+
+		foreach ( $shippings[0] as $shipping ) {
+			if ( $shipping['id'] == $_GET['id'] ) {
 				$filtered_address = $shipping;
 			}
 		}
@@ -62,11 +59,11 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 			<div class="woocommerce-address-fields__field-wrapper">
 				<?php
 				foreach ( $address as $key => $field ) {
-					if(!empty($filtered_address)){
-							$value = $filtered_address[$key];
-							
-					}else{
-						$value = "";
+					if ( ! empty( $filtered_address ) ) {
+							$value = $filtered_address[ $key ];
+
+					} else {
+						$value = '';
 					}
 					woocommerce_form_field( $key, $field, wc_get_post_data_by_key( $key, $value ) );
 				}
@@ -80,9 +77,11 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 				<?php wp_nonce_field( 'woocommerce-edit_address', 'woocommerce-edit-address-nonce' ); ?>
 				<input type="hidden" name="action" value="edit_address" />
 				<?php
-					if(isset($_GET['id'])){ ?>
-						<input type="hidden" name="id" value="<?= $_GET['id'] ?>" />
-				<?php }
+				if ( isset( $_GET['id'] ) ) {
+					?>
+						<input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" />
+					<?php
+				}
 				?>
 			</p>
 		</div>
