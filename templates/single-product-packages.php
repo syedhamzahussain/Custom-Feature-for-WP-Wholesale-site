@@ -4,6 +4,7 @@ global $post, $product;
 $packages    = get_post_meta( $post->ID, 'cfws_packages', true );
 $costPerItem = get_post_meta( $post->ID, 'cfws_unit_cost', true );
 $unitQunatity = get_post_meta( $post->ID, 'cfws_unit_quantity', true );
+$heading = get_post_meta( $post->ID, 'cfws_heading', true );
 $maxValue = $packages[count($packages)-1]['max'];
 $price = $product->get_price();
 $profit = $price-$costPerItem;
@@ -11,7 +12,7 @@ $profit = $price-$costPerItem;
 <div class="cfws_wrapper">
 	<div class="cfws_sale_unit">
 		<div class="cfws_div_1 cfws_sale">SALE UNIT</div>
-		<div class="cfws_div_2 cfws_gray_color">Package</div>
+		<div class="cfws_div_2 cfws_gray_color"><?= $heading ?></div>
 		<div class="cfws_div_1 cfws_gray_color">Quantity per unit</div>
 		<div class="cfws_div_2"><strong class="cfws_font_bold">= <?php echo $unitQunatity ?> pieces</strong></div>
 		<hr>

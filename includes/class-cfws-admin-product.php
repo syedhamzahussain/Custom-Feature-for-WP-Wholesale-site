@@ -148,9 +148,16 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 			global $post;
 
 			$product = wc_get_product( $post->ID );
+			$cfws_heading = get_post_meta( $post->ID, 'cfws_heading', true ) ? get_post_meta( $post->ID, 'cfws_heading', true ) : 'Package';
 
 			?>
 				<div id='packages_tab' class='panel '>
+					
+				<span>
+					<label for="cfws_heading">Heading</label>
+					<input type="text" name="cfws_heading" id="cfws_heading" value="<?= $cfws_heading ?>"  >
+				</span>
+
 					<div class='packages_table_group'>
 						<?php
 
@@ -262,6 +269,9 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 				}
 				// $select_primary_attribute = sanitize_text_field( wp_unslash( $_POST['cfws_primary_attribute'] ) );
 				update_post_meta( $post_id, 'cfws_packages', $packages );
+			}
+			if ( isset( $_POST['cfws_heading'] ) ) {
+				update_post_meta( $post_id, 'cfws_heading', $_POST['cfws_heading'] );
 			}
 
 		}
