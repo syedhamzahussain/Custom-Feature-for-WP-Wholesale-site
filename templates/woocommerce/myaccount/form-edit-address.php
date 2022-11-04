@@ -21,7 +21,7 @@ $page_title       = ( 'billing' === $load_address ) ? esc_html__( 'Billing addre
 $customer_id      = get_current_user_id();
 $filtered_address = array();
 if ( 'billing' === $load_address ) {
-	if ( $_GET['id'] !== null ) {
+	if ( isset($_GET['id']) ) {
 
 		$billings = get_user_meta( $customer_id, 'billing_address' );
 
@@ -32,7 +32,7 @@ if ( 'billing' === $load_address ) {
 		}
 	}
 } elseif ( 'shipping' === $load_address ) {
-	if ( $_GET['id'] !== null ) {
+	if (  isset($_GET['id']) ) {
 		$shippings = get_user_meta( $customer_id, 'shipping_address' );
 
 		foreach ( $shippings[0] as $shipping ) {
