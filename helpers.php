@@ -62,3 +62,26 @@ function cfws_get_price_by_quantity_ajax() {
 
 	wp_die();
 }
+
+function cfws_set_default_address_ajax(){
+	$slug = $_REQUEST['slug'];
+	$id = $_REQUEST['id'];
+	$user_id = get_current_user_id();
+
+	$address = get_user_meta( $user_id, "billing_address" );
+
+	$index = 0;
+	foreach ( $address[0] as $key => $b ) {
+		if ( $b['id'] == $id ) {
+	
+			update_user_meta( $user_id, $slug.'_default_address', $b );
+
+		}
+		$index++;
+	}
+
+	wp_send_json( 1 );
+
+	wp_die();
+	
+}

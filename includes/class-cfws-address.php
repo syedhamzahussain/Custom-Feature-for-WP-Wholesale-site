@@ -22,6 +22,7 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 
 			add_action( 'woocommerce_customer_save_address', array( $this, 'custom_validation' ), 10, 2 );
 			add_filter( 'woocommerce_locate_template', array( $this, 'intercept_wc_template' ), 10, 3 );
+			add_action( 'wp_ajax_cfws_set_default_address_ajax', 'cfws_set_default_address_ajax' );
 
 		}
 
@@ -40,6 +41,7 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 		public function update_fields( $post_req, $slug ) {
 			$updated_address                          = array();
 			$updated_address['id']                    = ( isset( $post_req['id'] ) ? $post_req['id'] : uniqid() );
+			$updated_address[ $slug . '_address_name' ]= $post_req[ $slug . '_address_name' ];
 			$updated_address[ $slug . '_first_name' ] = $post_req[ $slug . '_first_name' ];
 			$updated_address[ $slug . '_last_name' ]  = $post_req[ $slug . '_last_name' ];
 			$updated_address[ $slug . '_company' ]    = $post_req[ $slug . '_company' ];

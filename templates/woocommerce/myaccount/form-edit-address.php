@@ -31,17 +31,7 @@ if ( 'billing' === $load_address ) {
 			}
 		}
 	}
-} elseif ( 'shipping' === $load_address ) {
-	if (  isset($_GET['id']) ) {
-		$shippings = get_user_meta( $customer_id, 'shipping_address' );
-
-		foreach ( $shippings[0] as $shipping ) {
-			if ( $shipping['id'] == $_GET['id'] ) {
-				$filtered_address = $shipping;
-			}
-		}
-	}
-}
+} 
 
 do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 
@@ -49,7 +39,7 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 	<?php wc_get_template( 'myaccount/my-address.php' ); ?>
 <?php else : ?>
 
-	<form method="post">
+	<form method="post" >
 
 		<h3><?php echo apply_filters( 'woocommerce_my_account_edit_address_title', $page_title, $load_address ); ?></h3><?php // @codingStandardsIgnoreLine ?>
 
@@ -57,8 +47,15 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 			<?php do_action( "woocommerce_before_edit_address_form_{$load_address}" ); ?>
 
 			<div class="woocommerce-address-fields__field-wrapper">
+				<p class="form-row form-row-wide" id="billing_address_name" data-priority="10">
+					<label for="billing_address_name" class=""><?php echo esc_html__( 'Address Title', 'woocommerce' ); ?></label>
+					<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_address_name" id="billing_address_name" placeholder="" value="<?= $filtered_address['billing_address_name']  ?>">
+						<div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
+					</span>
+				</p>
 				<?php
 				foreach ( $address as $key => $field ) {
+					
 					if ( ! empty( $filtered_address ) ) {
 							$value = $filtered_address[ $key ];
 
