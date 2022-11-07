@@ -44,38 +44,38 @@ jQuery(document).ready(function ($) {
     $("#cfws_product_unit_price").html(offered_price);
     $("#cfws_product_total_price").html(qty * offered_price);
   });
-  $(".add_to_cart_button").click(function () {
-    var qty = $(".qty").val();
-    jQuery.ajax({
-      url: cfws_obj.ajaxurl,
-      type: "get",
-      data: {
-        action: "cfws_get_price_by_quantity_ajax",
-        qty: qty,
-        product_id: cfws_obj.product_id,
-      },
-      success: function (result) {
-        var price = parseInt(result.price);
-        var offered_price = $("#offered_price").val();
-        if (offered_price == "") {
-          offered_price = price;
-        }
-        jQuery.ajax({
-          url: cfws_obj.ajaxurl,
-          type: "get",
-          data: {
-            action: "cfws_save_offered_price",
-            qty: qty,
-            product_id: cfws_obj.product_id,
-            offered_price: offered_price,
-          },
-          success: function (result) {
-            console.log(result);
-          },
-        });
-      },
-    });
-  });
+  // $(".single_add_to_cart_button").click(function () {
+  //   var qty = $(".qty").val();
+  //   jQuery.ajax({
+  //     url: cfws_obj.ajaxurl,
+  //     type: "get",
+  //     data: {
+  //       action: "cfws_get_price_by_quantity_ajax",
+  //       qty: qty,
+  //       product_id: cfws_obj.product_id,
+  //     },
+  //     success: function (result) {
+  //       var price = parseInt(result.price);
+  //       var offered_price = $("#offered_price").val();
+  //       if (offered_price == "") {
+  //         offered_price = price;
+  //       }
+  //       jQuery.ajax({
+  //         url: cfws_obj.ajaxurl,
+  //         type: "get",
+  //         data: {
+  //           action: "cfws_save_offered_price",
+  //           qty: qty,
+  //           product_id: cfws_obj.product_id,
+  //           offered_price: parseInt(offered_price),
+  //         },
+  //         success: function (result) {
+  //           console.log(result);
+  //         },
+  //       });
+  //     },
+  //   });
+  // });
 });
 
 jQuery(document).ready(function ($) {

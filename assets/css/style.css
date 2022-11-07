@@ -53,7 +53,7 @@ hr.cfws_hr {
   margin-top: 10px;
 }
 .quantity {
-  float: right;
+  float: right !important;
 }
 #offered_price {
   float: right;
