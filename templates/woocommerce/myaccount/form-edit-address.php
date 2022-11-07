@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 $page_title       = ( 'billing' === $load_address ) ? esc_html__( 'Billing address', 'woocommerce' ) : esc_html__( 'Shipping address', 'woocommerce' );
 $customer_id      = get_current_user_id();
-$filtered_address = array();
+$filtered_address = ['billing_address_name' => ''];
 if ( 'billing' === $load_address ) {
 	if ( isset($_GET['id']) ) {
 

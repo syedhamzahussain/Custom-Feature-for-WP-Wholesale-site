@@ -22,10 +22,13 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_assets' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_assets' ) );
+			add_action( 'plugin_loaded', array( $this, 'load_plugin_languages' ) );
 
 		}
 
-
+         public function load_plugin_languages(){
+			load_plugin_textdomain( 'cfws', false, CFWS_PLUGIN_DIR. '/languages' ); 
+		 }
 
 		public function admin_assets() {
 			wp_enqueue_style( 'cfws-admin-style', CFWS_ASSETS_DIR_URL . '/css/admin/admin.css' );

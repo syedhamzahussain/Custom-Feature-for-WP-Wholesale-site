@@ -23,6 +23,8 @@ $billing = get_user_meta( $user_id, 'billing_address' );
 $default_billing_address = get_user_meta( $user_id, 'billing_default_address' );
 $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' );
 
+
+
 ?>
 <div>
 	<p>
@@ -50,11 +52,19 @@ if ( isset( $billing ) && ! empty( $billing ) ) :
 
 			<section>
 				<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', 'billing' ) ); ?>?id=<?php echo $address['id']; ?>" class="edit"><button><?php echo esc_html__( 'Edit Address', 'woocommerce' ); ?></button></a>
-<?php			if($address['id'] !== $default_billing_address[0]['id']){ ?>
-					<a href="#" class="set_as_default_billing_address" onclick="defaultAddressSet('<?php echo $address['id']; ?>','billing')"><button class="btn btn-primary"><?php echo esc_html__( 'Set as Default Billing Address', 'woocommerce' ); ?></button></a>
-<?php			}				
-				if($address['id'] !== $default_shipping_address[0]['id']){ ?>
+<?php	       if(!empty($default_billing_address)){
+                    if($address['id'] !== $default_billing_address[0]['id']){ ?>
+	                   <a href="#" class="set_as_default_billing_address" onclick="defaultAddressSet('<?php echo $address['id']; ?>','billing')"><button class="btn btn-primary"><?php echo esc_html__( 'Set as Default Billing Address', 'woocommerce' ); ?></button></a>
+<?php			     }
+                }else{ ?>
+                    <a href="#" class="set_as_default_billing_address" onclick="defaultAddressSet('<?php echo $address['id']; ?>','billing')"><button class="btn btn-primary"><?php echo esc_html__( 'Set as Default Billing Address', 'woocommerce' ); ?></button></a>
+<?php			}		
+                if(!empty($default_shipping_address)){ 				
+				  if($address['id'] !== $default_shipping_address[0]['id']){ ?>
 					<a href="#" class="set_as_default_shipping_address" onclick="defaultAddressSet('<?php echo $address['id']; ?>','shipping')"><button class="btn btn-primary"><?php echo esc_html__( 'Set as Default Shipping Address', 'woocommerce' ); ?></button></a>
+<?php			  }
+                }else{ ?>
+				  <a href="#" class="set_as_default_shipping_address" onclick="defaultAddressSet('<?php echo $address['id']; ?>','shipping')"><button class="btn btn-primary"><?php echo esc_html__( 'Set as Default Shipping Address', 'woocommerce' ); ?></button></a>
 <?php			}
 ?>			
 			</section>

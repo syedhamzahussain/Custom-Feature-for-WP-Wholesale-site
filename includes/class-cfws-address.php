@@ -62,7 +62,7 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 			if ( $user_id <= 0 ) {
 				return;
 			}
-
+            wc_clear_notices();
 			if ( isset( $_POST['id'] ) ) {
 				$user_id = get_current_user_id();
 				if ( $load_address == 'billing' ) {
@@ -99,6 +99,7 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 						$index++;
 					}
 				}
+				wc_add_notice(esc_html__( 'Address has been edited successfully', 'woocommerce' ),'success');
 			} else {
 				if ( $load_address == 'billing' ) {
 					$billing = get_user_meta( $user_id, 'billing_address' );
@@ -145,7 +146,10 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 
 					}
 				}
+				wc_add_notice(esc_html__( 'Address has been added successfully', 'woocommerce' ),'success');
 			}
+
+			
 		}
 
 
