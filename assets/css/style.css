@@ -1,3 +1,21 @@
+:root {
+  --poppins: "Roboto Slab", serif;
+  --lato: "Lato", sans-serif;
+  --light: #f9f9f9;
+  --purple: #5c33c9;
+  --light-purple: #c0bbcf;
+  --grey: #eee;
+  --dark-grey: #aaaaaa;
+  --dark: #342e37;
+  --red: #db504a;
+  --yellow: #ffce26;
+  --light-yellow: #fff2c6;
+  --orange: #fd7238;
+  --light-orange: #ffe0d3;
+  --blue: #103e64;
+  --light-blue: #5d7080;
+}
+
 .cfws_wrapper {
   max-width: 400px;
   min-height: 500px;
@@ -415,6 +433,62 @@ hr.cfws_hr {
 }
 .card-columns .card {
   margin-bottom: 0.75rem;
+}
+
+.box-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 24px;
+  margin-top: 36px;
+}
+
+.box-info li {
+  padding: 24px;
+  background: var(--light);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  grid-gap: 24px;
+}
+
+.box-info li .bx {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-info li:nth-child(1) .bx {
+  background: var(--light-purple);
+  color: var(--purple);
+}
+
+.box-info li:nth-child(2) .bx {
+  background: var(--light-yellow);
+  color: var(--yellow);
+}
+
+.box-info li:nth-child(3) .bx {
+  background: var(--light-orange);
+  color: var(--orange);
+}
+
+.box-info li:nth-child(4) .bx {
+  background: var(--light-blue);
+  color: var(--blue);
+}
+
+.box-info li .text h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.box-info li .text p {
+  color: var(--dark);
 }
 @media (min-width: 576px) {
   .card-columns {

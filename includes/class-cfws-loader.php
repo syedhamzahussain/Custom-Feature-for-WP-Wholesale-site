@@ -37,6 +37,8 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 
 		public function front_assets() {
 			wp_enqueue_style( 'cfws-front-style', CFWS_ASSETS_DIR_URL . '/css/style.css' );
+			wp_enqueue_style( 'cfws-boxicons-style', 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' );
+			
 			wp_enqueue_script( 'cfws-front-script', CFWS_ASSETS_DIR_URL . '/js/script.js', array( 'jquery' ), rand() );
 
 			// bootstrap
