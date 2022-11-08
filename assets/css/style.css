@@ -504,3 +504,16 @@ hr.cfws_hr {
     width: 100%;
   }
 }
+
+.cfws_cart_wrapper{
+  width: 100%;
+}
+.cfws_cart_addresses{
+  width: 25%;
+  float: left;
+}
+
+.cfws_cart_form{
+  width: 75%;
+  float: right;
+}
