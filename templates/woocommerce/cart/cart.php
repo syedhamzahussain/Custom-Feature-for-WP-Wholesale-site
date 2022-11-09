@@ -16,14 +16,61 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+$user_id = get_current_user_id();
+$addresses = get_user_meta( $user_id, 'billing_address' );
+$default_billing_address = get_user_meta( $user_id, 'billing_default_address' );
+$default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' );
+
 ?>
 <div class="cfws_cart_wrapper">
 	<div class="cfws_cart_addresses">
 		<div class="cfws_cart_billing">
-			
+			<div class="card">
+				<div class="card-header">Billing</div>
+				<div class="card-body">
+				<?php if ( isset( $addresses ) && ! empty( $addresses ) ) : ?>
+					<?php foreach ( $addresses[0] as $key => $address ) :?>
+						<div class="form-check">
+							<?php 
+							if(!empty($default_billing_address) && $address['id'] !== $default_billing_address[0]['id']){ ?>
+									<input class="form-check-input" type="radio" name="billing_address" id="billing_address_<?= $address['id'] ?>" checked >
+							<?php } else{ ?>
+								<input class="form-check-input" type="radio" name="billing_address" id="billing_address_<?= $address['id'] ?>" >
+							<?php } ?>
+							<label class="form-check-label" for="billing_address_<?= $address['id'] ?>">
+								<?= $address['billing_address_name'] ?>
+							</label>
+						</div>
+					<?php endforeach ?>
+				<?php else: ?>
+					<h4><?php echo esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' ); ?></h4>
+				<?php endif ?>
+				</div>
+			</div>
 		</div>
 		<div class="cfws_cart_shipping">
-			
+			<div class="card">
+				<div class="card-header">Shipping</div>
+				<div class="card-body">
+				<?php if ( isset( $addresses ) && ! empty( $addresses ) ) : ?>
+					<?php foreach ( $addresses[0] as $key => $address ) :?>
+						<div class="form-check">
+							<?php 
+							if(!empty($default_shipping_address) && $address['id'] !== $default_shipping_address[0]['id']){ ?>
+									<input class="form-check-input" type="radio" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" checked >
+							<?php } else{ ?>
+								<input class="form-check-input" type="radio" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" >
+							<?php } ?>
+							<label class="form-check-label" for="shipping_address_<?= $address['id'] ?>">
+								<?= $address['billing_address_name'] ?>
+							</label>
+						</div>
+					<?php endforeach ?>
+				<?php else: ?>
+					<h4><?php echo esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' ); ?></h4>
+				<?php endif ?>
+				</div>
+			</div>
 		</div>
 		<div class="cfws_cart_collaterals">
 			

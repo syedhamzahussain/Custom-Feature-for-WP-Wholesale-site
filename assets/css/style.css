@@ -511,6 +511,11 @@ hr.cfws_hr {
 .cfws_cart_addresses{
   width: 25%;
   float: left;
+  padding:5px
+}
+
+.cfws_cart_shipping{
+margin-top: 10px;
 }
 
 .cfws_cart_form{
