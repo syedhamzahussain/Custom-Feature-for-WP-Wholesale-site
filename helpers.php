@@ -5,21 +5,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function cfws_get_price_by_quantity( $quantity, $product_id ) {
 
-	$packages     = get_post_meta( $product_id, 'cfws_packages', true );
-	$costPerItem  = get_post_meta( $product_id, 'cfws_unit_cost', true );
-	$unitQunatity = get_post_meta( $product_id, 'cfws_unit_quantity', true );
 	$product      = wc_get_product( $product_id );
+	$packages     = !empty( get_post_meta( $product_id, 'cfws_packages', true )) ?  get_post_meta( $product_id, 'cfws_packages', true ) : array();
+	$costPerItem  = !empty( get_post_meta( $product_id, 'cfws_unit_cost', true )) ?  get_post_meta( $product_id, 'cfws_unit_cost', true ) : $product->get_price();
+	$unitQunatity = !empty( get_post_meta( $product_id, 'cfws_unit_quantity', true )) ?  get_post_meta( $product_id, 'cfws_unit_quantity', true ) : 1;
 	$price        = $product->get_price();
 	$profit       = $price - $costPerItem;
+	if(!empty($packages) ){
+		foreach ( $packages as $package ) {
 
-	foreach ( $packages as $package ) {
+			if ( $package['min'] <= $quantity && $package['max'] >= $quantity ) {
 
-		if ( $package['min'] <= $quantity && $package['max'] >= $quantity ) {
-
-			if ( $package['discount_type'] == 'percent' ) {
-				$price = $price - ( ( $profit / 100 ) * $package['discount'] );
-			} else {
-				$price = $price - ( $profit - $package['discount'] );
+				if ( $package['discount_type'] == 'percent' ) {
+					$price = $price - ( ( $profit / 100 ) * $package['discount'] );
+				} else {
+					$price = $price - ( $profit - $package['discount'] );
+				}
 			}
 		}
 	}

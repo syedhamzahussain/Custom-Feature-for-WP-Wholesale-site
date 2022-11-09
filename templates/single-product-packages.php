@@ -1,10 +1,14 @@
 <?php
 
 global $post, $product;
+
 $packages     = get_post_meta( $post->ID, 'cfws_packages', true );
 $costPerItem  = get_post_meta( $post->ID, 'cfws_unit_cost', true );
 $unitQunatity = get_post_meta( $post->ID, 'cfws_unit_quantity', true );
 $heading      = get_post_meta( $post->ID, 'cfws_heading', true );
+if(empty($unitQunatity )){
+	$unitQunatity = 1;
+}
 if(isset($packages ) &&  $packages != ''){
 	$maxValue     = $packages[ count( $packages ) - 1 ]['max'];
 	$price        = $product->get_price();
@@ -49,8 +53,6 @@ else{
 			<div class="cfws_div_2">REQUEST QUOTATION</div>
 			<?php } ?>
 		</div>
-		<div><input type="hidden" name="cfws_offered_price" id="cfws_offered_price" value=""></div>
-
 		<div>
 			<?php
 			woocommerce_quantity_input(

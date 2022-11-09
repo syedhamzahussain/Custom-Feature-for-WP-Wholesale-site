@@ -31,8 +31,11 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 					<?php foreach ( $addresses[0] as $key => $address ) :?>
 						<div class="form-check">
 							<?php 
-							if(!empty($default_billing_address) && $address['id'] !== $default_billing_address[0]['id']){ ?>
+							if(!empty($default_billing_address) && $address['id'] == $default_billing_address[0]['id']){ ?>
 									<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="billing_address" id="billing_address_<?= $address['id'] ?>" checked >
+							<?php } elseif($key == 0){ ?>
+								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="billing_address" id="billing_address_<?= $address['id'] ?>" checked >
+
 							<?php } else{ ?>
 								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="billing_address" id="billing_address_<?= $address['id'] ?>" >
 							<?php } ?>
@@ -55,8 +58,12 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 					<?php foreach ( $addresses[0] as $key => $address ) :?>
 						<div class="form-check">
 							<?php 
-							if(!empty($default_shipping_address) && $address['id'] !== $default_shipping_address[0]['id']){ ?>
+							// print_r($default_shipping_address[0]['id']); exit;
+							if(!empty($default_shipping_address) && $address['id'] == $default_shipping_address[0]['id']){ ?>
 									<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" checked >
+							<?php } elseif($key == 0){ ?>
+								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" checked >
+
 							<?php } else{ ?>
 								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" >
 							<?php } ?>
@@ -81,6 +88,11 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 					<div class="cfws_div_1 boxes text-left"><?= WC()->cart->get_taxes_total(); ?></div>
 					<div class="cfws_div_2">Totals</div>
 					<div class="cfws_div_1 text-left"><?= WC()->cart->total; ?></div>
+				<!-- </div> -->
+				<!-- <div class="card-footer"> -->
+					<div class="form-row place-order">
+						<button type="button" class="cfws_place_order" id="place_order">Place order</button>
+					</div>
 				</div>
 			</div>
 		</div>
