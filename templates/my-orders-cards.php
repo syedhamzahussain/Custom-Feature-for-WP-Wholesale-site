@@ -15,7 +15,7 @@
     <li>
     <span class="text">
         <p>Total Spent</p>
-        <h3><?= $total_amount ?></h3>
+        <h3><?php echo wc_price( $total_amount ); ?></h3>
       </span>
       <i class="bx bx-money"></i>
       
