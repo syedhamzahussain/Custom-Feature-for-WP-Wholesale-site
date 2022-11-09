@@ -40,6 +40,12 @@ hr.cfws_hr {
 .mb-0 {
   margin-bottom: 0px !important;
 }
+.text-right{
+  text-align: right;
+}
+.text-left{
+  text-align: left;
+}
 .cfws_unit_quantity {
   border: 1px solid black;
   border-radius: 15px;
@@ -521,4 +527,11 @@ margin-top: 10px;
 .cfws_cart_form{
   width: 75%;
   float: right;
+}
+
+.boxes{
+  border-radius: 25px;
+  background-color: rgb(250 250 250);
+  padding: 2px 24px;
+  margin: 2px 0px; 
 }

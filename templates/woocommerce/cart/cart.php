@@ -20,22 +20,21 @@ $user_id = get_current_user_id();
 $addresses = get_user_meta( $user_id, 'billing_address' );
 $default_billing_address = get_user_meta( $user_id, 'billing_default_address' );
 $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' );
-
 ?>
 <div class="cfws_cart_wrapper">
-	<div class="cfws_cart_addresses">
+	<div class="cfws_cart_addresses" dir="rtl">
 		<div class="cfws_cart_billing">
 			<div class="card">
-				<div class="card-header">Billing</div>
+				<div class="card-header">Billing Address</div>
 				<div class="card-body">
 				<?php if ( isset( $addresses ) && ! empty( $addresses ) ) : ?>
 					<?php foreach ( $addresses[0] as $key => $address ) :?>
 						<div class="form-check">
 							<?php 
 							if(!empty($default_billing_address) && $address['id'] !== $default_billing_address[0]['id']){ ?>
-									<input class="form-check-input" type="radio" name="billing_address" id="billing_address_<?= $address['id'] ?>" checked >
+									<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="billing_address" id="billing_address_<?= $address['id'] ?>" checked >
 							<?php } else{ ?>
-								<input class="form-check-input" type="radio" name="billing_address" id="billing_address_<?= $address['id'] ?>" >
+								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="billing_address" id="billing_address_<?= $address['id'] ?>" >
 							<?php } ?>
 							<label class="form-check-label" for="billing_address_<?= $address['id'] ?>">
 								<?= $address['billing_address_name'] ?>
@@ -50,16 +49,16 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 		</div>
 		<div class="cfws_cart_shipping">
 			<div class="card">
-				<div class="card-header">Shipping</div>
+				<div class="card-header">Shipping Address</div>
 				<div class="card-body">
 				<?php if ( isset( $addresses ) && ! empty( $addresses ) ) : ?>
 					<?php foreach ( $addresses[0] as $key => $address ) :?>
 						<div class="form-check">
 							<?php 
 							if(!empty($default_shipping_address) && $address['id'] !== $default_shipping_address[0]['id']){ ?>
-									<input class="form-check-input" type="radio" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" checked >
+									<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" checked >
 							<?php } else{ ?>
-								<input class="form-check-input" type="radio" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" >
+								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" >
 							<?php } ?>
 							<label class="form-check-label" for="shipping_address_<?= $address['id'] ?>">
 								<?= $address['billing_address_name'] ?>
@@ -73,7 +72,17 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 			</div>
 		</div>
 		<div class="cfws_cart_collaterals">
-			
+			<div class="card">
+				<div class="card-header">Totals</div>
+				<div class="card-body">
+					<div class="cfws_div_2 boxes">Subtotal</div>
+					<div class="cfws_div_1 boxes text-left"><?= WC()->cart->subtotal_ex_tax; ?></div>
+					<div class="cfws_div_2 boxes">Tax/Vat</div>
+					<div class="cfws_div_1 boxes text-left"><?= WC()->cart->get_taxes_total(); ?></div>
+					<div class="cfws_div_2">Totals</div>
+					<div class="cfws_div_1 text-left"><?= WC()->cart->total; ?></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="cfws_cart_form">
