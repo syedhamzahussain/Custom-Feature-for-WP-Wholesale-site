@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 $page_title       = ( 'billing' === $load_address ) ? esc_html__( 'Billing address', 'woocommerce' ) : esc_html__( 'Shipping address', 'woocommerce' );
 $customer_id      = get_current_user_id();
-$filtered_address = ['billing_address_name' => ''];
+$filtered_address = [];
 if ( 'billing' === $load_address ) {
 	if ( isset($_GET['id']) ) {
 
@@ -49,7 +49,7 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 			<div class="woocommerce-address-fields__field-wrapper">
 				<p class="form-row form-row-wide" id="billing_address_name" data-priority="10">
 					<label for="billing_address_name" class=""><?php echo esc_html__( 'Address Title', 'woocommerce' ); ?></label>
-					<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_address_name" id="billing_address_name" placeholder="" value="<?= $filtered_address['billing_address_name']  ?>">
+					<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_address_name" id="billing_address_name" placeholder="" value="<?php (!empty($filtered_address) ?  $filtered_address['address_name'] : '' ) ?>">
 						<div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
 					</span>
 				</p>
