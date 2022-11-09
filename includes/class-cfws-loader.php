@@ -33,6 +33,7 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 		public function admin_assets() {
 			wp_enqueue_style( 'cfws-admin-style', CFWS_ASSETS_DIR_URL . '/css/admin/admin.css' );
 			wp_enqueue_script( 'cfws-admin-script', CFWS_ASSETS_DIR_URL . '/js/admin/admin.js', array( 'jquery' ), rand() );
+			// wp_enqueue_style( 'cfws-boxicons-style', 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' );
 
 			global $post;
 			$is_product = false;

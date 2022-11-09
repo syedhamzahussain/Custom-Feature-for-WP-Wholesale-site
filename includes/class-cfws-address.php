@@ -23,6 +23,7 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 			add_action( 'woocommerce_customer_save_address', array( $this, 'custom_validation' ), 10, 2 );
 			add_filter( 'woocommerce_locate_template', array( $this, 'intercept_wc_template' ), 10, 3 );
 			add_action( 'wp_ajax_cfws_set_default_address_ajax', 'cfws_set_default_address_ajax' );
+			add_action( 'wp_ajax_cfws_delete_address_ajax', 'cfws_delete_address_ajax' );
 
 		}
 

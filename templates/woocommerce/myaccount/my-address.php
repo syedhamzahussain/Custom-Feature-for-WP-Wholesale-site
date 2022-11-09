@@ -42,7 +42,7 @@ if ( isset( $billing ) && ! empty( $billing ) ) :
 	 foreach ( $billing[0] as $key => $address ) :
 ?>	
 		<div class="card col-md-3">
-			<div class="card-header"><?= $address['billing_address_name'] ?></div>
+			<div class="card-header"><?= $address['address_name'] ?><button onclick="deleteAddress('<?php echo $address['id']; ?>')" style="float:left"><i class='bx bxs-message-square-x bx-spin bx-flip-horizontal' ></i></button></div>
 				<div class="card-body">
 			
 					<address>

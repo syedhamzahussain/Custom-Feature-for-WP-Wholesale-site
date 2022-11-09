@@ -49,7 +49,7 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 			<div class="woocommerce-address-fields__field-wrapper">
 				<p class="form-row form-row-wide" id="billing_address_name" data-priority="10">
 					<label for="billing_address_name" class=""><?php echo esc_html__( 'Address Title', 'woocommerce' ); ?></label>
-					<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_address_name" id="billing_address_name" placeholder="" value="<?php (!empty($filtered_address) ?  $filtered_address['address_name'] : '' ) ?>">
+					<span class="woocommerce-input-wrapper"><input type="text" class="input-text " name="billing_address_name" id="billing_address_name" placeholder="" value="<?php echo (!empty($filtered_address) ?  $filtered_address['address_name'] : '' ) ?>">
 						<div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
 					</span>
 				</p>
@@ -57,7 +57,7 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 				foreach ( $address as $key => $field ) {
 					
 					if ( ! empty( $filtered_address ) ) {
-							$value = $filtered_address[ $key ];
+							$value = $filtered_address[ str_replace('billing_', '', $key) ];
 
 					} else {
 						$value = '';

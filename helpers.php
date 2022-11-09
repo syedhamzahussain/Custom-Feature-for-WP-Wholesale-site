@@ -86,3 +86,37 @@ function cfws_set_default_address_ajax(){
 	wp_die();
 	
 }
+function cfws_delete_address_ajax(){
+	
+	$id = $_REQUEST['id'];
+	$user_id = get_current_user_id();
+
+	$address = get_user_meta( $user_id, "billing_address" );
+	$default_billing_address = get_user_meta( $user_id, "billing_default_address" );
+	$default_shipping_address = get_user_meta( $user_id, "shipping_default_address" );
+
+	$new_arr = array();
+	foreach ( $address[0] as $bil ) {
+		if ($bil['id'] !== $id) {
+			$new_arr[] = $bil;
+		}
+	}
+	
+
+	delete_user_meta( $user_id, 'billing_address' );
+	update_user_meta( $user_id, 'billing_address', $new_arr );
+
+	
+
+	if($id == $default_billing_address[0]['id']){
+		delete_user_meta( $user_id, 'billing_default_address' );
+	}
+	if($id == $default_shipping_address[0]['id']){
+		delete_user_meta( $user_id, 'shipping_default_address' );
+	}
+
+	wp_send_json( 1 );
+
+	wp_die();
+	
+}

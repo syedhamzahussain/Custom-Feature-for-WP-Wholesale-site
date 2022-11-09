@@ -113,3 +113,23 @@ function defaultAddressSet(id, slug) {
     },
   });
 }
+
+function deleteAddress(id) {
+  jQuery.ajax({
+    url: cfws_obj.ajaxurl,
+    type: "get",
+    data: {
+      action: "cfws_delete_address_ajax",
+      id: id,
+    },
+    success: function (result) {
+      if (result == 1) {
+        location.reload(true);
+        alert("Address Deleted Successfully");
+      }
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
