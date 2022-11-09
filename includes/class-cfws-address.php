@@ -41,18 +41,18 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 		public function update_fields( $post_req, $slug ) {
 			$updated_address                          = array();
 			$updated_address['id']                    = ( isset( $post_req['id'] ) ? $post_req['id'] : uniqid() );
-			$updated_address[ $slug . '_address_name' ]= $post_req[ $slug . '_address_name' ];
-			$updated_address[ $slug . '_first_name' ] = $post_req[ $slug . '_first_name' ];
-			$updated_address[ $slug . '_last_name' ]  = $post_req[ $slug . '_last_name' ];
-			$updated_address[ $slug . '_company' ]    = $post_req[ $slug . '_company' ];
-			$updated_address[ $slug . '_address_1' ]  = $post_req[ $slug . '_address_1' ];
-			$updated_address[ $slug . '_address_2' ]  = $post_req[ $slug . '_address_2' ];
-			$updated_address[ $slug . '_city' ]       = $post_req[ $slug . '_city' ];
-			$updated_address[ $slug . '_state' ]      = $post_req[ $slug . '_state' ];
-			$updated_address[ $slug . '_postcode' ]   = $post_req[ $slug . '_postcode' ];
-			$updated_address[ $slug . '_country' ]    = $post_req[ $slug . '_country' ];
-			$updated_address[ $slug . '_email' ]      = $post_req[ $slug . '_email' ];
-			$updated_address[ $slug . '_phone' ]      = $post_req[ $slug . '_phone' ];
+			$updated_address[ 'address_name' ]= $post_req[ $slug . '_address_name' ];
+			$updated_address[ 'first_name' ] = $post_req[ $slug . '_first_name' ];
+			$updated_address[ 'last_name' ]  = $post_req[ $slug . '_last_name' ];
+			$updated_address[ 'company' ]    = $post_req[ $slug . '_company' ];
+			$updated_address[ 'address_1' ]  = $post_req[ $slug . '_address_1' ];
+			$updated_address[ 'address_2' ]  = $post_req[ $slug . '_address_2' ];
+			$updated_address[ 'city' ]       = $post_req[ $slug . '_city' ];
+			$updated_address[ 'state' ]      = $post_req[ $slug . '_state' ];
+			$updated_address[ 'postcode' ]   = $post_req[ $slug . '_postcode' ];
+			$updated_address[ 'country' ]    = $post_req[ $slug . '_country' ];
+			$updated_address[ 'email' ]      = $post_req[ $slug . '_email' ];
+			$updated_address[ 'phone' ]      = $post_req[ $slug . '_phone' ];
 
 			return $updated_address;
 		}

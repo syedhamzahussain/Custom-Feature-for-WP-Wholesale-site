@@ -33,6 +33,21 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 		public function admin_assets() {
 			wp_enqueue_style( 'cfws-admin-style', CFWS_ASSETS_DIR_URL . '/css/admin/admin.css' );
 			wp_enqueue_script( 'cfws-admin-script', CFWS_ASSETS_DIR_URL . '/js/admin/admin.js', array( 'jquery' ), rand() );
+
+			global $post;
+			$is_product = false;
+
+			if ('product' == get_post_type()) {
+				$is_product = true;
+			}
+			wp_localize_script(
+				'cfws-admin-script',
+				'cfws_obj',
+				array(
+					'is_product'  => $is_product,
+					
+				)
+			);
 		}
 
 		public function front_assets() {

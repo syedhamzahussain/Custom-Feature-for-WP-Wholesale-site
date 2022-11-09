@@ -36,28 +36,36 @@ if ( ! class_exists( 'CFWS_ACCOUNT_ORDERS' ) ) {
          * @return void
          */
         function before_account_orders_action( $has_orders ){
-            $query = new WC_Order_Query( array(
+
+            $orders = wc_get_orders( array(
                 'limit' => -1,
-                'return' => 'total',
+                'customer_id' => get_current_user_id(),
             ) );
+
             $total_amount = 0;
-            $orders = $query->get_orders();
             
-            if(count($orders) > 0){
+            
+            if( $orders ){
                 foreach($orders as $order){
-                    $total_amount += $order['total'];
+                    $total_amount += $order->get_total();
                 }
             }
             
 
             $args_quotes = array(
-                'status' => array('wc-pending-review'),
+                'status' => array('pending review'),
+                'limit' => -1,
+                'customer_id' => get_current_user_id(),
             );
             $args_pending = array(
                 'status' => array('wc-pending'),
+                'customer_id' => get_current_user_id(),
+                'limit' => -1,
             );
             $args_completed = array(
                 'status' => array('wc-completed'),
+                'customer_id' => get_current_user_id(),
+                'limit' => -1,
             );
             $total_quotes = count(wc_get_orders( $args_quotes ));
             $total_pending = count(wc_get_orders( $args_pending ));

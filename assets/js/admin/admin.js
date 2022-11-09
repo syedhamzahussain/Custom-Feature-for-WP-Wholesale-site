@@ -1,11 +1,13 @@
 var $ = jQuery;
 jQuery(document).ready(function ($) {
-  $("#post").submit(function (e) {
-    if ($('input[name="cfws_min_unit[]"]').length == 0) {
-      e.preventDefault();
-      alert("Please add atleast one package to continue");
-    }
-  });
+  if (cfws_obj.is_product) {
+    $("#post").submit(function (e) {
+      if ($('input[name="cfws_min_unit[]"]').length == 0) {
+        e.preventDefault();
+        alert("Please add atleast one package to continue");
+      }
+    });
+  }
 });
 
 function editPackage(obj) {
