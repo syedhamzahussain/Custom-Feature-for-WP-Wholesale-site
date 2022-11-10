@@ -33,8 +33,15 @@ function fillFields(min, max, type, discount) {
 }
 
 function validateFields(min, max, type, discount) {
-  if (min == "" || max == "" || discount == "") {
-    alert("Please fill all fields");
+  if (
+    min == "" ||
+    max == "" ||
+    discount == "" ||
+    min <= 0 ||
+    max <= 0 ||
+    discount < 0
+  ) {
+    alert("Please fill all fields with valid input");
     return false;
   }
   if (type === "null") {
