@@ -61,7 +61,7 @@ function getFieldsValue() {
 
 function createRow(tr, min, max, type, discount) {
   tr +=
-    "<input type='hidden' name='cfws_min_unit[]' value='" +
+    "<input type='hidden' min='1' name='cfws_min_unit[]' value='" +
     min +
     "'/><input type='hidden' name='cfws_max_unit[]' value='" +
     max +
