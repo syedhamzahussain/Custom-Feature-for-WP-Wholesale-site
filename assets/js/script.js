@@ -11,7 +11,7 @@ jQuery(document).ready(function ($) {
         product_id: cfws_obj.product_id,
       },
       success: function (result) {
-        price = parseInt(result.price);
+        price = parseFloat(result.price);
         $("#cfws_product_quantity").html(qty);
         $("#cfws_product_unit_price").html(price);
         $("#cfws_product_total_price").html((qty * price).toFixed(2));

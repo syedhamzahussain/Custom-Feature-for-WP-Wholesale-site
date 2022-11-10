@@ -22,11 +22,12 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 
 			add_shortcode( 'cfws_single_product', array( $this, 'single_product_shortcode_callback' ) );
 			add_action( 'wp', array( $this, 'front_hooks' ) );
+			
 			add_action( 'wp_ajax_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
 			add_action( 'wp_ajax_nopriv_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
 			
-			add_action( 'wp_ajax_cfws_product_add_to_cart_ajax',array($this, 'cfws_product_add_to_cart_ajax' ));
-			add_action( 'wp_ajax_nopriv_cfws_product_add_to_cart_ajax',array($this, 'cfws_product_add_to_cart_ajax' ));
+			add_action( 'wp_ajax_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
+			add_action( 'wp_ajax_nopriv_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
 		}
 		
 		public function front_hooks() {
@@ -46,26 +47,6 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 				$template = CFWS_TEMP_DIR . '/woocommerce/cart/cart.php';
 			}
 			return $template;
-		}
-
-		public function cfws_product_add_to_cart_ajax() {
-			ob_start();
-			$product_id   = isset( $_REQUEST['product_id'] ) ? $_REQUEST['product_id'] : 0;
-			$quantity   = isset( $_REQUEST['quantity'] ) ? $_REQUEST['quantity'] : 0;
-			$passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
-			$product_status    = get_post_status( $product_id );
-			if ( $passed_validation && WC()->cart->add_to_cart( $product_id, $quantity ) && 'publish' === $product_status ) {
-				do_action( 'woocommerce_ajax_added_to_cart', $product_id );
-				wc_add_to_cart_message( $product_id );
-			} else {
-				// If there was an error adding to the cart, redirect to the product page to show any errors
-				$data = array(
-					'error'       => true,
-					'product_url' => apply_filters( 'woocommerce_cart_redirect_after_error', get_permalink( $product_id ), $product_id )
-				);
-				wp_send_json( $data );
-			}
-			die();
 		}
 
 		public function show_packages_info() {
