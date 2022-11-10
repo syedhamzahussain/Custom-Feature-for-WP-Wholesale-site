@@ -15,7 +15,7 @@
             <p>
                 <span>
                     <label for="cfws_min_qty">Min Unit Qty</label>
-                    <input type="number" name="" id="cfws_min_qty" min="0">
+                    <input type="number" name="" id="cfws_min_qty" min="1">
                 </span>
                 
                 <span>

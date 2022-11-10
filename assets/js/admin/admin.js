@@ -33,8 +33,15 @@ function fillFields(min, max, type, discount) {
 }
 
 function validateFields(min, max, type, discount) {
-  if (min == "" || max == "" || discount == "") {
-    alert("Please fill all fields");
+  if (
+    min == "" ||
+    max == "" ||
+    discount == "" ||
+    min <= 0 ||
+    max <= 0 ||
+    discount < 0
+  ) {
+    alert("Please fill all fields with valid input");
     return false;
   }
   if (type === "null") {
@@ -54,7 +61,7 @@ function getFieldsValue() {
 
 function createRow(tr, min, max, type, discount) {
   tr +=
-    "<input type='hidden' name='cfws_min_unit[]' value='" +
+    "<input type='hidden' min='1' name='cfws_min_unit[]' value='" +
     min +
     "'/><input type='hidden' name='cfws_max_unit[]' value='" +
     max +

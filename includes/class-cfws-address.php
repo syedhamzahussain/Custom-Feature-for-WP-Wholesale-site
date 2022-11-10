@@ -24,9 +24,14 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 			add_filter( 'woocommerce_locate_template', array( $this, 'intercept_wc_template' ), 10, 3 );
 			add_action( 'wp_ajax_cfws_set_default_address_ajax', 'cfws_set_default_address_ajax' );
 			add_action( 'wp_ajax_cfws_delete_address_ajax', 'cfws_delete_address_ajax' );
-
+			add_filter( 'woocommerce_admin_report_data', array( $this,'custom_admin_report_data'), 10, 1 );
 		}
 
+		function custom_admin_report_data( $report_data ){
+			$report_data->revenue = "0.00";
+			var_dump($report_data); die();
+			return $report_data;
+		}
 		function intercept_wc_template( $template, $template_name, $template_path ) {
 
 			if ( 'my-address.php' === basename( $template ) ) {
