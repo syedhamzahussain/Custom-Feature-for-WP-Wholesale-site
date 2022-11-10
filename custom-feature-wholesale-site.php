@@ -35,9 +35,4 @@ if ( ! defined( 'CFWS_ASSETS_DIR_URL' ) ) {
 }
 
 require_once CFWS_PLUGIN_DIR . '/helpers.php';
-require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-admin-report.php';
-require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-admin-product.php';
-require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-address.php';
-require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-orders.php';
 require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-loader.php';
-require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-single-product.php';

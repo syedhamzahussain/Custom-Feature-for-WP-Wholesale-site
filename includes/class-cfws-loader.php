@@ -23,7 +23,21 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_assets' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_assets' ) );
 			add_action( 'plugin_loaded', array( $this, 'load_plugin_languages' ) );
+			$this->includes();
 
+
+
+		}
+
+		public function includes(){
+			if(is_admin()){
+				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-admin-product.php';
+				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-admin-report.php';
+			}else{
+				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-address.php';
+				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-orders.php';
+				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-single-product.php';
+			}
 		}
 
          public function load_plugin_languages(){
