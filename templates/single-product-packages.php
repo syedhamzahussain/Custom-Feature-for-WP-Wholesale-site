@@ -12,7 +12,13 @@ if(empty($unitQunatity )){
 if(isset($packages ) &&  $packages != ''){
 	$maxValue     = $packages[ count( $packages ) - 1 ]['max'];
 	$price        = $product->get_price();
-	$profit       = $price - $costPerItem;
+	if(!empty($costPerItem)){
+
+		$profit       = $price - $costPerItem;
+	}
+	else{
+		$profit = 0;
+	}
 }
 else{
 
