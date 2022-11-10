@@ -95,8 +95,7 @@ else{
 		</div>
 		<br>
 		<div>
-			<!-- <button type="submit" name="add-to-cart"  value="<?php //echo $post->ID ?>" class="single_add_to_cart_button button alt add_to_cart_button">Add to cart</button> -->
-			<?php echo do_shortcode( '[add_to_cart id=' . $post->ID . ' style=”border:none; padding: 10px;”  show_price=false]' ); ?>
+			<button type="button" id="cfws_add_to_cart" name="add-to-cart"  class="button">Add to cart</button>
 		</div>
 		<div><input type="hidden" name="cfws_get_product_price" value="<?php echo $product->get_price(); ?>"></div>
 	<!-- </form> -->

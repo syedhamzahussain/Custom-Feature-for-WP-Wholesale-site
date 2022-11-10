@@ -44,12 +44,30 @@ jQuery(document).ready(function ($) {
     $("#cfws_product_unit_price").html(offered_price);
     $("#cfws_product_total_price").html(qty * offered_price);
   });
+  $("#cfws_add_to_cart").click(function () {
+    var qty = $(".qty").val();
+    jQuery.ajax({
+      url: cfws_obj.ajaxurl,
+      type: "get",
+      dataType : 'json',
+      data: {
+        action: "cfws_product_add_to_cart_ajax",
+        qty: qty,
+        product_id: cfws_obj.product_id,
+      },
+      success: function (result) {
+          // console.log(result);
+        // window.href = result;
+      },
+    });
+  });
   $("#cfws_place_order").click(function () {
     var billing_address = $("input[name='billing_address']:checked").val();
     var shippping_address = $("input[name='shippping_address']:checked").val();
     jQuery.ajax({
       url: cfws_obj.ajaxurl,
       type: "get",
+      dataType : 'json', 
       data: {
         action: "cfws_place_order",
         billing_address: billing_address,
@@ -57,7 +75,7 @@ jQuery(document).ready(function ($) {
       },
       success: function (result) {
           console.log(result);
-
+        // window.href = result;
       },
     });
   });
