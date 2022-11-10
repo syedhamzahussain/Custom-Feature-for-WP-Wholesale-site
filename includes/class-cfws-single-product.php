@@ -24,6 +24,7 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			add_action( 'wp', array( $this, 'front_hooks' ) );
 			add_action( 'wp_ajax_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
 			add_action( 'wp_ajax_nopriv_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
+			add_filter( 'wc_order_statuses', array($this, 'cfws_add_status_to_list' ));
 			
 
 		}
@@ -44,9 +45,21 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			}
 			return $template;
 		}
-		public function show_packages_info() {
+		// Add registered status to list of WC Order statuses
 
-			do_shortcode( '[cfws_single_product]' );
+		public function cfws_add_status_to_list( $order_statuses ) {
+
+			$order_statuses[ 'pending-review' ] = 'Pending Review';
+			$order_statuses[ 'pending-payment' ] = 'Pending payment';
+			return $order_statuses;
+
+		}
+		public function show_packages_info() {
+			global $product;
+			if($product->get_type() == 'simple'){
+
+				do_shortcode( '[cfws_single_product]' );
+			}
 		}
 		public function cfws_change_cart_page() {
 

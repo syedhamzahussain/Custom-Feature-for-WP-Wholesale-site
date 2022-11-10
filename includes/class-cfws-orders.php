@@ -21,6 +21,7 @@ if ( ! class_exists( 'CFWS_ACCOUNT_ORDERS' ) ) {
 		public function __construct() {
 
 			add_action( 'woocommerce_before_account_orders', array($this,'before_account_orders_action') );
+			add_action( 'woocommerce_before_account_orders', array($this,'before_account_orders_action') );
 
 
 
