@@ -29,6 +29,11 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 		}
 
 		public function front_hooks() {
+
+			// remove add to cart button.
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+			// remove price.
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 			add_action( 'woocommerce_product_meta_start', array( $this, 'show_packages_info' ), 10 );
 			add_filter( 'woocommerce_locate_template', array( $this, 'cfws_cart_page_override' ), 10, 3 );
 		}
@@ -41,10 +46,6 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 		}
 		public function show_packages_info() {
 
-			// remove add to cart button.
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
-			// remove price.
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 			do_shortcode( '[cfws_single_product]' );
 		}
 		public function cfws_change_cart_page() {

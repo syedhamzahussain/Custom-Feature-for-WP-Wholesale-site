@@ -40,7 +40,7 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="billing_address" id="billing_address_<?= $address['id'] ?>" >
 							<?php } ?>
 							<label class="form-check-label" for="billing_address_<?= $address['id'] ?>">
-								<?= $address['billing_address_name'] ?>
+								<?= $address['address_name'] ?>
 							</label>
 						</div>
 					<?php endforeach ?>
@@ -68,7 +68,7 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" >
 							<?php } ?>
 							<label class="form-check-label" for="shipping_address_<?= $address['id'] ?>">
-								<?= $address['billing_address_name'] ?>
+								<?= $address['address_name'] ?>
 							</label>
 						</div>
 					<?php endforeach ?>
