@@ -91,7 +91,7 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 				<!-- </div> -->
 				<!-- <div class="card-footer"> -->
 					<div class="form-row place-order">
-						<button type="button" class="cfws_place_order" id="place_order">Place order</button>
+						<button type="button" class="cfws_place_order" id="cfws_place_order">Place order</button>
 					</div>
 				</div>
 			</div>

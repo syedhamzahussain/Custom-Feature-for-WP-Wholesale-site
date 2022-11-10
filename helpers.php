@@ -3,6 +3,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function cfws_place_order( ) {
+	
+	$user_id = get_current_user_id();
+	// get billing and shipping addresses
+	$billing_address = $_REQUEST['billing_address'];
+	$shippping_address = $_REQUEST['shippping_address'];
+	// set default billing and shipping addresses
+	cfws_set_default_address('billing',$_REQUEST['billing_address']);
+	cfws_set_default_address('shippping',$_REQUEST['shippping_address']);
+	
+	$cart = WC()->cart;
+	$checkout = WC()->checkout();
+	$order_id = $checkout->create_order(array());
+	$order = wc_get_order($order_id);
+
+	update_post_meta($order_id, '_customer_user', get_current_user_id());
+	$order->set_payment_method( 'bacs' );
+	// $order->payment_complete(); 	
+	$default_billing_address = get_user_meta( $user_id, "billing_default_address", true );
+	$default_shipping_address = get_user_meta( $user_id, "shipping_default_address", true );
+	$order->set_address( $default_billing_address, 'billing' );
+	$order->set_address( $default_shipping_address, 'shipping' );
+	$order->set_status( 'wc-pending-review');
+	$order->calculate_totals();
+	$order->save();
+	$cart->empty_cart();
+	// add payment method
+	
+
+}
+
 function cfws_get_price_by_quantity( $quantity, $product_id ) {
 
 	$product      = wc_get_product( $product_id );
@@ -64,6 +95,23 @@ function cfws_get_price_by_quantity_ajax() {
 	wp_die();
 }
 
+function cfws_set_default_address($slug,$id){
+	$user_id = get_current_user_id();
+
+	$address = get_user_meta( $user_id, "billing_address" );
+
+	$index = 0;
+	foreach ( $address[0] as $key => $b ) {
+		if ( $b['id'] == $id ) {
+	
+			update_user_meta( $user_id, $slug.'_default_address', $b );
+
+		}
+		$index++;
+	}
+	return;
+	
+}
 function cfws_set_default_address_ajax(){
 	$slug = $_REQUEST['slug'];
 	$id = $_REQUEST['id'];
