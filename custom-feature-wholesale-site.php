@@ -36,3 +36,23 @@ if ( ! defined( 'CFWS_ASSETS_DIR_URL' ) ) {
 
 require_once CFWS_PLUGIN_DIR . '/helpers.php';
 require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-loader.php';
+
+add_action( 'admin_init', 'cfws_pending_review_order_status');
+
+function cfws_pending_review_order_status() {
+            register_post_status( 'wc-pending-review', array(
+                'label'                     => 'Pending Review',
+                'public'                    => true,
+                'show_in_admin_status_list' => true,
+                'show_in_admin_all_list'    => true,
+                'exclude_from_search'       => false,
+                'label_count'               => _n_noop( 'Pending Review <span class="count">(%s)</span>', 'Pending Review <span class="count">(%s)</span>' )
+            ) );
+
+            add_filter( 'wc_order_statuses', 'cfws_add_status_to_list' );
+}
+
+function cfws_add_status_to_list( $order_statuses ) {
+    $order_statuses[ 'wc-pending-review' ] = 'Pending Review';
+    return $order_statuses;
+}

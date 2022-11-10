@@ -54,7 +54,7 @@ if ( ! class_exists( 'CFWS_ACCOUNT_ORDERS' ) ) {
             
 
             $args_quotes = array(
-                'status' => array('pending review'),
+                'status' => array('wc-pending-review'),
                 'limit' => -1,
                 'customer_id' => get_current_user_id(),
             );

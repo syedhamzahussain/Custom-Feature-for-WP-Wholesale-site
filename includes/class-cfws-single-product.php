@@ -26,8 +26,6 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			add_action( 'wp_ajax_nopriv_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
 			add_action( 'wp_ajax_cfws_place_order', 'cfws_place_order' );
 			add_action( 'wp_ajax_nopriv_cfws_place_order', 'cfws_place_order' );
-			// add_filter( 'wc_order_statuses', array($this, 'cfws_add_status_to_list' ));
-			
 
 			add_action( 'init', array( $this, 'cfws_pending_review_order_status' ));
 		}
@@ -42,8 +40,6 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			add_action( 'woocommerce_product_meta_start', array( $this, 'show_packages_info' ), 10 );
 			add_filter( 'woocommerce_locate_template', array( $this, 'cfws_cart_page_override' ), 10, 3 );
 
-			add_action( 'init', array( $this, 'cfws_pending_review_order_status' ));
-
 		}
 		public function cfws_cart_page_override( $template, $template_name, $template_path ) {
  
@@ -52,28 +48,6 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			}
 			return $template;
 		}
-		// Add registered status to list of WC Order statuses
-
-		// public function cfws_add_status_to_list( $order_statuses ) {
-
-
-
-
-		// 	$order_statuses[ 'wc-pending-review' ] = 'Pending Review';
-		// 	return $order_statuses;
-
-		// }
-		public function cfws_pending_review_order_status() {
-			register_post_status( 'wc-pending-review', array(
-				'label'                     => 'Pending Review',
-				'public'                    => true,
-				'show_in_admin_status_list' => true,
-				'show_in_admin_all_list'    => true,
-				'exclude_from_search'       => false,
-				'label_count'               => _n_noop( 'Pending Review <span class="count">(%s)</span>', 'Pending Review <span class="count">(%s)</span>' )
-			) );
-		}
-
 
 		public function show_packages_info() {
 			global $product;
@@ -95,7 +69,7 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			global $woocommerce;
 
 			$offered_price = filter_input( INPUT_POST, 'offered_price' );
-			// print_r($offered_price); exit;
+
 			$cart_item_data['offered_price'] = $offered_price;
 		
 			return $cart_item_data;
