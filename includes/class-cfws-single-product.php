@@ -26,8 +26,6 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			add_action( 'wp_ajax_nopriv_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
 			add_action( 'wp_ajax_cfws_place_order', 'cfws_place_order' );
 			add_action( 'wp_ajax_nopriv_cfws_place_order', 'cfws_place_order' );
-
-			add_action( 'init', array( $this, 'cfws_pending_review_order_status' ));
 		}
 
 		public function front_hooks() {
