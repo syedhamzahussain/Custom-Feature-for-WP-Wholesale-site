@@ -2,17 +2,30 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+function cfws_add_item_data($cart_item_data, $product_id, $price) {
 
+    global $woocommerce;
+    $new_value = array();
+    $new_value['_custom_options'] = $price;
+
+    if(empty($cart_item_data)) {
+        return $new_value;
+    } else {
+        return array_merge($cart_item_data, $new_value);
+    }
+}
 function cfws_add_to_cart_ajax() {
 	ob_start();
 	$product_id   = isset( $_REQUEST['product_id'] ) ? $_REQUEST['product_id'] : 0;
 	$quantity   = isset( $_REQUEST['qty'] ) ? $_REQUEST['qty'] : 1;
+	$price   = isset( $_REQUEST['price'] ) ? $_REQUEST['price'] : 0;
+	$offered_price   = isset( $_REQUEST['offered_price'] ) ? $_REQUEST['offered_price'] : false;
 	
 	$passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
 	$product_status    = get_post_status( $product_id );
 	if ( $passed_validation && WC()->cart->add_to_cart( $product_id, $quantity ) && 'publish' === $product_status ) {
 		do_action( 'woocommerce_ajax_added_to_cart', $product_id );
-		wc_add_to_cart_message( $product_id );
+		// cfws_add_item_data(WC()->cart(), $product_id, $price);
 		return;
 		
 	} else {

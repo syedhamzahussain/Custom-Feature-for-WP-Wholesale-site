@@ -46,6 +46,16 @@ jQuery(document).ready(function ($) {
   });
   $("#cfws_add_to_cart").click(function () {
     var qty = $(".qty").val();
+    var price = $("#cfws_product_unit_price").html();
+    var offered_price = $("#offered_price").val();
+    console.log(offered_price);
+    console.log(price);
+    if(offered_price != ''){
+      offered_price = true;
+    }
+    else{
+      offered_price = false;
+    }
     jQuery.ajax({
       url: cfws_obj.ajaxurl,
       type: "get",
@@ -53,10 +63,11 @@ jQuery(document).ready(function ($) {
       data: {
         action: "cfws_add_to_cart_ajax",
         qty: qty,
+        price: price,
         product_id: cfws_obj.product_id,
+        offered_price: offered_price,
       },
       success: function (result) {
-         
       },
     }).done( function (response) {
       

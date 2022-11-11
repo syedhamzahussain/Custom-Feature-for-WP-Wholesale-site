@@ -28,6 +28,9 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			
 			add_action( 'wp_ajax_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
 			add_action( 'wp_ajax_nopriv_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
+			
+			add_filter('woocommerce_add_cart_item_data','cfws_add_item_data',1,10);
+			
 		}
 		
 		public function front_hooks() {
