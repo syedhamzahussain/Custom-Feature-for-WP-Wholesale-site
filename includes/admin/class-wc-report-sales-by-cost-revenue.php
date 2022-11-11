@@ -65,10 +65,10 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 				if($completed_orders){
 					foreach ($completed_orders as $key => $order) {
 						foreach($order->get_items() as $item){
-							$cost = get_post_meta($item['product_id'],'cfws_unit_cost');
+							$cost = get_post_meta($item['product_id'],'cfws_unit_cost',true) ? get_post_meta($item['product_id'],'cfws_unit_cost',true) : 0;
 							$product = wc_get_product( $item['product_id'] );
-							// var_dump($cost); die();
-							$total += (intval($product->get_price()) - intval($cost[0]))*$item['quantity'];
+							
+							$total += ($product->get_price() - floatval( $cost ) ) *$item['quantity'];
 						}
 						
 					}
@@ -76,10 +76,11 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			}else{
 				$order = wc_get_order( $order_id );
 				foreach($order->get_items() as $item){
-					$cost = get_post_meta($item['product_id'],'cfws_unit_cost');
+					$cost = get_post_meta($item['product_id'],'cfws_unit_cost',true) ? get_post_meta($item['product_id'],'cfws_unit_cost',true) : 0;
+					
 					$product = wc_get_product( $item['product_id'] );
-					// var_dump($cost); die();
-					$total += (intval($product->get_price()) - intval($cost[0]))*$item['quantity'];
+					
+					$total += ( $product->get_price() - floatval($cost) ) * $item['quantity'];
 				}
 			}
             
@@ -101,8 +102,8 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 					foreach ($completed_orders as $key => $order) {
 
 						foreach ($order->get_items() as $item) {
-							$cost = get_post_meta($item['product_id'],'cfws_unit_cost');
-							$total +=  intval($cost[0])*$item['quantity'];
+							$cost = get_post_meta($item['product_id'],'cfws_unit_cost',true) ? get_post_meta($item['product_id'],'cfws_unit_cost',true) : 0;
+							$total +=  floatval( $cost ) * $item['quantity'];
 						}
 						
 						
@@ -111,8 +112,8 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			}else{
 				$order = wc_get_order( $order_id );
 				foreach ($order->get_items() as $item) {
-					$cost = get_post_meta($item['product_id'],'cfws_unit_cost');
-					$total +=  intval($cost[0])*$item['quantity'];
+					$cost = get_post_meta($item['product_id'],'cfws_unit_cost',true) ? get_post_meta($item['product_id'],'cfws_unit_cost',true) : 0;
+					$total +=  floatval($cost) * $item['quantity'];
 				}
 			}
            
@@ -190,14 +191,14 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 
 			if ( is_array( $orders ) ) {
 				foreach ( $orders as $order ) {
-
+					// $formated_date = $order->get_date_completed();
 					switch ( $this->chart_groupby ) {
 						case 'day':
-							$time = strtotime( current_time( 'Ymd', strtotime( $order->get_date_completed() ) ) ) * 1000;
+							$time = date( strtotime( $order->post_date ) );
 							break;
 						case 'month':
 						default:
-							$time = strtotime( current_time( 'Ym', strtotime( $order->get_date_completed() ) ) . '01' ) * 1000;
+							$time = date( strtotime( $order->post_date ) );
 							break;
 					}
 
