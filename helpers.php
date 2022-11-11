@@ -4,15 +4,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function cfws_add_to_cart_ajax() {
-	// ob_start();
+	ob_start();
 	$product_id   = isset( $_REQUEST['product_id'] ) ? $_REQUEST['product_id'] : 0;
 	$quantity   = isset( $_REQUEST['qty'] ) ? $_REQUEST['qty'] : 1;
-	wp_send_json($product_id); die();
+	
 	$passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
 	$product_status    = get_post_status( $product_id );
 	if ( $passed_validation && WC()->cart->add_to_cart( $product_id, $quantity ) && 'publish' === $product_status ) {
 		do_action( 'woocommerce_ajax_added_to_cart', $product_id );
 		wc_add_to_cart_message( $product_id );
+		return;
+		
 	} else {
 		// If there was an error adding to the cart, redirect to the product page to show any errors
 		$data = array(
@@ -20,8 +22,9 @@ function cfws_add_to_cart_ajax() {
 			'product_url' => apply_filters( 'woocommerce_cart_redirect_after_error', get_permalink( $product_id ), $product_id )
 		);
 		wp_send_json( $data );
+		
 	}
-	die();
+	wp_die();
 }
 
 function cfws_get_price_by_quantity( $quantity, $product_id ) {

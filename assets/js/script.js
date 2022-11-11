@@ -51,14 +51,22 @@ jQuery(document).ready(function ($) {
       type: "get",
       dataType : 'json',
       data: {
-        action: "cfws_product_add_to_cart_ajax",
+        action: "cfws_add_to_cart_ajax",
         qty: qty,
         product_id: cfws_obj.product_id,
       },
       success: function (result) {
-          // console.log(result);
-        // window.href = result;
+         
       },
+    }).done( function (response) {
+      
+          if( response.error != 'undefined' && response.error ){
+            //some kind of error processing or just redirect to link
+            // might be a good idea to link to the single product page in case JS is disabled
+            return true;
+          } else {
+            window.location.href = cfws_obj.cart_page_url;
+          }
     });
   });
   $("#cfws_place_order").click(function () {

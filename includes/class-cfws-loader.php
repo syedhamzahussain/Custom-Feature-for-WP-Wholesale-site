@@ -92,6 +92,10 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 			);
 			global $post;
 			$product_id = isset( $post ) ? $post->ID : false;
+
+			$cart_page_id = wc_get_page_id( 'cart' );
+			$cart_page_url = $cart_page_id ? get_permalink( $cart_page_id ) : '';
+
 			wp_localize_script(
 				'cfws-front-script',
 				'cfws_obj',
@@ -99,6 +103,7 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 					'ajaxurl'    => admin_url( 'admin-ajax.php' ),
 					'is_logged'  => is_user_logged_in(),
 					'product_id' => $product_id,
+					'cart_page_url' => $cart_page_url,
 				)
 			);
 		}
