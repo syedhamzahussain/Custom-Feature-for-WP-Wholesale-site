@@ -78,32 +78,32 @@ if ( ! class_exists( 'CFWS_ACCOUNT_ORDERS' ) ) {
         }
         public function cfws_place_order( ) {
             
-        //     $user_id = get_current_user_id();
-        //     wp_send_json($user_id);
-        //     // get billing and shipping addresses
-        //     $billing_address = $_REQUEST['billing_address'];
-        //     $shippping_address = $_REQUEST['shippping_address'];
-        //     // set default billing and shipping addresses
-        //     cfws_set_default_address('billing',$_REQUEST['billing_address']);
-        //     cfws_set_default_address('shippping',$_REQUEST['shippping_address']);
+            $user_id = get_current_user_id();
+            // wp_send_json($user_id);
+            // get billing and shipping addresses
+            $billing_address = $_REQUEST['billing_address'];
+            $shippping_address = $_REQUEST['shippping_address'];
+            // set default billing and shipping addresses
+            cfws_set_default_address('billing',$_REQUEST['billing_address']);
+            cfws_set_default_address('shippping',$_REQUEST['shippping_address']);
             
-        //     $cart = WC()->cart;
-        //     $checkout = WC()->checkout();
-        //     $order_id = $checkout->create_order(array());
-        //     $order = wc_get_order($order_id);
-        // print_r($order); exit;
-        //     update_post_meta($order_id, '_customer_user', get_current_user_id());
-        //     $order->set_payment_method( 'bacs' );
-        //     // $order->payment_complete(); 	
-        //     $default_billing_address = get_user_meta( $user_id, "billing_default_address", true );
-        //     $default_shipping_address = get_user_meta( $user_id, "shipping_default_address", true );
-        //     $order->set_address( $default_billing_address, 'billing' );
-        //     $order->set_address( $default_shipping_address, 'shipping' );
-        //     $order->set_status( 'wc-pending-review');
-        //     $order->calculate_totals();
-        //     $order->save();
-        //     $cart->empty_cart();
-        //     return $order->get_checkout_order_received_url();
+            $cart = WC()->cart;
+            $checkout = WC()->checkout();
+            $order_id = $checkout->create_order(array());
+            $order = wc_get_order($order_id);
+        
+            update_post_meta($order_id, '_customer_user', get_current_user_id());
+            $order->set_payment_method( 'bacs' );
+            // $order->payment_complete(); 	
+            $default_billing_address = get_user_meta( $user_id, "billing_default_address", true );
+            $default_shipping_address = get_user_meta( $user_id, "shipping_default_address", true );
+            $order->set_address( $default_billing_address, 'billing' );
+            $order->set_address( $default_shipping_address, 'shipping' );
+            $order->set_status( 'wc-pending-review');
+            $order->calculate_totals();
+            $order->save();
+            $cart->empty_cart();
+            wp_send_json($order->get_checkout_order_received_url());
         }
         
 

@@ -75,7 +75,6 @@ jQuery(document).ready(function ($) {
     jQuery.ajax({
       url: cfws_obj.ajaxurl,
       type: "get",
-      dataType : 'json', 
       data: {
         action: "cfws_place_order",
         billing_address: billing_address,
@@ -85,6 +84,15 @@ jQuery(document).ready(function ($) {
           console.log(result);
         // window.href = result;
       },
+    }).done( function (response) {
+      
+          if( response.error != 'undefined' && response.error ){
+            //some kind of error processing or just redirect to link
+            // might be a good idea to link to the single product page in case JS is disabled
+            return true;
+          } else {
+            window.location.href = response;
+          }
     });
   });
 });

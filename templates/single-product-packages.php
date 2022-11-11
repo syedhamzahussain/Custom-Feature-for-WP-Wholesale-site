@@ -56,7 +56,7 @@ else{
 
 				<?php } ?>
 			<div class="cfws_div_1">More than <?php echo $maxValue; ?></div>
-			<div class="cfws_div_2">REQUEST QUOTATION</div>
+			<div class="cfws_div_2 cfws_font_bold">REQUEST QUOTATION</div>
 			<?php } ?>
 		</div>
 		<div>
