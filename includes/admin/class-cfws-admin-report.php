@@ -21,7 +21,7 @@ if ( ! class_exists( 'CFWS_ADMIN_REPORT' ) ) {
 		 */
 		public function __construct() {
 			add_filter( 'woocommerce_admin_reports', array( $this, 'filter_report_company' ), 10, 1 );
-			// add_filter( 'wc_admin_reports_path', array( $this, 'include_report_company_class' ), 10 );
+			add_filter( 'wc_admin_reports_path', array( $this, 'include_report_cost_revenue_class' ), 10 );
 		}
 
 		/**
@@ -54,12 +54,12 @@ if ( ! class_exists( 'CFWS_ADMIN_REPORT' ) ) {
 		 * @param string $path include path.
 		 * @return string
 		 */
-		// public function include_report_company_class( $path ) {
-		// 	if ( 'reports/class-wc-report-sales-by-company.php' == $path ) {
-		// 		$path = WCB2BRP_ABSPATH . '/includes/admin/class-wc-report-sales-by-company.php';
-		// 	}
-		// 	return $path;
-		// }
+		public function include_report_cost_revenue_class( $path ) {
+			if ( 'reports/class-wc-report-sales-by-cost-revenue.php' == $path ) {
+				$path = CFWS_PLUGIN_DIR . '/includes/admin/class-wc-report-sales-by-cost-revenue.php';
+			}
+			return $path;
+		}
 
 	}
 }

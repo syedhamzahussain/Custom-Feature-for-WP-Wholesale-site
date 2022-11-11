@@ -22,55 +22,105 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 		 * @var array
 		 */
 		public $chart_colours = array();
-
+		
 		/**
-		 * Categories ids.
+		 * Item revenue.
 		 *
 		 * @var array
 		 */
-		public $show_companies = array();
+		private $revenue_sales = array();
 
 		/**
-		 * Item sales.
+		 * Item revenue and times.
 		 *
 		 * @var array
 		 */
-		private $item_sales = array();
+		private $revenue_sales_and_times = array();
 
 		/**
-		 * Item sales and times.
+		 * Item revenue.
 		 *
 		 * @var array
 		 */
-		private $item_sales_and_times = array();
-
+		private $cost_sales = array();
 
 		/**
-		 * Get all orders of company.
+		 * Item revenue and times.
 		 *
-		 * @param  int $company Company ID.
-		 * @return object
+		 * @var array
 		 */
-		public function get_company_orders( $company ) {
-			$customers = get_users(
-				array(
-					'role'       => 'customer',
-					'meta_key'   => 'wcb2brp_company',
-					'meta_value' => $company,
-				)
-			);
+		private $cost_sales_and_times = array();
 
-			if ( $customers ) {
-				foreach ( $customers as $customer ) {
-					$ids[] = $customer->ID;
+		
+		public function get_revenue_total($order_id = null){
+			$args_completed = array(
+                'status' => array('wc-completed'),
+                'limit' => -1,
+            );
+			$total        	  = 0;
+			if($order_id == null){
+				$completed_orders = wc_get_orders( $args_completed );
+			
+			
+				if($completed_orders){
+					foreach ($completed_orders as $key => $order) {
+						foreach($order->get_items() as $item){
+							$cost = get_post_meta($item['product_id'],'cfws_unit_cost');
+							$product = wc_get_product( $item['product_id'] );
+							// var_dump($cost); die();
+							$total += (intval($product->get_price()) - intval($cost[0]))*$item['quantity'];
+						}
+						
+					}
 				}
-				$query = new WC_Order_Query();
-				$query->set( 'customer_id', $ids );
-				return $query->get_orders();
+			}else{
+				$order = wc_get_order( $order_id );
+				foreach($order->get_items() as $item){
+					$cost = get_post_meta($item['product_id'],'cfws_unit_cost');
+					$product = wc_get_product( $item['product_id'] );
+					// var_dump($cost); die();
+					$total += (intval($product->get_price()) - intval($cost[0]))*$item['quantity'];
+				}
 			}
-			return false;
+            
+			// var_dump($total); die();
+			return $total;
 		}
 
+		public function get_cost_total($order_id = null){
+			$args_completed = array(
+                'status' => array('wc-completed'),
+                'limit' => -1,
+            );
+			$total        	  = 0;
+			if($order_id == null){
+				$completed_orders = wc_get_orders( $args_completed );
+				
+				// var_dump($completed_orders); die();
+				if($completed_orders){
+					foreach ($completed_orders as $key => $order) {
+
+						foreach ($order->get_items() as $item) {
+							$cost = get_post_meta($item['product_id'],'cfws_unit_cost');
+							$total +=  intval($cost[0])*$item['quantity'];
+						}
+						
+						
+					}
+				}
+			}else{
+				$order = wc_get_order( $order_id );
+				foreach ($order->get_items() as $item) {
+					$cost = get_post_meta($item['product_id'],'cfws_unit_cost');
+					$total +=  intval($cost[0])*$item['quantity'];
+				}
+			}
+           
+			
+			
+			return $total;
+		}
+		
 		/**
 		 * Get the legend for the main chart sidebar.
 		 *
@@ -78,34 +128,30 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 		 */
 		public function get_chart_legend() {
 
-			if ( empty( $this->show_companies ) ) {
-				return array();
-			}
 
 			$legend = array();
-			$index  = 0;
+			
 
-			foreach ( $this->show_companies as $company ) {
-				$company_data = get_post( $company );
-				$total        = 0;
-				$orders       = $this->get_company_orders( $company );
-				if ( $orders ) {
-					foreach ( $orders as $order ) {
-						if ( isset( $this->item_sales[ $order->id ] ) ) {
-							$total += $this->item_sales[ $order->id ];
-						}
-					}
-				}
+			
+			
+			$revenue = $this->get_revenue_total();
+			$cost = $this->get_cost_total();
 
-				$legend[] = array(
-					/* translators: 1: total items sold 2: category name */
-					'title'            => sprintf( __( '%1$s sales in %2$s', 'wcb2brp' ), '<strong>' . wc_price( $total ) . '</strong>', $company_data->post_title ),
-					'color'            => isset( $this->chart_colours[ $index ] ) ? $this->chart_colours[ $index ] : $this->chart_colours[0],
-					'highlight_series' => $index,
-				);
+			$legend[] = array(
+				/* translators: 1: total Revenue  */
+				'title'            => sprintf( __( '%1$s %2$s', 'cfws' ), '<strong>' . wc_price( $revenue ) . '</strong>', "Total revenue of completed orders" ),
+				'color'            => $this->chart_colours[0],
+				'highlight_series' => 0,
+			);
 
-				$index++;
-			}
+			$legend[] = array(
+				/* translators: 1: total cost  */
+				'title'            => sprintf( __( '%1$s %2$s', 'cfws' ), '<strong>' . wc_price( $cost ) . '</strong>', "Total cost of completed orders" ),
+				'color'            => $this->chart_colours[1],
+				'highlight_series' => 1,
+			);
+
+			
 
 			return $legend;
 		}
@@ -116,13 +162,13 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 		public function output_report() {
 
 			$ranges = array(
-				'year'       => __( 'Year', 'wcb2brp' ),
-				'last_month' => __( 'Last month', 'wcb2brp' ),
-				'month'      => __( 'This month', 'wcb2brp' ),
-				'7day'       => __( 'Last 7 days', 'wcb2brp' ),
+				'year'       => __( 'Year', 'cfws' ),
+				'last_month' => __( 'Last month', 'cfws' ),
+				'month'      => __( 'This month', 'cfws' ),
+				'7day'       => __( 'Last 7 days', 'cfws' ),
 			);
 
-			$this->chart_colours = array( '#3498db', '#34495e', '#1abc9c', '#2ecc71', '#f1c40f', '#e67e22', '#e74c3c', '#2980b9', '#8e44ad', '#2c3e50', '#16a085', '#27ae60', '#f39c12', '#d35400', '#c0392b' );
+			$this->chart_colours = array( '#3498db', '#34495e' );
 
 			$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( wp_unslash( $_GET['range'] ) ) : '7day';
 
@@ -134,150 +180,68 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			$this->calculate_current_range( $current_range );
 
 			// Get item sales data.
-			if ( ! empty( $this->show_companies ) ) {
-				$orders = $this->get_order_report_data(
-					array(
-						'data'         => array(
-							'ID'           => array(
-								'type'     => 'post_data',
-								'function' => '',
-								'name'     => 'ID',
-							),
-							'_order_total' => array(
-								'type'     => 'meta',
-								'function' => 'SUM',
-								'name'     => 'total_sales',
-							),
-							'post_date'    => array(
-								'type'     => 'post_data',
-								'function' => '',
-								'name'     => 'post_date',
-							),
-						),
-						'group_by'     => 'post_date',
-						'query_type'   => 'get_results',
-						'filter_range' => true,
-					)
-				);
+			
+			$args_completed = array(
+                'status' => array('wc-completed'),
+                'limit' => -1,
+            );
+            $orders = wc_get_orders( $args_completed );
+			
 
-				$this->item_sales           = array();
-				$this->item_sales_and_times = array();
+			if ( is_array( $orders ) ) {
+				foreach ( $orders as $order ) {
 
-				if ( is_array( $orders ) ) {
-					foreach ( $orders as $order ) {
-
-						switch ( $this->chart_groupby ) {
-							case 'day':
-								$time = strtotime( current_time( 'Ymd', strtotime( $order->post_date ) ) ) * 1000;
-								break;
-							case 'month':
-							default:
-								$time = strtotime( current_time( 'Ym', strtotime( $order->post_date ) ) . '01' ) * 1000;
-								break;
-						}
-
-						$this->item_sales_and_times[ $time ][ $order->ID ] = isset( $this->item_sales_and_times[ $time ][ $order->ID ] ) ? $this->item_sales_and_times[ $time ][ $order->ID ] + $order->total_sales : $order->total_sales;
-
-						$this->item_sales[ $order->ID ] = isset( $this->item_sales[ $order->ID ] ) ? $this->item_sales[ $order->ID ] + $order->total_sales : $order->total_sales;
+					switch ( $this->chart_groupby ) {
+						case 'day':
+							$time = strtotime( current_time( 'Ymd', strtotime( $order->get_date_completed() ) ) ) * 1000;
+							break;
+						case 'month':
+						default:
+							$time = strtotime( current_time( 'Ym', strtotime( $order->get_date_completed() ) ) . '01' ) * 1000;
+							break;
 					}
+
+					$this->revenue_sales_and_times[ $time ][ $order->get_id() ] = isset( $this->revenue_sales_and_times[ $time ][ $order->get_id() ] ) ? $this->revenue_sales_and_times[ $time ][ $order->get_id() ] + $this->get_revenue_total($order->get_id()) : $this->get_revenue_total($order->get_id());
+					$this->cost_sales_and_times[ $time ][ $order->get_id() ] = isset( $this->cost_sales_and_times[ $time ][ $order->get_id() ] ) ? $this->cost_sales_and_times[ $time ][ $order->get_id() ] + $this->get_cost_total($order->get_id()) : $this->get_revenue_total($order->get_id());
+
+					$this->revenue_sales[ $order->get_id() ] = isset( $this->revenue_sales[ $order->get_id() ] ) ? $this->revenue_sales[ $order->get_id() ] + $this->get_revenue_total($order->get_id()) : $this->get_revenue_total($order->get_id());
+					$this->cost_sales[ $order->get_id() ] = isset( $this->cost_sales[ $order->get_id() ] ) ? $this->cost_sales[ $order->get_id() ] + $this->get_cost_total($order->get_id()) : $this->get_cost_total($order->get_id());
 				}
 			}
+			
 
 			$legends = array();
 
-			if ( ! empty( $this->show_companies ) ) {
-				$legends = $this->get_chart_legend();
-			}
-
+			
+			$legends = $this->get_chart_legend();
+			
+			// var_dump($this->revenue_sales); die();
 			wc_get_template(
-				'/admin/report-by-company.php',
+				'/admin/report-by-cost-revenue.php',
 				array(
 					'ranges'                    => $ranges,
 					'chart_colours'             => $this->chart_colours,
 					'current_range'             => $current_range,
 					'check_current_range_nonce' => $this->check_current_range_nonce( $current_range ),
 					'calculate_current_range'   => $this->calculate_current_range( $current_range ),
-					'show_companies'            => $this->show_companies,
+					// 'show_companies'            => $this->show_companies,
 					'orders'                    => $orders,
-					'item_sales'                => $this->item_sales,
-					'item_sales_and_times'      => $this->item_sales_and_times,
-					'get_export_button'         => $get_export_button,
+					'item_sales'                => $this->revenue_sales,
+					'item_sales_and_times'      => $this->revenue_sales_and_times,
+					// 'get_export_button'         => $get_export_button,
 					'legends'                   => $legends,
-					'get_chart_widgets'         => $get_chart_widgets,
-					'get_chart_widgets'         => $this->get_chart_widgets(),
+					// 'get_chart_widgets'         => $get_chart_widgets,
+					// 'get_chart_widgets'         => $this->get_chart_widgets(),
 					'get_main_chart'            => $this->get_main_chart(),
 				),
-				WCB2BRP_PLUGIN_FOLDER,
-				WCB2BRP_ABSPATH . '/templates/'
+				CFWS_PLUGIN_DIR,
+				CFWS_TEMP_DIR . '/'
 			);
 		}
 
-		/**
-		 * Get chart widgets.
-		 *
-		 * @return array
-		 */
-		public function get_chart_widgets() {
+		
 
-			return array(
-				array(
-					'title'    => __( 'Companies', 'wcb2brp' ),
-					'callback' => array( $this, 'company_widget' ),
-				),
-			);
-		}
-
-		/**
-		 * Output category widget.
-		 */
-		public function company_widget() {
-			$companies = wcb2brp_all_companies();
-			?>
-			<form method="GET">
-				<div>
-					<select multiple="multiple" data-placeholder="<?php esc_attr_e( 'Select Companies&hellip;', 'wcb2brp' ); ?>" class="wc-enhanced-select" id="show_companies" name="show_companies[]" style="width: 205px;">
-						<?php
-						if ( $companies ) {
-							foreach ( $companies as $key => $value ) {
-								?>
-						<option value="<?php echo wp_kses_post( $value->ID ); ?>"<?php echo ( filter_input( INPUT_GET, 'show_companies' ) != null && in_array( $value->ID, filter_input( INPUT_GET, 'show_companies' ) ) ) ? esc_attr_e( ' selected' ) : ''; ?>><?php echo wp_kses_post( $value->post_title ); ?></option>
-								<?php
-							}
-						}
-						?>
-					</select>
-			<?php // @codingStandardsIgnoreStart ?>
-			<a href="#" class="select_none"><?php esc_html_e( 'None', 'wcb2brp' ); ?></a>
-			<a href="#" class="select_all"><?php esc_html_e( 'All', 'wcb2brp' ); ?></a>
-			<button type="submit" class="submit button" value="<?php esc_attr_e( 'Show', 'wcb2brp' ); ?>"><?php esc_html_e( 'Show', 'wcb2brp' ); ?></button>
-			<input type="hidden" name="range" value="<?php echo ( ! empty( filter_input( INPUT_GET, 'range' ) ) ) ? esc_attr( wp_unslash( filter_input( INPUT_GET, 'range' ) ) ) : ''; ?>" />
-			<input type="hidden" name="start_date" value="<?php echo ( ! empty( filter_input( INPUT_GET, 'start_date' ) ) ) ? esc_attr( wp_unslash( filter_input( INPUT_GET, 'start_date' ) ) ) : ''; ?>" />
-			<input type="hidden" name="end_date" value="<?php echo ( ! empty( filter_input( INPUT_GET, 'end_date' ) ) ) ? esc_attr( wp_unslash( filter_input( INPUT_GET, 'end_date' ) ) ) : ''; ?>" />
-			<input type="hidden" name="page" value="<?php echo ( ! empty( filter_input( INPUT_GET, 'page' ) ) ) ? esc_attr( wp_unslash( filter_input( INPUT_GET, 'page' ) ) ) : ''; ?>" />
-			<input type="hidden" name="tab" value="<?php echo ( ! empty( filter_input( INPUT_GET, 'tab' ) ) ) ? esc_attr( wp_unslash( filter_input( INPUT_GET, 'tab' ) ) ) : ''; ?>" />
-			<input type="hidden" name="report" value="<?php echo ( ! empty( filter_input( INPUT_GET, 'report' ) ) ) ? esc_attr( wp_unslash( filter_input( INPUT_GET, 'report' ) ) ) : ''; ?>" />
-			<?php // @codingStandardsIgnoreEnd ?>
-				</div>
-				<script type="text/javascript">
-					jQuery(function () {
-						// Select all/None
-						jQuery('.chart-widget').on('click', '.select_all', function () {
-							jQuery(this).closest('div').find('select option').attr('selected', 'selected');
-							jQuery(this).closest('div').find('select').change();
-							return false;
-						});
-
-						jQuery('.chart-widget').on('click', '.select_none', function () {
-							jQuery(this).closest('div').find('select option').removeAttr('selected');
-							jQuery(this).closest('div').find('select').change();
-							return false;
-						});
-					});
-				</script>
-			</form>
-			<?php
-		}
-
+		
 		/**
 		 * Output an export link.
 		 */
@@ -290,10 +254,10 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 				download="report-<?php echo esc_attr( $current_range ); ?>-<?php echo esc_attr( date_i18n( 'Y-m-d', current_time( 'timestamp' ) ) ); ?>.csv"
 				class="export_csv"
 				data-export="chart"
-				data-xaxes="<?php esc_attr_e( 'Date', 'wcb2brp' ); ?>"
+				data-xaxes="<?php esc_attr_e( 'Date', 'cfws' ); ?>"
 				data-groupby="<?php echo esc_attr( $this->chart_groupby ); ?>"
 				>
-					<?php esc_html_e( 'Export CSV', 'wcb2brp' ); ?>
+					<?php esc_html_e( 'Export CSV', 'cfws' ); ?>
 			</a>
 			<?php
 		}
@@ -304,50 +268,59 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 		public function get_main_chart() {
 			global $wp_locale;
 
-			if ( empty( $this->show_companies ) ) {
-				?>
-				<div class="chart-container">
-					<p class="chart-prompt"><?php esc_html_e( 'Choose an company to view stats', 'wcb2brp' ); ?></p>
-				</div>
-				<?php
-			} else {
-				$chart_data = array();
-				$index      = 0;
+			$chart_data = array();
+			$index      = 0;
+			
+			
+			
+				$revenue_chart_data = array();
+				$cost_chart_data = array();
 
-				foreach ( $this->show_companies as $company ) {
-					$company_data       = get_post( $company );
-					$company_chart_data = array();
+				for ( $i = 0; $i <= $this->chart_interval; $i ++ ) {
 
-					for ( $i = 0; $i <= $this->chart_interval; $i ++ ) {
+					$interval_total_revenue = 0;
+					$interval_total_cost = 0;
 
-						$interval_total = 0;
-
-						switch ( $this->chart_groupby ) {
-							case 'day':
-								$time = strtotime( current_time( 'Ymd', strtotime( "+{$i} DAY", $this->start_date ) ) ) * 1000;
-								break;
-							case 'month':
-							default:
-								$time = strtotime( current_time( 'Ym', strtotime( "+{$i} MONTH", $this->start_date ) ) . '01' ) * 1000;
-								break;
-						}
-						$orders = $this->get_company_orders( $company );
-						if ( $orders ) {
-							foreach ( $orders as $order ) {
-								if ( isset( $this->item_sales_and_times[ $time ][ $order->id ] ) ) {
-									$interval_total += $this->item_sales_and_times[ $time ][ $order->id ];
-								}
+					switch ( $this->chart_groupby ) {
+						case 'day':
+							$time = strtotime( current_time( 'Ymd', strtotime( "+{$i} DAY", $this->start_date ) ) ) * 1000;
+							break;
+						case 'month':
+						default:
+							$time = strtotime( current_time( 'Ym', strtotime( "+{$i} MONTH", $this->start_date ) ) . '01' ) * 1000;
+							break;
+					}
+					$args_completed = array(
+						'status' => array('wc-completed'),
+						'limit' => -1,
+					);
+					$completed_orders = wc_get_orders( $args_completed );
+					if ( $completed_orders ) {
+						foreach ( $completed_orders as $order ) {
+							if ( isset( $this->revenue_sales_and_times[ $time ][ $order->get_id() ] ) ) {
+								$interval_total_revenue += $this->revenue_sales_and_times[ $time ][ $order->get_id() ];
 							}
-						}
 
-						$company_chart_data[] = array( $time, (float) wc_format_decimal( $interval_total, wc_get_price_decimals() ) );
+							if ( isset( $this->revenue_sales_and_times[ $time ][ $order->get_id() ] ) ) {
+								$interval_total_cost += $this->cost_sales_and_times[ $time ][ $order->get_id() ];
+							}
+
+						}
 					}
 
-					$chart_data[ $company_data->ID ]['company'] = $company_data->post_title;
-					$chart_data[ $company_data->ID ]['data']    = $company_chart_data;
-
-					$index++;
+					$revenue_chart_data[] = array( $time, (float) wc_format_decimal( $interval_total_revenue, wc_get_price_decimals() ) );
+					$cost_chart_data[] = array( $time, (float) wc_format_decimal( $interval_total_cost, wc_get_price_decimals() ) );
 				}
+
+				$chart_data[ 'revenue' ]['title'] = "Revenue";
+				$chart_data[ 'revenue' ]['data']    = $revenue_chart_data;
+
+				$chart_data[ 'cost' ]['title'] = "Cost";
+				$chart_data[ 'cost' ]['data']    = $cost_chart_data;
+
+				
+				// var_dump($chart_data); die();
+				
 				?>
 				<div class="chart-container">
 					<div class="chart-placeholder main"></div>
@@ -370,22 +343,22 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 						$series[ $key ][0] = $series_data[0] + $offset;
 					}
 					echo '{
-label: "' . esc_js( $data['company'] ) . '",
-data: jQuery.parseJSON( "' . json_encode( $series ) . '" ),
-color: "' . esc_js( $color ) . '",
-bars: {
-fillColor: "' . esc_js( $color ) . '",
-fill: true,
-show: true,
-lineWidth: 1,
-align: "center",
-barWidth: ' . esc_js( $width ) * 0.75 . ',
-stack: false
-},
-' . wp_kses_post( $this->get_currency_tooltip() ) . ',
-enable_tooltip: true,
-prepend_label: true
-},';
+						label: "' . esc_js( $data['title'] ) . '",
+						data: jQuery.parseJSON( "' . json_encode( $series ) . '" ),
+						color: "' . esc_js( $color ) . '",
+						bars: {
+						fillColor: "' . esc_js( $color ) . '",
+						fill: true,
+						show: true,
+						lineWidth: 1,
+						align: "center",
+						barWidth: ' . esc_js( $width ) * 0.75 . ',
+						stack: false
+						},
+						' . wp_kses_post( $this->get_currency_tooltip() ) . ',
+						enable_tooltip: true,
+						prepend_label: true
+						},';
 					$index++;
 				}
 				?>
@@ -465,6 +438,6 @@ prepend_label: true
 			}
 		}
 
-	}
+	
 
 }
