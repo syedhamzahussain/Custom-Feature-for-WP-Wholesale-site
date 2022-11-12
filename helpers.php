@@ -21,7 +21,9 @@ function cfws_add_to_cart_ajax() {
 	$price   = isset( $_REQUEST['price'] ) ? $_REQUEST['price'] : 0;
 	$offered_price   = isset( $_REQUEST['offered_price'] ) ? $_REQUEST['offered_price'] : false;
 	$meta = [];
-	$meta['offered_price'] = $offered_price;
+	if($offered_price){
+		$meta['offered_price'] = $offered_price;
+	}
 	
 	$passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
 	$product_status    = get_post_status( $product_id );

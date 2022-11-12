@@ -28,20 +28,9 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			
 			add_action( 'wp_ajax_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
 			add_action( 'wp_ajax_nopriv_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
-			
-			add_filter('woocommerce_add_cart_item_data','cfws_add_item_data',1,10);
-			
 		}
 		
-		public function front_hooks() {
-			// print_r(WC()->cart->get_cart());
-			// foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-			// 	  $meta = wc_get_formatted_cart_item_data( $cart_item );
-			// 	  print_r($meta);
-			// 	  die();
-			// }
-
-			
+		public function front_hooks() {			
 			// remove add to cart button.
 			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
 			// remove price.
@@ -61,10 +50,6 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 
 		public function show_packages_info() {
 			do_shortcode( '[cfws_single_product]' );
-			// global $product;
-			// if($product->get_type() == 'simple'){
-
-			// }
 		}
 		public function cfws_change_cart_page() {
 
@@ -73,17 +58,6 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 			}
 			require_once CFWS_TEMP_DIR . '/woocommerce/cart/cart.php';
 		}
-
-		// public function cfws_add_item_data($cart_item_data, $product_id, $variation_id ) {
-
-		// 	global $woocommerce;
-
-		// 	$offered_price = filter_input( INPUT_POST, 'offered_price' );
-
-		// 	$cart_item_data['offered_price'] = $offered_price;
-		
-		// 	return $cart_item_data;
-		// }
 
 		public function single_product_shortcode_callback() {
 
