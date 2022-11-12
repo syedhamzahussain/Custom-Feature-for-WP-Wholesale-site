@@ -104,7 +104,7 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 					<tr>
 						<th class="product-remove">&nbsp;</th>
 						<th class="product-subtotal"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
-						<th class="product-price"><?php esc_html_e( 'Price', 'woocommerce' ); ?></th>
+						<th class="product-price"><?php esc_html_e( 'Unit Price / Offered Price', 'cfws' ); ?></th>
 						<th class="product-quantity"><?php esc_html_e( 'Quantity', 'woocommerce' ); ?></th>
 						<th class="product-name"><?php esc_html_e( 'Product Title', 'woocommerce' ); ?></th>
 						<th class="product-name"><?php esc_html_e( 'Image', 'woocommerce' ); ?></th>

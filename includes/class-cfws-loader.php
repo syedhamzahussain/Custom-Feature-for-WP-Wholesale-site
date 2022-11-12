@@ -38,6 +38,7 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-address.php';
 				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-orders.php';
 				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-single-product.php';
+				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-cart.php';
 			
 		}
 

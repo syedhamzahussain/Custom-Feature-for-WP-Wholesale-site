@@ -543,3 +543,7 @@ margin-top: 10px;
   width: 100% !important;
   margin-top:10px;
 }
+
+.cfws_custom_cart_price{
+  max-width: 80%;
+}
