@@ -20,12 +20,14 @@ function cfws_add_to_cart_ajax() {
 	$quantity   = isset( $_REQUEST['qty'] ) ? $_REQUEST['qty'] : 1;
 	$price   = isset( $_REQUEST['price'] ) ? $_REQUEST['price'] : 0;
 	$offered_price   = isset( $_REQUEST['offered_price'] ) ? $_REQUEST['offered_price'] : false;
+	$meta = [];
+	$meta['offered_price'] = $offered_price;
 	
 	$passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
 	$product_status    = get_post_status( $product_id );
-	if ( $passed_validation && WC()->cart->add_to_cart( $product_id, $quantity ) && 'publish' === $product_status ) {
+	if ( $passed_validation && WC()->cart->add_to_cart( $product_id, $quantity,0, array(),$meta ) && 'publish' === $product_status ) {
 		do_action( 'woocommerce_ajax_added_to_cart', $product_id );
-		// cfws_add_item_data(WC()->cart(), $product_id, $price);
+		
 		return;
 		
 	} else {

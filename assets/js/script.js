@@ -48,10 +48,9 @@ jQuery(document).ready(function ($) {
     var qty = $(".qty").val();
     var price = $("#cfws_product_unit_price").html();
     var offered_price = $("#offered_price").val();
-    console.log(offered_price);
-    console.log(price);
+    
     if(offered_price != ''){
-      offered_price = true;
+      offered_price = offered_price;
     }
     else{
       offered_price = false;

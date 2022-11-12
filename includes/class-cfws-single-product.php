@@ -34,7 +34,12 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 		}
 		
 		public function front_hooks() {
-
+			// print_r(WC()->cart->get_cart());
+			// foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+			// 	  $meta = wc_get_formatted_cart_item_data( $cart_item );
+			// 	  print_r($meta);
+			// 	  die();
+			// }
 			// remove add to cart button.
 			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
 			// remove price.
