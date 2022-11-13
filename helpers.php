@@ -2,18 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-function cfws_add_item_data( $cart_item_data, $product_id, $price ) {
 
-	global $woocommerce;
-	$new_value                    = array();
-	$new_value['_custom_options'] = $price;
-
-	if ( empty( $cart_item_data ) ) {
-		return $new_value;
-	} else {
-		return array_merge( $cart_item_data, $new_value );
-	}
-}
 function cfws_add_to_cart_ajax() {
 	ob_start();
 	$product_id    = isset( $_REQUEST['product_id'] ) ? $_REQUEST['product_id'] : 0;
