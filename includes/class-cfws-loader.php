@@ -105,6 +105,7 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 					'is_logged'  => is_user_logged_in(),
 					'product_id' => $product_id,
 					'cart_page_url' => $cart_page_url,
+					'is_single_page' => is_single() 
 				)
 			);
 		}

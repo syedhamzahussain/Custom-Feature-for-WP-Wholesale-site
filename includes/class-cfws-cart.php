@@ -20,6 +20,7 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'wp', array( $this, 'front_hooks' ) );
+			add_filter( 'woocommerce_update_cart_action_cart_updated',array($this,'recalculate_price_on_update_cart'),10,1 );
 		}
 
 		public function front_hooks() {
@@ -30,13 +31,15 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
 			//  changing html of unit price on mini cart.
 			add_filter( 'woocommerce_widget_cart_item_quantity', array( $this, 'change_product_price_display_min_cart' ),99,3 );
 
+			
+
 		}
 
 		public function change_product_price_display( $price , $cart_item, $cart_item_key ) {
 			global  $woocommerce;
 			
 			if( isset( $cart_item['offered_price'] ) &&  ( !empty( $cart_item['offered_price'] ) && $cart_item['offered_price'] != 'false' ) ) {
-				$price = get_woocommerce_currency_symbol()."<input name='cfws_custom_cart_price' class='cfws_custom_cart_price' value='".$cart_item[ 'offered_price' ]."'/>";
+				$price = get_woocommerce_currency_symbol()."<input name='"."cart[".$cart_item_key."][offered_price]' class='cfws_custom_cart_price' value='".$cart_item[ 'offered_price' ]."'/>";
 			}
 
 			return $price;
@@ -70,6 +73,24 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
 
 			}
 
+		}
+
+		public function recalculate_price_on_update_cart( $cart_updated ) {
+			global $woocommerce;
+    		
+
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+		    	if( isset( $_POST['cart'][$cart_item_key]['offered_price'] ) ){
+		        	$cart_item['offered_price'] = $_POST['cart'][$cart_item_key]['offered_price'];
+		        	WC()->cart->cart_contents[$cart_item_key] = $cart_item;
+		    	}
+		    	
+		    	
+		    	
+		    }
+		
+		    
+		    return $cart_updated;
 		}
 
 	}
