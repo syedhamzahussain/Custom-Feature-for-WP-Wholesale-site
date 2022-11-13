@@ -80,13 +80,15 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
     		
 
 			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-		    	if( isset( $_POST['cart'][$cart_item_key]['offered_price'] ) ){
+		    	if( isset( $_POST['cart'][$cart_item_key]['offered_price'] ) && $_POST['cart'][$cart_item_key]['offered_price'] != 'false' ){
 		        	$cart_item['offered_price'] = $_POST['cart'][$cart_item_key]['offered_price'];
-		        	WC()->cart->cart_contents[$cart_item_key] = $cart_item;
+		        	
+		    	}
+		    	else{
+		    		unset($cart_item['offered_price']);
 		    	}
 		    	
-		    	
-		    	
+		  		WC()->cart->cart_contents[$cart_item_key] = $cart_item;
 		    }
 		
 		    
