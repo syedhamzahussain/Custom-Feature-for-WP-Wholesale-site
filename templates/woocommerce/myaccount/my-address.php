@@ -19,8 +19,8 @@ defined( 'ABSPATH' ) || exit;
 
 $user_id = get_current_user_id();
 
-$billing = get_user_meta( $user_id, 'billing_address' );
-$default_billing_address = get_user_meta( $user_id, 'billing_default_address' );
+$billing                  = get_user_meta( $user_id, 'billing_address' );
+$default_billing_address  = get_user_meta( $user_id, 'billing_default_address' );
 $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' );
 
 
@@ -34,47 +34,58 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 	
 </div>
 <?php
-if ( isset( $billing ) && ! empty( $billing ) ) : 
-?>
+if ( isset( $billing ) && ! empty( $billing ) ) :
+	?>
 	<div class="row" style="margin-top: 10px">
 	
-<?php
-	 foreach ( $billing[0] as $key => $address ) :
-?>	
+	<?php
+	foreach ( $billing[0] as $key => $address ) :
+		?>
+			
 		<div class="card col-md-3">
-			<div class="card-header"><?= $address['address_name'] ?><button onclick="deleteAddress('<?php echo $address['id']; ?>')" style="float:left"><i class='bx bxs-message-square-x bx-spin bx-flip-horizontal' ></i></button></div>
+			<div class="card-header"><?php echo $address['address_name']; ?><button onclick="deleteAddress('<?php echo $address['id']; ?>')" style="float:left"><i class='bx bxs-message-square-x bx-spin bx-flip-horizontal' ></i></button></div>
 				<div class="card-body">
 			
 					<address>
-					<?php
-						$formatted_address = implode( '<br>', array_slice(array_filter( $address ), 2 ));
-						echo wp_kses_post( $formatted_address );
+				   <?php
+					   $formatted_address = implode( '<br>', array_slice( array_filter( $address ), 2 ) );
+					   echo wp_kses_post( $formatted_address );
 					?>
 					</address>
 
 					<section>
 						<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', 'billing' ) ); ?>?id=<?php echo $address['id']; ?>" class="edit"><button><?php echo esc_html__( 'Edit Address', 'woocommerce' ); ?></button></a>
 						<br>
-		<?php	       if(!empty($default_billing_address)){
-							if($address['id'] !== $default_billing_address[0]['id']){ ?>
+		<?php
+		if ( ! empty( $default_billing_address ) ) {
+			if ( $address['id'] !== $default_billing_address[0]['id'] ) {
+				?>
 							<a href="#" class="set_as_default_billing_address" onclick="defaultAddressSet('<?php echo $address['id']; ?>','billing')"><button class="btn btn-primary"><?php echo esc_html__( 'Set as Default Billing Address', 'woocommerce' ); ?></button></a>
-		<?php			     }else{?>
+		<?php	} else { ?>
 								<button class="btn btn-disabled"><?php echo esc_html__( 'Already set as Default Billing', 'woocommerce' ); ?></button>
-		<?php				 }
-						}else{ ?>
+				<?php
+		}
+		} else {
+			?>
 							<a href="#" class="set_as_default_billing_address" onclick="defaultAddressSet('<?php echo $address['id']; ?>','billing')"><button class="btn btn-primary"><?php echo esc_html__( 'Set as Default Billing Address', 'woocommerce' ); ?></button></a>
-		<?php			} ?>
+		<?php	} ?>
 						<br>		
-		<?php			if(!empty($default_shipping_address)){ 				
-							if($address['id'] !== $default_shipping_address[0]['id']){ ?>
+		<?php
+		if ( ! empty( $default_shipping_address ) ) {
+			if ( $address['id'] !== $default_shipping_address[0]['id'] ) {
+				?>
 								<a href="#" class="set_as_default_shipping_address" onclick="defaultAddressSet('<?php echo $address['id']; ?>','shipping')"><button class="btn btn-primary"><?php echo esc_html__( 'Set as Default Shipping Address', 'woocommerce' ); ?></button></a>
-			<?php			 }else{ ?>
+			<?php	} else { ?>
 								<button class="btn btn-disabled"><?php echo esc_html__( 'Already set as Default Shipping', 'woocommerce' ); ?></button>
-			<?php			}
-						}else{ ?>
+				<?php
+			}
+		} else {
+			?>
 						<a href="#" class="set_as_default_shipping_address" onclick="defaultAddressSet('<?php echo $address['id']; ?>','shipping')"><button class="btn btn-primary"><?php echo esc_html__( 'Set as Default Shipping Address', 'woocommerce' ); ?></button></a>
-		<?php			}
-		?>			
+			<?php
+		}
+		?>
+					
 					</section>
 			</div>
 		</div>
@@ -82,37 +93,39 @@ if ( isset( $billing ) && ! empty( $billing ) ) :
 				
 			
 
-<?php
-	 endforeach; ?>
+		<?php
+	 endforeach;
+	?>
 	</div>
-<?php
+	<?php
  else :
-?>
+		?>
 	<h4><?php echo esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' ); ?></h4>
 	
-<?php
+	 <?php
 endif;
-?>
+	?>
 <br><br>
 <div class="row" style="margin: 10px">
 	<div class="card col-md-5">
 		<div class="card-header">Default Billing Address</div>
 		<div class="card-body">
-<?php 	if( isset( $default_billing_address ) && ! empty( $default_billing_address )) : ?>
+<?php if ( isset( $default_billing_address ) && ! empty( $default_billing_address ) ) : ?>
 			<address>
-<?php
-			$formatted_address = implode( '<br>', array_slice(array_filter( $default_billing_address[0] ), 1 ));
+	<?php
+			$formatted_address = implode( '<br>', array_slice( array_filter( $default_billing_address[0] ), 1 ) );
 			echo wp_kses_post( $formatted_address );
-?>
+	?>
 			</address>
-<?php 	else :
-?>
+	<?php
+  else :
+		?>
 	
 		 <h4><?php echo esc_html_e( 'You have not set default billing address yet.', 'woocommerce' ); ?></h4>
 	
-<?php
-		endif; 
-?>
+	  <?php
+		endif;
+	?>
 		</div>
 	
 	</div>
@@ -120,20 +133,21 @@ endif;
 	<div class="card col-md-5" style="margin-right:10px">
 		<div class="card-header">Default Shipping Address</div>
 		<div class="card-body">
-<?php if( isset( $default_shipping_address ) && ! empty( $default_shipping_address )) : ?>
+<?php if ( isset( $default_shipping_address ) && ! empty( $default_shipping_address ) ) : ?>
 			
 			<address>
-<?php
-			$formatted_address = implode( '<br>', array_slice(array_filter( $default_shipping_address[0] ), 1 ));
+	<?php
+			$formatted_address = implode( '<br>', array_slice( array_filter( $default_shipping_address[0] ), 1 ) );
 			echo wp_kses_post( $formatted_address );
-?>
+	?>
 			</address>
-<?php else :
-?>
+	<?php
+else :
+	?>
 	
 		 <h4><?php echo esc_html_e( 'You have not set default shipping address yet.', 'woocommerce' ); ?></h4>
 	
-<?php
+	<?php
 	endif;
 ?>
 		</div>

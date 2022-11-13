@@ -22,7 +22,7 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 		 * @var array
 		 */
 		public $chart_colours = array();
-		
+
 		/**
 		 * Item revenue.
 		 *
@@ -51,77 +51,71 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 		 */
 		private $cost_sales_and_times = array();
 
-		
-		public function get_revenue_total($order_id = null){
+
+		public function get_revenue_total( $order_id = null ) {
 			$args_completed = array(
-                'status' => array('wc-completed'),
-                'limit' => -1,
-            );
-			$total        	  = 0;
-			if($order_id == null){
+				'status' => array( 'wc-completed' ),
+				'limit'  => -1,
+			);
+			$total          = 0;
+			if ( $order_id == null ) {
 				$completed_orders = wc_get_orders( $args_completed );
-			
-			
-				if($completed_orders){
-					foreach ($completed_orders as $key => $order) {
-						foreach($order->get_items() as $item){
-							$cost = get_post_meta($item['product_id'],'cfws_unit_cost',true) ? get_post_meta($item['product_id'],'cfws_unit_cost',true) : 0;
+
+				if ( $completed_orders ) {
+					foreach ( $completed_orders as $key => $order ) {
+						foreach ( $order->get_items() as $item ) {
+							$cost    = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
 							$product = wc_get_product( $item['product_id'] );
-							
-							$total += ($product->get_price() - floatval( $cost ) ) *$item['quantity'];
+
+							$total += ( $product->get_price() - floatval( $cost ) ) * $item['quantity'];
 						}
-						
 					}
 				}
-			}else{
+			} else {
 				$order = wc_get_order( $order_id );
-				foreach($order->get_items() as $item){
-					$cost = get_post_meta($item['product_id'],'cfws_unit_cost',true) ? get_post_meta($item['product_id'],'cfws_unit_cost',true) : 0;
-					
+				foreach ( $order->get_items() as $item ) {
+					$cost = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+
 					$product = wc_get_product( $item['product_id'] );
-					
-					$total += ( $product->get_price() - floatval($cost) ) * $item['quantity'];
+
+					$total += ( $product->get_price() - floatval( $cost ) ) * $item['quantity'];
 				}
 			}
-            
+
 			// var_dump($total); die();
 			return $total;
 		}
 
-		public function get_cost_total($order_id = null){
+		public function get_cost_total( $order_id = null ) {
 			$args_completed = array(
-                'status' => array('wc-completed'),
-                'limit' => -1,
-            );
-			$total        	  = 0;
-			if($order_id == null){
+				'status' => array( 'wc-completed' ),
+				'limit'  => -1,
+			);
+			$total          = 0;
+			if ( $order_id == null ) {
 				$completed_orders = wc_get_orders( $args_completed );
-				
-				// var_dump($completed_orders); die();
-				if($completed_orders){
-					foreach ($completed_orders as $key => $order) {
 
-						foreach ($order->get_items() as $item) {
-							$cost = get_post_meta($item['product_id'],'cfws_unit_cost',true) ? get_post_meta($item['product_id'],'cfws_unit_cost',true) : 0;
-							$total +=  floatval( $cost ) * $item['quantity'];
+				// var_dump($completed_orders); die();
+				if ( $completed_orders ) {
+					foreach ( $completed_orders as $key => $order ) {
+
+						foreach ( $order->get_items() as $item ) {
+							$cost   = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+							$total += floatval( $cost ) * $item['quantity'];
 						}
-						
-						
 					}
 				}
-			}else{
+			} else {
 				$order = wc_get_order( $order_id );
-				foreach ($order->get_items() as $item) {
-					$cost = get_post_meta($item['product_id'],'cfws_unit_cost',true) ? get_post_meta($item['product_id'],'cfws_unit_cost',true) : 0;
-					$total +=  floatval($cost) * $item['quantity'];
+				foreach ( $order->get_items() as $item ) {
+					$cost   = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+					$total += floatval( $cost ) * $item['quantity'];
 				}
 			}
-           
-			
-			
+
 			return $total;
 		}
-		
+
 		/**
 		 * Get the legend for the main chart sidebar.
 		 *
@@ -129,30 +123,24 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 		 */
 		public function get_chart_legend() {
 
-
 			$legend = array();
-			
 
-			
-			
 			$revenue = $this->get_revenue_total();
-			$cost = $this->get_cost_total();
+			$cost    = $this->get_cost_total();
 
 			$legend[] = array(
 				/* translators: 1: total Revenue  */
-				'title'            => sprintf( __( '%1$s %2$s', 'cfws' ), '<strong>' . wc_price( $revenue ) . '</strong>', "Total revenue of completed orders" ),
+				'title'            => sprintf( __( '%1$s %2$s', 'cfws' ), '<strong>' . wc_price( $revenue ) . '</strong>', 'Total revenue of completed orders' ),
 				'color'            => $this->chart_colours[0],
 				'highlight_series' => 0,
 			);
 
 			$legend[] = array(
 				/* translators: 1: total cost  */
-				'title'            => sprintf( __( '%1$s %2$s', 'cfws' ), '<strong>' . wc_price( $cost ) . '</strong>', "Total cost of completed orders" ),
+				'title'            => sprintf( __( '%1$s %2$s', 'cfws' ), '<strong>' . wc_price( $cost ) . '</strong>', 'Total cost of completed orders' ),
 				'color'            => $this->chart_colours[1],
 				'highlight_series' => 1,
 			);
-
-			
 
 			return $legend;
 		}
@@ -181,13 +169,12 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			$this->calculate_current_range( $current_range );
 
 			// Get item sales data.
-			
+
 			$args_completed = array(
-                'status' => array('wc-completed'),
-                'limit' => -1,
-            );
-            $orders = wc_get_orders( $args_completed );
-			
+				'status' => array( 'wc-completed' ),
+				'limit'  => -1,
+			);
+			$orders         = wc_get_orders( $args_completed );
 
 			if ( is_array( $orders ) ) {
 				foreach ( $orders as $order ) {
@@ -202,20 +189,18 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 							break;
 					}
 
-					$this->revenue_sales_and_times[ $time ][ $order->get_id() ] = isset( $this->revenue_sales_and_times[ $time ][ $order->get_id() ] ) ? $this->revenue_sales_and_times[ $time ][ $order->get_id() ] + $this->get_revenue_total($order->get_id()) : $this->get_revenue_total($order->get_id());
-					$this->cost_sales_and_times[ $time ][ $order->get_id() ] = isset( $this->cost_sales_and_times[ $time ][ $order->get_id() ] ) ? $this->cost_sales_and_times[ $time ][ $order->get_id() ] + $this->get_cost_total($order->get_id()) : $this->get_revenue_total($order->get_id());
+					$this->revenue_sales_and_times[ $time ][ $order->get_id() ] = isset( $this->revenue_sales_and_times[ $time ][ $order->get_id() ] ) ? $this->revenue_sales_and_times[ $time ][ $order->get_id() ] + $this->get_revenue_total( $order->get_id() ) : $this->get_revenue_total( $order->get_id() );
+					$this->cost_sales_and_times[ $time ][ $order->get_id() ]    = isset( $this->cost_sales_and_times[ $time ][ $order->get_id() ] ) ? $this->cost_sales_and_times[ $time ][ $order->get_id() ] + $this->get_cost_total( $order->get_id() ) : $this->get_revenue_total( $order->get_id() );
 
-					$this->revenue_sales[ $order->get_id() ] = isset( $this->revenue_sales[ $order->get_id() ] ) ? $this->revenue_sales[ $order->get_id() ] + $this->get_revenue_total($order->get_id()) : $this->get_revenue_total($order->get_id());
-					$this->cost_sales[ $order->get_id() ] = isset( $this->cost_sales[ $order->get_id() ] ) ? $this->cost_sales[ $order->get_id() ] + $this->get_cost_total($order->get_id()) : $this->get_cost_total($order->get_id());
+					$this->revenue_sales[ $order->get_id() ] = isset( $this->revenue_sales[ $order->get_id() ] ) ? $this->revenue_sales[ $order->get_id() ] + $this->get_revenue_total( $order->get_id() ) : $this->get_revenue_total( $order->get_id() );
+					$this->cost_sales[ $order->get_id() ]    = isset( $this->cost_sales[ $order->get_id() ] ) ? $this->cost_sales[ $order->get_id() ] + $this->get_cost_total( $order->get_id() ) : $this->get_cost_total( $order->get_id() );
 				}
 			}
-			
 
 			$legends = array();
 
-			
 			$legends = $this->get_chart_legend();
-			
+
 			// var_dump($this->revenue_sales); die();
 			wc_get_template(
 				'/admin/report-by-cost-revenue.php',
@@ -240,9 +225,9 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			);
 		}
 
-		
 
-		
+
+
 		/**
 		 * Output an export link.
 		 */
@@ -271,58 +256,54 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 
 			$chart_data = array();
 			$index      = 0;
-			
-			
-			
+
 				$revenue_chart_data = array();
-				$cost_chart_data = array();
+				$cost_chart_data    = array();
 
-				for ( $i = 0; $i <= $this->chart_interval; $i ++ ) {
+			for ( $i = 0; $i <= $this->chart_interval; $i ++ ) {
 
-					$interval_total_revenue = 0;
-					$interval_total_cost = 0;
+				$interval_total_revenue = 0;
+				$interval_total_cost    = 0;
 
-					switch ( $this->chart_groupby ) {
-						case 'day':
-							$time = strtotime( current_time( 'Ymd', strtotime( "+{$i} DAY", $this->start_date ) ) ) * 1000;
-							break;
-						case 'month':
-						default:
-							$time = strtotime( current_time( 'Ym', strtotime( "+{$i} MONTH", $this->start_date ) ) . '01' ) * 1000;
-							break;
-					}
-					$args_completed = array(
-						'status' => array('wc-completed'),
-						'limit' => -1,
-					);
-					$completed_orders = wc_get_orders( $args_completed );
-					if ( $completed_orders ) {
-						foreach ( $completed_orders as $order ) {
-							if ( isset( $this->revenue_sales_and_times[ $time ][ $order->get_id() ] ) ) {
-								$interval_total_revenue += $this->revenue_sales_and_times[ $time ][ $order->get_id() ];
-							}
+				switch ( $this->chart_groupby ) {
+					case 'day':
+						$time = strtotime( current_time( 'Ymd', strtotime( "+{$i} DAY", $this->start_date ) ) ) * 1000;
+						break;
+					case 'month':
+					default:
+						$time = strtotime( current_time( 'Ym', strtotime( "+{$i} MONTH", $this->start_date ) ) . '01' ) * 1000;
+						break;
+				}
+				$args_completed   = array(
+					'status' => array( 'wc-completed' ),
+					'limit'  => -1,
+				);
+				$completed_orders = wc_get_orders( $args_completed );
+				if ( $completed_orders ) {
+					foreach ( $completed_orders as $order ) {
+						if ( isset( $this->revenue_sales_and_times[ $time ][ $order->get_id() ] ) ) {
+							$interval_total_revenue += $this->revenue_sales_and_times[ $time ][ $order->get_id() ];
+						}
 
-							if ( isset( $this->revenue_sales_and_times[ $time ][ $order->get_id() ] ) ) {
-								$interval_total_cost += $this->cost_sales_and_times[ $time ][ $order->get_id() ];
-							}
-
+						if ( isset( $this->revenue_sales_and_times[ $time ][ $order->get_id() ] ) ) {
+							$interval_total_cost += $this->cost_sales_and_times[ $time ][ $order->get_id() ];
 						}
 					}
-
-					$revenue_chart_data[] = array( $time, (float) wc_format_decimal( $interval_total_revenue, wc_get_price_decimals() ) );
-					$cost_chart_data[] = array( $time, (float) wc_format_decimal( $interval_total_cost, wc_get_price_decimals() ) );
 				}
 
-				$chart_data[ 'revenue' ]['title'] = "Revenue";
-				$chart_data[ 'revenue' ]['data']    = $revenue_chart_data;
+				$revenue_chart_data[] = array( $time, (float) wc_format_decimal( $interval_total_revenue, wc_get_price_decimals() ) );
+				$cost_chart_data[]    = array( $time, (float) wc_format_decimal( $interval_total_cost, wc_get_price_decimals() ) );
+			}
 
-				$chart_data[ 'cost' ]['title'] = "Cost";
-				$chart_data[ 'cost' ]['data']    = $cost_chart_data;
+				$chart_data['revenue']['title'] = 'Revenue';
+				$chart_data['revenue']['data']  = $revenue_chart_data;
 
-				
+				$chart_data['cost']['title'] = 'Cost';
+				$chart_data['cost']['data']  = $cost_chart_data;
+
 				// var_dump($chart_data); die();
-				
-				?>
+
+			?>
 				<div class="chart-container">
 					<div class="chart-placeholder main"></div>
 				</div>
@@ -436,9 +417,9 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			</script>
 				<?php // @codingStandardsIgnoreEnd ?>
 				<?php
-			}
 		}
+	}
 
-	
+
 
 }

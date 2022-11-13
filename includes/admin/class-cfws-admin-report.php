@@ -35,7 +35,6 @@ if ( ! class_exists( 'CFWS_ADMIN_REPORT' ) ) {
 
 			$custom_report = __( 'Revenue/Cost Report', 'cfws' );
 
-			
 			// $modify_sales_by_company_menu = apply_filters( 'wcb2brp_modify_sales_by_company_menu', $modify_sales_by_company_menu );
 
 			$reports['orders']['reports']['sales_by_cost_revenue'] = array(

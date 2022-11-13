@@ -25,12 +25,10 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 			add_action( 'plugin_loaded', array( $this, 'load_plugin_languages' ) );
 			$this->includes();
 
-
-
 		}
 
-		public function includes(){
-			if(is_admin()){
+		public function includes() {
+			if ( is_admin() ) {
 				require_once CFWS_PLUGIN_DIR . '/includes/admin/class-cfws-admin-product.php';
 				require_once CFWS_PLUGIN_DIR . '/includes/admin/class-cfws-admin-report.php';
 				require_once CFWS_PLUGIN_DIR . '/includes/admin/class-cfws-admin-orders.php';
@@ -39,12 +37,12 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-orders.php';
 				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-single-product.php';
 				require_once CFWS_PLUGIN_DIR . '/includes/class-cfws-cart.php';
-			
+
 		}
 
-         public function load_plugin_languages(){
-			load_plugin_textdomain( 'cfws', false, CFWS_PLUGIN_DIR. '/languages' ); 
-		 }
+		public function load_plugin_languages() {
+			load_plugin_textdomain( 'cfws', false, CFWS_PLUGIN_DIR . '/languages' );
+		}
 
 		public function admin_assets() {
 			wp_enqueue_style( 'cfws-admin-style', CFWS_ASSETS_DIR_URL . '/css/admin/admin.css' );
@@ -54,15 +52,15 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 			global $post;
 			$is_product = false;
 
-			if ('product' == get_post_type()) {
+			if ( 'product' == get_post_type() ) {
 				$is_product = true;
 			}
 			wp_localize_script(
 				'cfws-admin-script',
 				'cfws_obj',
 				array(
-					'is_product'  => $is_product,
-					
+					'is_product' => $is_product,
+
 				)
 			);
 		}
@@ -70,7 +68,7 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 		public function front_assets() {
 			wp_enqueue_style( 'cfws-front-style', CFWS_ASSETS_DIR_URL . '/css/style.css' );
 			wp_enqueue_style( 'cfws-boxicons-style', 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' );
-			
+
 			wp_enqueue_script( 'cfws-front-script', CFWS_ASSETS_DIR_URL . '/js/script.js', array( 'jquery' ), rand() );
 
 			// bootstrap
@@ -94,18 +92,18 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 			global $post;
 			$product_id = isset( $post ) ? $post->ID : false;
 
-			$cart_page_id = wc_get_page_id( 'cart' );
+			$cart_page_id  = wc_get_page_id( 'cart' );
 			$cart_page_url = $cart_page_id ? get_permalink( $cart_page_id ) : '';
 
 			wp_localize_script(
 				'cfws-front-script',
 				'cfws_obj',
 				array(
-					'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-					'is_logged'  => is_user_logged_in(),
-					'product_id' => $product_id,
-					'cart_page_url' => $cart_page_url,
-					'is_single_page' => is_single() 
+					'ajaxurl'        => admin_url( 'admin-ajax.php' ),
+					'is_logged'      => is_user_logged_in(),
+					'product_id'     => $product_id,
+					'cart_page_url'  => $cart_page_url,
+					'is_single_page' => is_single(),
 				)
 			);
 		}

@@ -26,7 +26,7 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 			add_action( 'wp_ajax_cfws_delete_address_ajax', 'cfws_delete_address_ajax' );
 		}
 
-		
+
 		function intercept_wc_template( $template, $template_name, $template_path ) {
 
 			if ( 'my-address.php' === basename( $template ) ) {
@@ -40,20 +40,20 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 		}
 
 		public function update_fields( $post_req, $slug ) {
-			$updated_address                          = array();
-			$updated_address['id']                    = ( isset( $post_req['id'] ) ? $post_req['id'] : uniqid() );
-			$updated_address[ 'address_name' ]= $post_req[ $slug . '_address_name' ];
-			$updated_address[ 'first_name' ] = $post_req[ $slug . '_first_name' ];
-			$updated_address[ 'last_name' ]  = $post_req[ $slug . '_last_name' ];
-			$updated_address[ 'company' ]    = $post_req[ $slug . '_company' ];
-			$updated_address[ 'address_1' ]  = $post_req[ $slug . '_address_1' ];
-			$updated_address[ 'address_2' ]  = $post_req[ $slug . '_address_2' ];
-			$updated_address[ 'city' ]       = $post_req[ $slug . '_city' ];
-			$updated_address[ 'state' ]      = $post_req[ $slug . '_state' ];
-			$updated_address[ 'postcode' ]   = $post_req[ $slug . '_postcode' ];
-			$updated_address[ 'country' ]    = $post_req[ $slug . '_country' ];
-			$updated_address[ 'email' ]      = $post_req[ $slug . '_email' ];
-			$updated_address[ 'phone' ]      = $post_req[ $slug . '_phone' ];
+			$updated_address                 = array();
+			$updated_address['id']           = ( isset( $post_req['id'] ) ? $post_req['id'] : uniqid() );
+			$updated_address['address_name'] = $post_req[ $slug . '_address_name' ];
+			$updated_address['first_name']   = $post_req[ $slug . '_first_name' ];
+			$updated_address['last_name']    = $post_req[ $slug . '_last_name' ];
+			$updated_address['company']      = $post_req[ $slug . '_company' ];
+			$updated_address['address_1']    = $post_req[ $slug . '_address_1' ];
+			$updated_address['address_2']    = $post_req[ $slug . '_address_2' ];
+			$updated_address['city']         = $post_req[ $slug . '_city' ];
+			$updated_address['state']        = $post_req[ $slug . '_state' ];
+			$updated_address['postcode']     = $post_req[ $slug . '_postcode' ];
+			$updated_address['country']      = $post_req[ $slug . '_country' ];
+			$updated_address['email']        = $post_req[ $slug . '_email' ];
+			$updated_address['phone']        = $post_req[ $slug . '_phone' ];
 
 			return $updated_address;
 		}
@@ -63,7 +63,7 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 			if ( $user_id <= 0 ) {
 				return;
 			}
-            wc_clear_notices();
+			wc_clear_notices();
 			if ( isset( $_POST['id'] ) ) {
 				$user_id = get_current_user_id();
 				if ( $load_address == 'billing' ) {
@@ -100,7 +100,7 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 						$index++;
 					}
 				}
-				wc_add_notice(esc_html__( 'Address has been edited successfully', 'woocommerce' ),'success');
+				wc_add_notice( esc_html__( 'Address has been edited successfully', 'woocommerce' ), 'success' );
 			} else {
 				if ( $load_address == 'billing' ) {
 					$billing = get_user_meta( $user_id, 'billing_address' );
@@ -147,10 +147,9 @@ if ( ! class_exists( 'CFWS_ADDRESS_PRODUCT' ) ) {
 
 					}
 				}
-				wc_add_notice(esc_html__( 'Address has been added successfully', 'woocommerce' ),'success');
+				wc_add_notice( esc_html__( 'Address has been added successfully', 'woocommerce' ), 'success' );
 			}
 
-			
 		}
 
 

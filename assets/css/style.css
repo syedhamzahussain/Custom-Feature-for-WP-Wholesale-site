@@ -140,20 +140,20 @@ hr.cfws_hr {
   line-height: 1.5 !important;
   border-radius: 0.25rem !important;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -webkit-border-radius: 0.25rem !important;
   -moz-border-radius: 0.25rem !important;
   -ms-border-radius: 0.25rem !important;
   -o-border-radius: 0.25rem !important;
   -webkit-transition: color 0.15s ease-in-out,
-    background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out;
+	background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+	box-shadow 0.15s ease-in-out;
   -moz-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -ms-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -o-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .btn-primary {
@@ -188,8 +188,8 @@ hr.cfws_hr {
 
 @media screen and (max-width: 480px) {
   .accordion {
-    width: 100%;
-    margin: 0;
+	width: 100%;
+	margin: 0;
   }
 }
 
@@ -330,27 +330,27 @@ hr.cfws_hr {
 }
 @media (min-width: 576px) {
   .card-deck {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-flow: row wrap;
+	flex-flow: row wrap;
+	margin-right: -15px;
+	margin-left: -15px;
   }
   .card-deck .card {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex: 1;
-    -ms-flex: 1 0 0%;
-    flex: 1 0 0%;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    margin-right: 15px;
-    margin-bottom: 0;
-    margin-left: 15px;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-flex: 1;
+	-ms-flex: 1 0 0%;
+	flex: 1 0 0%;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	margin-right: 15px;
+	margin-bottom: 0;
+	margin-left: 15px;
   }
 }
 .card-group {
@@ -367,74 +367,74 @@ hr.cfws_hr {
 }
 @media (min-width: 576px) {
   .card-group {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-ms-flex-flow: row wrap;
+	flex-flow: row wrap;
   }
   .card-group > .card {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 0 0%;
-    flex: 1 0 0%;
-    margin-bottom: 0;
+	-webkit-box-flex: 1;
+	-ms-flex: 1 0 0%;
+	flex: 1 0 0%;
+	margin-bottom: 0;
   }
   .card-group > .card + .card {
-    margin-left: 0;
-    border-left: 0;
+	margin-left: 0;
+	border-left: 0;
   }
   .card-group > .card:first-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
   }
   .card-group > .card:first-child .card-header,
   .card-group > .card:first-child .card-img-top {
-    border-top-right-radius: 0;
+	border-top-right-radius: 0;
   }
   .card-group > .card:first-child .card-footer,
   .card-group > .card:first-child .card-img-bottom {
-    border-bottom-right-radius: 0;
+	border-bottom-right-radius: 0;
   }
   .card-group > .card:last-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
   }
   .card-group > .card:last-child .card-header,
   .card-group > .card:last-child .card-img-top {
-    border-top-left-radius: 0;
+	border-top-left-radius: 0;
   }
   .card-group > .card:last-child .card-footer,
   .card-group > .card:last-child .card-img-bottom {
-    border-bottom-left-radius: 0;
+	border-bottom-left-radius: 0;
   }
   .card-group > .card:only-child {
-    border-radius: 0.25rem;
+	border-radius: 0.25rem;
   }
   .card-group > .card:only-child .card-header,
   .card-group > .card:only-child .card-img-top {
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
   }
   .card-group > .card:only-child .card-footer,
   .card-group > .card:only-child .card-img-bottom {
-    border-bottom-right-radius: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
+	border-bottom-right-radius: 0.25rem;
+	border-bottom-left-radius: 0.25rem;
   }
   .card-group > .card:not(:first-child):not(:last-child):not(:only-child) {
-    border-radius: 0;
+	border-radius: 0;
   }
   .card-group
-    > .card:not(:first-child):not(:last-child):not(:only-child)
-    .card-footer,
+	> .card:not(:first-child):not(:last-child):not(:only-child)
+	.card-footer,
   .card-group
-    > .card:not(:first-child):not(:last-child):not(:only-child)
-    .card-header,
+	> .card:not(:first-child):not(:last-child):not(:only-child)
+	.card-header,
   .card-group
-    > .card:not(:first-child):not(:last-child):not(:only-child)
-    .card-img-bottom,
+	> .card:not(:first-child):not(:last-child):not(:only-child)
+	.card-img-bottom,
   .card-group
-    > .card:not(:first-child):not(:last-child):not(:only-child)
-    .card-img-top {
-    border-radius: 0;
+	> .card:not(:first-child):not(:last-child):not(:only-child)
+	.card-img-top {
+	border-radius: 0;
   }
 }
 .card-columns .card {
@@ -498,16 +498,16 @@ hr.cfws_hr {
 }
 @media (min-width: 576px) {
   .card-columns {
-    -webkit-column-count: 3;
-    -moz-column-count: 3;
-    column-count: 3;
-    -webkit-column-gap: 1.25rem;
-    -moz-column-gap: 1.25rem;
-    column-gap: 1.25rem;
+	-webkit-column-count: 3;
+	-moz-column-count: 3;
+	column-count: 3;
+	-webkit-column-gap: 1.25rem;
+	-moz-column-gap: 1.25rem;
+	column-gap: 1.25rem;
   }
   .card-columns .card {
-    display: inline-block;
-    width: 100%;
+	display: inline-block;
+	width: 100%;
   }
 }
 
@@ -533,7 +533,7 @@ margin-top: 10px;
   border-radius: 25px;
   /* background-color: rgb(250 250 250); */
   padding: 2px 0px;
-  margin: 2px 0px; 
+  margin: 2px 0px;
 }
 .cfws_cart_collaterals{
   margin-top:10px;

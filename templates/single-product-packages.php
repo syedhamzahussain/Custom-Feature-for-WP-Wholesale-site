@@ -6,25 +6,23 @@ $packages     = get_post_meta( $post->ID, 'cfws_packages', true );
 $costPerItem  = get_post_meta( $post->ID, 'cfws_unit_cost', true );
 $unitQunatity = get_post_meta( $post->ID, 'cfws_unit_quantity', true );
 $heading      = get_post_meta( $post->ID, 'cfws_heading', true );
-if(empty($unitQunatity )){
+if ( empty( $unitQunatity ) ) {
 	$unitQunatity = 1;
 }
-if(isset($packages ) &&  $packages != ''){
-	$maxValue     = $packages[ count( $packages ) - 1 ]['max'];
-	$price        = $product->get_price();
-	if(!empty($costPerItem)){
+if ( isset( $packages ) && $packages != '' ) {
+	$maxValue = $packages[ count( $packages ) - 1 ]['max'];
+	$price    = $product->get_price();
+	if ( ! empty( $costPerItem ) ) {
 
-		$profit       = $price - $costPerItem;
-	}
-	else{
+		$profit = $price - $costPerItem;
+	} else {
 		$profit = 0;
 	}
-}
-else{
+} else {
 
-	$maxValue     = '';
-	$price        = '';
-	$profit       = '';
+	$maxValue = '';
+	$price    = '';
+	$profit   = '';
 }
 ?>
 <div class="cfws_wrapper">
@@ -39,7 +37,7 @@ else{
 		<div class="cfws_price_packages">
 			<h4 class="cfws_sale">Price</h4>
 			<input type="hidden" id="max_package" name="max_package" value="<?php echo $maxValue; ?>" />
-			<?php if(isset($packages ) &&  $packages != ''){ ?>
+			<?php if ( isset( $packages ) && $packages != '' ) { ?>
 				<?php foreach ( $packages as $package ) { ?>
 					<div class="cfws_div_1"><?php echo $package['min']; ?> - <?php echo $package['max']; ?></div>
 					<?php

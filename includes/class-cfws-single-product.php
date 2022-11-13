@@ -22,15 +22,15 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 
 			add_shortcode( 'cfws_single_product', array( $this, 'single_product_shortcode_callback' ) );
 			add_action( 'wp', array( $this, 'front_hooks' ) );
-			
+
 			add_action( 'wp_ajax_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
 			add_action( 'wp_ajax_nopriv_cfws_get_price_by_quantity_ajax', 'cfws_get_price_by_quantity_ajax' );
-			
+
 			add_action( 'wp_ajax_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
 			add_action( 'wp_ajax_nopriv_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
 		}
-		
-		public function front_hooks() {			
+
+		public function front_hooks() {
 			// remove add to cart button.
 			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
 			// remove price.
@@ -41,7 +41,7 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 
 		}
 		public function cfws_cart_page_override( $template, $template_name, $template_path ) {
- 
+
 			if ( 'cart.php' === basename( $template ) ) {
 				$template = CFWS_TEMP_DIR . '/woocommerce/cart/cart.php';
 			}

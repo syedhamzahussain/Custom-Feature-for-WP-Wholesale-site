@@ -16,9 +16,9 @@
  */
 
 defined( 'ABSPATH' ) || exit;
-$user_id = get_current_user_id();
-$addresses = get_user_meta( $user_id, 'billing_address' );
-$default_billing_address = get_user_meta( $user_id, 'billing_default_address' );
+$user_id                  = get_current_user_id();
+$addresses                = get_user_meta( $user_id, 'billing_address' );
+$default_billing_address  = get_user_meta( $user_id, 'billing_default_address' );
 $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' );
 ?>
 <div class="cfws_cart_wrapper">
@@ -28,23 +28,24 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 				<div class="card-header">Billing Address</div>
 				<div class="card-body">
 				<?php if ( isset( $addresses ) && ! empty( $addresses ) ) : ?>
-					<?php foreach ( $addresses[0] as $key => $address ) :?>
+					<?php foreach ( $addresses[0] as $key => $address ) : ?>
 						<div class="form-check">
-							<?php 
-							if(!empty($default_billing_address) && $address['id'] == $default_billing_address[0]['id']){ ?>
-									<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="billing_address" id="billing_address_<?= $address['id'] ?>" checked >
-							<?php } elseif($key == 0){ ?>
-								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="billing_address" id="billing_address_<?= $address['id'] ?>" checked >
+							<?php
+							if ( ! empty( $default_billing_address ) && $address['id'] == $default_billing_address[0]['id'] ) {
+								?>
+									<input class="form-check-input" type="radio" value="<?php echo $address['id']; ?>" name="billing_address" id="billing_address_<?php echo $address['id']; ?>" checked >
+							<?php } elseif ( $key == 0 ) { ?>
+								<input class="form-check-input" type="radio" value="<?php echo $address['id']; ?>" name="billing_address" id="billing_address_<?php echo $address['id']; ?>" checked >
 
-							<?php } else{ ?>
-								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="billing_address" id="billing_address_<?= $address['id'] ?>" >
+							<?php } else { ?>
+								<input class="form-check-input" type="radio" value="<?php echo $address['id']; ?>" name="billing_address" id="billing_address_<?php echo $address['id']; ?>" >
 							<?php } ?>
-							<label class="form-check-label" for="billing_address_<?= $address['id'] ?>">
-								<?= $address['address_name'] ?>
+							<label class="form-check-label" for="billing_address_<?php echo $address['id']; ?>">
+								<?php echo $address['address_name']; ?>
 							</label>
 						</div>
 					<?php endforeach ?>
-				<?php else: ?>
+				<?php else : ?>
 					<h4><?php echo esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' ); ?></h4>
 				<?php endif ?>
 				</div>
@@ -55,24 +56,25 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 				<div class="card-header">Shipping Address</div>
 				<div class="card-body">
 				<?php if ( isset( $addresses ) && ! empty( $addresses ) ) : ?>
-					<?php foreach ( $addresses[0] as $key => $address ) :?>
+					<?php foreach ( $addresses[0] as $key => $address ) : ?>
 						<div class="form-check">
-							<?php 
+							<?php
 							// print_r($default_shipping_address[0]['id']); exit;
-							if(!empty($default_shipping_address) && $address['id'] == $default_shipping_address[0]['id']){ ?>
-									<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" checked >
-							<?php } elseif($key == 0){ ?>
-								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" checked >
+							if ( ! empty( $default_shipping_address ) && $address['id'] == $default_shipping_address[0]['id'] ) {
+								?>
+									<input class="form-check-input" type="radio" value="<?php echo $address['id']; ?>" name="shipping_address" id="shipping_address_<?php echo $address['id']; ?>" checked >
+							<?php } elseif ( $key == 0 ) { ?>
+								<input class="form-check-input" type="radio" value="<?php echo $address['id']; ?>" name="shipping_address" id="shipping_address_<?php echo $address['id']; ?>" checked >
 
-							<?php } else{ ?>
-								<input class="form-check-input" type="radio" value="<?= $address['id'] ?>" name="shipping_address" id="shipping_address_<?= $address['id'] ?>" >
+							<?php } else { ?>
+								<input class="form-check-input" type="radio" value="<?php echo $address['id']; ?>" name="shipping_address" id="shipping_address_<?php echo $address['id']; ?>" >
 							<?php } ?>
-							<label class="form-check-label" for="shipping_address_<?= $address['id'] ?>">
-								<?= $address['address_name'] ?>
+							<label class="form-check-label" for="shipping_address_<?php echo $address['id']; ?>">
+								<?php echo $address['address_name']; ?>
 							</label>
 						</div>
 					<?php endforeach ?>
-				<?php else: ?>
+				<?php else : ?>
 					<h4><?php echo esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' ); ?></h4>
 				<?php endif ?>
 				</div>
@@ -83,11 +85,11 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 				<div class="card-header">Totals</div>
 				<div class="card-body">
 					<div class="cfws_div_2 boxes">Subtotal</div>
-					<div class="cfws_div_1 boxes text-left"><?= WC()->cart->subtotal_ex_tax; ?></div>
+					<div class="cfws_div_1 boxes text-left"><?php echo WC()->cart->subtotal_ex_tax; ?></div>
 					<div class="cfws_div_2 boxes">Tax/Vat</div>
-					<div class="cfws_div_1 boxes text-left"><?= WC()->cart->get_taxes_total(); ?></div>
+					<div class="cfws_div_1 boxes text-left"><?php echo WC()->cart->get_taxes_total(); ?></div>
 					<div class="cfws_div_2">Totals</div>
-					<div class="cfws_div_1 text-left"><?= WC()->cart->total; ?></div>
+					<div class="cfws_div_1 text-left"><?php echo WC()->cart->total; ?></div>
 				<!-- </div> -->
 				<!-- <div class="card-footer"> -->
 					<div class="form-row place-order">
@@ -125,18 +127,18 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 
 								<td class="product-remove">
 									<?php
-								echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-									'woocommerce_cart_item_remove_link',
-									sprintf(
-										'<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
-										esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
-										esc_html__( 'Remove this item', 'woocommerce' ),
-										esc_attr( $product_id ),
-										esc_attr( $_product->get_sku() )
-									),
-									$cart_item_key
-								);
-								?>
+									echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										'woocommerce_cart_item_remove_link',
+										sprintf(
+											'<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
+											esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+											esc_html__( 'Remove this item', 'woocommerce' ),
+											esc_attr( $product_id ),
+											esc_attr( $_product->get_sku() )
+										),
+										$cart_item_key
+									);
+									?>
 							</td>
 
 							<td class="product-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>">
@@ -170,35 +172,35 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 									);
 								}
 
-						echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
-						?>
+								echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
+								?>
 					</td>
 
 					<td class="product-name" data-title="<?php esc_attr_e( 'Product', 'woocommerce' ); ?>">
-						<?php
-						if ( ! $product_permalink ) {
-							echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;' );
-						} else {
-							echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', sprintf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $_product->get_name() ), $cart_item, $cart_item_key ) );
-						}
+							<?php
+							if ( ! $product_permalink ) {
+								echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;' );
+							} else {
+								echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', sprintf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $_product->get_name() ), $cart_item, $cart_item_key ) );
+							}
 
-						do_action( 'woocommerce_after_cart_item_name', $cart_item, $cart_item_key );
+							do_action( 'woocommerce_after_cart_item_name', $cart_item, $cart_item_key );
 
-						// Meta data.
-						echo wc_get_formatted_cart_item_data( $cart_item ); // PHPCS: XSS ok.
+							// Meta data.
+							echo wc_get_formatted_cart_item_data( $cart_item ); // PHPCS: XSS ok.
 
-						// Backorder notification.
-						if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $cart_item['quantity'] ) ) {
-							echo wp_kses_post( apply_filters( 'woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__( 'Available on backorder', 'woocommerce' ) . '</p>', $product_id ) );
-						}
-						?>
+							// Backorder notification.
+							if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $cart_item['quantity'] ) ) {
+								echo wp_kses_post( apply_filters( 'woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__( 'Available on backorder', 'woocommerce' ) . '</p>', $product_id ) );
+							}
+							?>
 					</td>
 
 					<td class="product-thumbnail">
-						<?php
-						$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
+							<?php
+							$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 
-						if ( ! $product_permalink ) {
+							if ( ! $product_permalink ) {
 								echo $thumbnail; // PHPCS: XSS ok.
 							} else {
 								printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
@@ -206,10 +208,10 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 							?>
 						</td>
 					</tr>
-					<?php
-				}
-			}
-			?>
+							<?php
+						}
+					}
+					?>
 
 			<?php do_action( 'woocommerce_cart_contents' ); ?>
 

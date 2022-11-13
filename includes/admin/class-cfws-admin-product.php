@@ -150,7 +150,7 @@ if ( ! class_exists( 'CFWS_ADMIN_PRODUCT' ) ) {
 			$product      = wc_get_product( $post->ID );
 			$cfws_heading = get_post_meta( $post->ID, 'cfws_heading', true ) ? get_post_meta( $post->ID, 'cfws_heading', true ) : 'Package';
 
-			require_once(CFWS_TEMP_DIR . '/cfws-package-tab.php');
+			require_once CFWS_TEMP_DIR . '/cfws-package-tab.php';
 			?>
 			
 				<?php
