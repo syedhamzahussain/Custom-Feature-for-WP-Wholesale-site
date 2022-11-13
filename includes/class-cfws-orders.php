@@ -26,9 +26,16 @@ if ( ! class_exists( 'CFWS_ACCOUNT_ORDERS' ) ) {
 			add_action( 'wp_ajax_cfws_place_order', array( $this, 'cfws_place_order' ) );
 			add_action( 'wp_ajax_nopriv_cfws_place_order', array( $this, 'cfws_place_order' ) );
 
+			// Add order item meta.
+			add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_order_item_meta' ),10, 3 );
+
 		}
 
-
+		public function add_order_item_meta ( $item_id, $cart_item, $cart_item_key ) {
+			if ( isset( $cart_item[ 'offered_price' ] ) && $cart_item[ 'offered_price' ] != 'false' ) {
+				wc_add_order_item_meta( $item_id, __( "Offered Unit Price", "cfws"), $cart_item[ 'offered_price' ] );
+			}
+		}
 
 		/**
 		 * Function for `woocommerce_before_account_orders` action-hook.
