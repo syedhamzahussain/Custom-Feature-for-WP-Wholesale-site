@@ -31,6 +31,16 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
 			// changing html of unit price on mini cart.
 			add_filter( 'woocommerce_widget_cart_item_quantity', array( $this, 'change_product_price_display_min_cart' ), 99, 3 );
 
+			add_filter( 'woocommerce_locate_template', array( $this, 'cfws_cart_page_override' ), 10, 3 );
+
+		}
+
+		public function cfws_cart_page_override( $template, $template_name, $template_path ) {
+
+			if ( 'cart.php' === basename( $template ) ) {
+				$template = CFWS_TEMP_DIR . '/woocommerce/cart/cart.php';
+			}
+			return $template;
 		}
 
 		public function change_product_price_display( $price, $cart_item, $cart_item_key ) {

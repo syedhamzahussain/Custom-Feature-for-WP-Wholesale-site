@@ -31,21 +31,17 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 		}
 
 		public function front_hooks() {
-			// remove add to cart button.
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
-			// remove price.
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+			global $post;
+			
+			if( is_single() && 'simple' == wc_get_product( $post->ID )->get_type() ){
+				// remove add to cart button.
+				remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+				// remove price.
+				remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 
-			add_action( 'woocommerce_product_meta_start', array( $this, 'show_packages_info' ), 10 );
-			add_filter( 'woocommerce_locate_template', array( $this, 'cfws_cart_page_override' ), 10, 3 );
-
-		}
-		public function cfws_cart_page_override( $template, $template_name, $template_path ) {
-
-			if ( 'cart.php' === basename( $template ) ) {
-				$template = CFWS_TEMP_DIR . '/woocommerce/cart/cart.php';
+				add_action( 'woocommerce_product_meta_start', array( $this, 'show_packages_info' ), 10 );
 			}
-			return $template;
+
 		}
 
 		public function show_packages_info() {
