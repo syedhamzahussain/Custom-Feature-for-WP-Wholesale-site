@@ -19,9 +19,10 @@ function cfws_add_to_cart_ajax() {
 	$product_id   = isset( $_REQUEST['product_id'] ) ? $_REQUEST['product_id'] : 0;
 	$quantity   = isset( $_REQUEST['qty'] ) ? $_REQUEST['qty'] : 1;
 	$price   = isset( $_REQUEST['price'] ) ? $_REQUEST['price'] : 0;
-	$offered_price   = isset( $_REQUEST['offered_price'] ) ? $_REQUEST['offered_price'] : false;
+	$offered_price   = isset( $_REQUEST['offered_price'] ) ? $_REQUEST['offered_price'] : '';
+	
 	$meta = [];
-	if($offered_price){
+	if( !empty($offered_price) && $offered_price != false){
 		$meta['offered_price'] = $offered_price;
 	}
 	

@@ -34,7 +34,8 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
 
 		public function change_product_price_display( $price , $cart_item, $cart_item_key ) {
 			global  $woocommerce;
-			if( array_key_exists( 'offered_price', $cart_item ) &&  ( !empty( $cart_item['offered_price'] ) && $cart_item['offered_price'] != false) ) {
+			
+			if( isset( $cart_item['offered_price'] ) &&  ( !empty( $cart_item['offered_price'] ) && $cart_item['offered_price'] != 'false' ) ) {
 				$price = get_woocommerce_currency_symbol()."<input name='cfws_custom_cart_price' class='cfws_custom_cart_price' value='".$cart_item[ 'offered_price' ]."'/>";
 			}
 
@@ -42,8 +43,9 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
 		}
 
 		public function change_product_price_display_min_cart( $html , $cart_item, $cart_item_key  ) {
-				if( array_key_exists( 'offered_price', $cart_item ) &&  ( false != $cart_item['offered_price'] ) ) {
-				 	$html = '<span class="quantity">' . sprintf( '%s &times; %s', $cart_item['quantity'], $cart_item['offered_price'] ) . '</span> hi';
+
+				if( isset( $cart_item['offered_price'] ) &&  ( !empty( $cart_item['offered_price'] ) && $cart_item['offered_price'] != 'false' ) ) {
+				 	$html = '<span class="quantity">' . sprintf( '%s &times; %s', $cart_item['quantity'], wc_price( $cart_item['offered_price'] ) ) . '</span>';
 				}
 			
 
@@ -54,8 +56,16 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
 
 			foreach ( $cart_object->get_cart() as $item ) {
 
-				if( array_key_exists( 'offered_price', $item ) &&  ( false != $item['offered_price'] ) ) {
+				if( isset( $item['offered_price'] ) &&  ( !empty( $item['offered_price'] ) && $item['offered_price'] != 'false' ) ) {
+
+					// when offered price applicable.
 					$item[ 'data' ]->set_price( $item['offered_price'] );
+				}
+				else{
+					// get price based on range if no offered price applicable.
+					$product_id = $item['product_id'];
+					$quantity = $item['quantity'];
+					$item[ 'data' ]->set_price( cfws_get_price_by_quantity( $quantity, $product_id ) );
 				}
 
 			}
