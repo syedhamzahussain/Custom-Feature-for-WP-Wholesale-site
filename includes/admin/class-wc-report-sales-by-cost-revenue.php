@@ -51,6 +51,39 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 		 */
 		private $cost_sales_and_times = array();
 
+		public function getStartAndEndDate() {
+			$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( wp_unslash( $_GET['range'] ) ) : '7day';
+
+			if ( $current_range == '7day' ) {
+
+				$start_date = date( 'Y-m-d', strtotime( '-7 days' ) );
+				$end_date   = date( 'Y-m-d' );
+
+			} elseif ( $current_range == 'month' ) {
+
+				$start_date = date( 'Y-m-01' );
+				$end_date   = date( 'Y-m-d' );
+
+			} elseif ( $current_range == 'last_month' ) {
+
+				$start_date = date( 'Y-m-d', strtotime( 'first day of last month' ) );
+				$end_date   = date( 'Y-m-d', strtotime( 'last day of last month' ) );
+
+			} elseif ( $current_range == 'year' ) {
+
+				$start_date = date( 'Y-m-d', strtotime( 'first day of january this year' ) );
+				$end_date   = date( 'Y-m-d' );
+
+			} elseif ( $current_range == 'custom' ) {
+
+				$start_date = $_GET['start_date'];
+				$end_date   = $_GET['end_date'];
+
+			}
+
+			return array( $start_date, $end_date );
+		}
+
 
 		public function get_revenue_total( $order_id = null ) {
 			$args_completed = array(
@@ -59,6 +92,19 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			);
 			$total          = 0;
 			if ( $order_id == null ) {
+
+				$dateRange        = $this->getStartAndEndDate();
+				$args_completed   = array(
+					'status'     => array( 'wc-completed' ),
+					'limit'      => -1,
+					'date_query' => array(
+						array(
+							'after'     => $dateRange[0],
+							'before'    => $dateRange[1],
+							'inclusive' => true,
+						),
+					),
+				);
 				$completed_orders = wc_get_orders( $args_completed );
 
 				if ( $completed_orders ) {
@@ -93,9 +139,21 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			);
 			$total          = 0;
 			if ( $order_id == null ) {
+
+				$dateRange        = $this->getStartAndEndDate();
+				$args_completed   = array(
+					'status'     => array( 'wc-completed' ),
+					'limit'      => -1,
+					'date_query' => array(
+						array(
+							'after'     => $dateRange[0],
+							'before'    => $dateRange[1],
+							'inclusive' => true,
+						),
+					),
+				);
 				$completed_orders = wc_get_orders( $args_completed );
 
-				// var_dump($completed_orders); die();
 				if ( $completed_orders ) {
 					foreach ( $completed_orders as $key => $order ) {
 
@@ -178,14 +236,14 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 
 			if ( is_array( $orders ) ) {
 				foreach ( $orders as $order ) {
-					// $formated_date = $order->get_date_completed();
+
 					switch ( $this->chart_groupby ) {
 						case 'day':
-							$time = date( strtotime( $order->post_date ) );
+							$time = strtotime( current_time( 'Ymd', strtotime( $order->get_date_completed()->date( 'Y-m-d' ) ) ) ) * 1000;
 							break;
 						case 'month':
 						default:
-							$time = date( strtotime( $order->post_date ) );
+							$time = strtotime( current_time( 'Ym', strtotime( $order->get_date_completed()->date( 'Y-m' ) ) ) . '01' ) * 1000;
 							break;
 					}
 
