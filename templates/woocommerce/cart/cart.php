@@ -123,7 +123,7 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 						if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
 							$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
 							?>
-							<tr class="woocommerce-cart-form__cart-item <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
+							<tr class="woocommerce-cart-form__cart-item <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product_id="<?= $_product->id ?>">
 
 								<td class="product-remove">
 									<?php
@@ -166,6 +166,7 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 											'max_value'    => $_product->get_max_purchase_quantity(),
 											'min_value'    => '0',
 											'product_name' => $_product->get_name(),
+											'product_id' => $_product->id,
 										),
 										$_product,
 										false
@@ -174,6 +175,7 @@ $default_shipping_address = get_user_meta( $user_id, 'shipping_default_address' 
 
 								echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
 								?>
+								<input type="hidden" id="product_id" value="<?= $_product->id ?>" />
 					</td>
 
 					<td class="product-name" data-title="<?php esc_attr_e( 'Product', 'woocommerce' ); ?>">

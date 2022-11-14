@@ -28,6 +28,9 @@ if ( ! class_exists( 'CFWS_SINGLE_PRODUCT' ) ) {
 
 			add_action( 'wp_ajax_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
 			add_action( 'wp_ajax_nopriv_cfws_add_to_cart_ajax', 'cfws_add_to_cart_ajax' );
+
+			add_action( 'wp_ajax_cfws_check_offered_price', 'cfws_check_offered_price' );
+			add_action( 'wp_ajax_nopriv_cfws_check_offered_price', 'cfws_check_offered_price' );
 		}
 
 		public function front_hooks() {
