@@ -21,8 +21,18 @@ if ( ! class_exists( 'CFWS_ADMIN_ORDER' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'admin_init', array( $this, 'cfws_pending_review_order_status' ) );
-		}
+			add_filter( 'wc_order_is_editable', array($this, 'cfws_wc_order_is_editable'), 10, 2);
 
+		}
+		public function cfws_wc_order_is_editable( $editable, $order ) {
+			// Compare
+			// print_r($order->get_status()); die();
+			if ( $order->get_status() == 'pending-review' ) {
+				$editable = true;
+			}
+			
+			return $editable;
+		}
 		public function cfws_pending_review_order_status() {
 			register_post_status(
 				'wc-pending-review',

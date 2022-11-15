@@ -29,8 +29,16 @@ if ( ! class_exists( 'CFWS_ACCOUNT_ORDERS' ) ) {
 			// Add order item meta.
 			add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_order_item_meta' ),10, 3 );
 
-		}
 
+			add_filter( 'woocommerce_locate_template', array( $this, 'cfws_pay_for_order_override' ), 10, 3 );
+		}
+		public function cfws_pay_for_order_override( $template, $template_name, $template_path ) {
+
+			if ( 'form-pay.php' === basename( $template ) ) {
+				$template = CFWS_TEMP_DIR . '/woocommerce/checkout/form-pay.php';
+			}
+			return $template;
+		}
 		public function add_order_item_meta ( $item_id, $cart_item, $cart_item_key ) {
 			if ( isset( $cart_item[ 'offered_price' ] ) && $cart_item[ 'offered_price' ] != 'false' ) {
 				wc_add_order_item_meta( $item_id, __( "Offered Unit Price", "cfws"), $cart_item[ 'offered_price' ] );

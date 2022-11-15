@@ -50,39 +50,42 @@ jQuery(document).ready(function ($) {
   $("#cfws_add_to_cart").click(function () {
     var qty = $(".qty").val();
     var price = $("#cfws_product_unit_price").html();
-    var offered_price = $("#cfws_product_unit_price").val();
+    // var offered_price = $("#cfws_product_unit_price").val();
+    // console.
     
-    if(offered_price != ''){
-      jQuery.ajax({
-        url: cfws_obj.ajaxurl,
-        type: "get",
-        dataType : 'json',
-        data: {
-          action: "cfws_add_to_cart_ajax",
-          qty: qty,
-          price: price,
-          product_id: cfws_obj.product_id,
-          offered_price: offered_price,
-        },
-        success: function (result) {
-        },
-      }).done( function (response) {
+    if($('#offered_price').is(':visible')){
+      var offered_price = $("#offered_price").val();
+      console.log(offered_price);
+      if(offered_price != ''){
+        jQuery.ajax({
+          url: cfws_obj.ajaxurl,
+          type: "get",
+          dataType : 'json',
+          data: {
+            action: "cfws_add_to_cart_ajax",
+            qty: qty,
+            price: price,
+            product_id: cfws_obj.product_id,
+            offered_price: offered_price,
+          },
+          success: function (result) {
+          },
+        }).done( function (response) {
 
-        if( response.error != 'undefined' && response.error ){
-              //some kind of error processing or just redirect to link
-              // might be a good idea to link to the single product page in case JS is disabled
-          return true;
-        } else {
-          window.location.href = cfws_obj.cart_page_url;
-        }
-      });
-    }
-    else{
-      if($('#offered_price').is(':visible')){
-        alert('Your Must have to fill Offer your price');
+          if( response.error != 'undefined' && response.error ){
+                //some kind of error processing or just redirect to link
+                // might be a good idea to link to the single product page in case JS is disabled
+            return true;
+          } else {
+            window.location.href = cfws_obj.cart_page_url;
+          }
+        });
       }
       else{
-        
+        alert('Must have to fill Offered Price');
+      }
+    }
+    else{
       jQuery.ajax({
         url: cfws_obj.ajaxurl,
         type: "get",
@@ -92,7 +95,7 @@ jQuery(document).ready(function ($) {
           qty: qty,
           price: price,
           product_id: cfws_obj.product_id,
-          offered_price: offered_price,
+          offered_price: false,
         },
         success: function (result) {
         },
@@ -106,8 +109,8 @@ jQuery(document).ready(function ($) {
           window.location.href = cfws_obj.cart_page_url;
         }
       });
-      }
     }
+    
   });
   if(window.location.href == cfws_obj.cart_page_url){
     $(".qty").change(function () {
@@ -155,6 +158,30 @@ jQuery(document).ready(function ($) {
       });
     });
   }
+  $("input[name=payment_method]").change(function () {
+    var payment_method = $(this).val();
+    if(payment_method == 'bacs'){
+      $('#cfws_payment_file').attr('required',true);
+      $('#cfws_payment').show();
+    }
+    else{
+      $('#cfws_payment_file').removeAttr('required');
+      $('#cfws_payment').hide();
+      
+    }
+  });
+  $("#place_order").click(function (e) {
+    if($('#cfws_payment_file').is(':visible')){
+      if($('#cfws_payment_file').val() == ''){
+        alert('Must have to attach file to Pay for Order');
+        e.preventDefault();
+      }
+      else{
+        
+      }
+    }
+
+  });
   $("#cfws_place_order").click(function () {
     var billing_address = $("input[name='billing_address']:checked").val();
     var shippping_address = $("input[name='shippping_address']:checked").val();

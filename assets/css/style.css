@@ -547,3 +547,7 @@ hr.cfws_hr {
 .cfws_custom_cart_price {
   max-width: 80%;
 }
+
+#cfws_payment_file{
+  margin: 10px 0px;
+}
