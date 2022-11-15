@@ -61,7 +61,7 @@ function cfws_get_price_by_quantity( $quantity, $product_id ) {
 
 	wp_die();
 }
-function cfws_check_offered_price() {
+function cfws_check_offered_price_ajax() {
 	$quantity   = isset( $_REQUEST['qty'] ) ? $_REQUEST['qty'] : 1;
 	$product_id = isset( $_REQUEST['product_id'] ) ? $_REQUEST['product_id'] : false;
 	$price      = 0;
@@ -88,6 +88,33 @@ function cfws_check_offered_price() {
 		return wp_send_json(0);
 	}
 
+	wp_die();
+}
+function cfws_check_offered_price($cart_item = array()) {
+	$product_id = isset( $cart_item['product_id'] ) ? $cart_item['product_id'] : false;
+	$quantity   = isset( $cart_item['quantity'] ) ? $cart_item['quantity'] : 1;
+	if ( $product_id ) {
+		$packages     = get_post_meta( $product_id, 'cfws_packages', true );
+		if(isset($packages) && !empty($packages)){
+
+			$costPerItem  = get_post_meta( $product_id, 'cfws_unit_cost', true );
+			$unitQunatity = get_post_meta( $product_id, 'cfws_unit_quantity', true );
+			$product      = wc_get_product( $product_id );
+			$price        = $product->get_price();
+			$profit       = $price - $costPerItem;
+			$allPkgMax    = array();
+			foreach ( $packages as $package ) {
+				$allPkgMax[] = $package['max'];
+			}
+			$max = (int) max( $allPkgMax );
+			if($max < (int)$quantity)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
 	wp_die();
 }
 

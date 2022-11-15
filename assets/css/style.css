@@ -32,7 +32,7 @@
   display: inline-block;
 }
 .cfws_div_2 {
-  text-align: right;
+  text-align: left;
 }
 hr.cfws_hr {
   border-bottom: 1px dotted black;
@@ -77,10 +77,10 @@ hr.cfws_hr {
   margin-top: 10px;
 }
 .quantity {
-  float: right !important;
+  float: left !important;
 }
 #offered_price {
-  float: right;
+  float: left !important;
 }
 #offered_price,
 .qty {

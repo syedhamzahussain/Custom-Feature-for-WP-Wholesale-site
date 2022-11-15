@@ -1,0 +1,208 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Solcoders
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-15 15:37+0500\n"
+"PO-Revision-Date: 2022-11-15 15:40+0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Eazy Po 1.0.0.0\n"
+
+#: includes/class-cfws-address.php:103
+msgid "Address has been edited successfully"
+msgstr ""
+
+#: includes/class-cfws-address.php:150
+msgid "Address has been added successfully"
+msgstr ""
+
+#: includes/class-cfws-orders.php:36
+msgid "Offered Unit Price"
+msgstr ""
+
+#: includes/admin/class-cfws-admin-orders.php:35
+#, php-format
+msgid "Pending Review <span class=\"count\">(%s)</span>"
+msgid_plural "Pending Review <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/class-cfws-admin-product.php:40
+#: includes/admin/class-cfws-admin-product.php:210
+msgid "Quantity per Unit"
+msgstr ""
+
+#: includes/admin/class-cfws-admin-product.php:41
+#: includes/admin/class-cfws-admin-product.php:211
+msgid "Set quantity per unit"
+msgstr ""
+
+#: includes/admin/class-cfws-admin-product.php:54
+#: includes/admin/class-cfws-admin-product.php:55
+#: includes/admin/class-cfws-admin-product.php:224
+#: includes/admin/class-cfws-admin-product.php:225
+msgid "Unit Cost"
+msgstr ""
+
+#: includes/admin/class-cfws-admin-product.php:136
+msgid "Packages Table"
+msgstr ""
+
+#: includes/admin/class-cfws-admin-product.php:227
+msgid "Set the cost for a unit."
+msgstr ""
+
+#: includes/admin/class-cfws-admin-report.php:36
+msgid "Revenue/Cost Report"
+msgstr ""
+
+#: includes/admin/class-wc-report-sales-by-cost-revenue.php:191
+#: includes/admin/class-wc-report-sales-by-cost-revenue.php:198
+#, php-format
+msgid "%1$s %2$s"
+msgstr ""
+
+#: includes/admin/class-wc-report-sales-by-cost-revenue.php:212
+msgid "Year"
+msgstr ""
+
+#: includes/admin/class-wc-report-sales-by-cost-revenue.php:213
+msgid "Last month"
+msgstr ""
+
+#: includes/admin/class-wc-report-sales-by-cost-revenue.php:214
+msgid "This month"
+msgstr ""
+
+#: includes/admin/class-wc-report-sales-by-cost-revenue.php:215
+msgid "Last 7 days"
+msgstr ""
+
+#: includes/admin/class-wc-report-sales-by-cost-revenue.php:301
+msgid "Date"
+msgstr ""
+
+#: includes/admin/class-wc-report-sales-by-cost-revenue.php:304
+msgid "Export CSV"
+msgstr ""
+
+#: templates/admin/report-by-cost-revenue.php:42
+msgid "Custom:"
+msgstr ""
+
+#: templates/admin/report-by-cost-revenue.php:61
+msgid "Go"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:49
+#: templates/woocommerce/cart/cart.php:78
+#: templates/woocommerce/myaccount/my-address.php:103
+msgid "You have not set up this type of address yet."
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:108
+#: templates/woocommerce/cart/cart.php:145
+msgid "Subtotal"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:109
+msgid "Unit Price / Offered Price"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:110
+#: templates/woocommerce/cart/cart.php:171
+msgid "Quantity"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:111
+msgid "Product Title"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:112
+msgid "Image"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:136
+msgid "Remove this item"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:152
+msgid "Price"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:195
+msgid "Product"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:210
+msgid "Available on backorder"
+msgstr ""
+
+#: templates/woocommerce/cart/cart.php:238
+msgid "Update cart"
+msgstr ""
+
+#: templates/woocommerce/myaccount/form-edit-address.php:20
+msgid "عنوان الفاتورۃ"
+msgstr ""
+
+#: templates/woocommerce/myaccount/form-edit-address.php:20
+msgid "Shipping address"
+msgstr ""
+
+#: templates/woocommerce/myaccount/form-edit-address.php:51
+msgid "Address Title"
+msgstr ""
+
+#: templates/woocommerce/myaccount/form-edit-address.php:73
+msgid "Save address"
+msgstr ""
+
+#: templates/woocommerce/myaccount/my-address.php:31
+msgid "The following addresses will be used on the checkout page by default."
+msgstr ""
+
+#: templates/woocommerce/myaccount/my-address.php:33
+msgid "Add Address"
+msgstr ""
+
+#: templates/woocommerce/myaccount/my-address.php:57
+msgid "Edit Address"
+msgstr ""
+
+#: templates/woocommerce/myaccount/my-address.php:63
+#: templates/woocommerce/myaccount/my-address.php:70
+msgid "Set as Default Billing Address"
+msgstr ""
+
+#: templates/woocommerce/myaccount/my-address.php:65
+msgid "Already set as Default Billing"
+msgstr ""
+
+#: templates/woocommerce/myaccount/my-address.php:77
+#: templates/woocommerce/myaccount/my-address.php:84
+msgid "Set as Default Shipping Address"
+msgstr ""
+
+#: templates/woocommerce/myaccount/my-address.php:79
+msgid "Already set as Default Shipping"
+msgstr ""
+
+#: templates/woocommerce/myaccount/my-address.php:124
+msgid "You have not set default billing address yet."
+msgstr ""
+
+#: templates/woocommerce/myaccount/my-address.php:148
+msgid "You have not set default shipping address yet."
+msgstr ""

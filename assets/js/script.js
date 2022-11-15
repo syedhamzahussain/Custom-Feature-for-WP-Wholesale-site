@@ -50,10 +50,9 @@ jQuery(document).ready(function ($) {
   $("#cfws_add_to_cart").click(function () {
     var qty = $(".qty").val();
     var price = $("#cfws_product_unit_price").html();
-    var offered_price = $("#offered_price").val();
-
+    var offered_price = $("#cfws_product_unit_price").val();
+    
     if(offered_price != ''){
-      offered_price = offered_price;
       jQuery.ajax({
         url: cfws_obj.ajaxurl,
         type: "get",
@@ -79,7 +78,35 @@ jQuery(document).ready(function ($) {
       });
     }
     else{
-      alert('Your Must have to fill Offer your price');
+      if($('#offered_price').is(':visible')){
+        alert('Your Must have to fill Offer your price');
+      }
+      else{
+        
+      jQuery.ajax({
+        url: cfws_obj.ajaxurl,
+        type: "get",
+        dataType : 'json',
+        data: {
+          action: "cfws_add_to_cart_ajax",
+          qty: qty,
+          price: price,
+          product_id: cfws_obj.product_id,
+          offered_price: offered_price,
+        },
+        success: function (result) {
+        },
+      }).done( function (response) {
+
+        if( response.error != 'undefined' && response.error ){
+              //some kind of error processing or just redirect to link
+              // might be a good idea to link to the single product page in case JS is disabled
+          return true;
+        } else {
+          window.location.href = cfws_obj.cart_page_url;
+        }
+      });
+      }
     }
   });
   if(window.location.href == cfws_obj.cart_page_url){
@@ -93,7 +120,7 @@ jQuery(document).ready(function ($) {
         url: cfws_obj.ajaxurl,
         type: "get",
         data: {
-          action: "cfws_check_offered_price",
+          action: "cfws_check_offered_price_ajax",
           qty: qty,
           product_id: product_id,
         },

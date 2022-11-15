@@ -21,6 +21,7 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
 		public function __construct() {
 			add_action( 'wp', array( $this, 'front_hooks' ) );
 			add_filter( 'woocommerce_update_cart_action_cart_updated', array( $this, 'recalculate_price_on_update_cart' ), 10, 1 );
+			add_action( 'woocommerce_before_checkout_form', array( $this, 'redirect_to_cart' ) );
 		}
 
 		public function front_hooks() {
@@ -53,6 +54,13 @@ if ( ! class_exists( 'CFWS_CART' ) ) {
 			return $price;
 		}
 
+		public function redirect_to_cart() {
+		
+			$url = wc_get_cart_url();
+			return wp_safe_redirect( $url );
+		
+		}
+		
 		public function change_product_price_display_min_cart( $html, $cart_item, $cart_item_key ) {
 
 			if ( isset( $cart_item['offered_price'] ) && ( ! empty( $cart_item['offered_price'] ) && $cart_item['offered_price'] != 'false' ) ) {
