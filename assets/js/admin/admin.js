@@ -119,3 +119,11 @@ function addPackage() {
 
   fillFields(null, null, null, null);
 }
+
+jQuery(document).ready(function ($) {
+  // working on first time click only, not working after canceling the edit.... Have to figure out
+  $(".edit-order-item").click(function (e) {
+    $("#custom_value_without_edit").hide();
+    $("#custom_value_with_edit").show();
+  });
+});

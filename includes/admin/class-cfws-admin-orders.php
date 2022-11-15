@@ -22,17 +22,42 @@ if ( ! class_exists( 'CFWS_ADMIN_ORDER' ) ) {
 		public function __construct() {
 			add_action( 'admin_init', array( $this, 'cfws_pending_review_order_status' ) );
 			add_filter( 'wc_order_is_editable', array($this, 'cfws_wc_order_is_editable'), 10, 2);
-
+			add_action('woocommerce_admin_order_item_headers', array($this,'cfws_admin_order_item_custom_header'));
+			add_action('woocommerce_admin_order_item_values', array($this, 'cfws_admin_order_item_custom_value'), 10, 3);
+			
 		}
+
+
+		
+		public function cfws_admin_order_item_custom_header() {
+			// set the column name
+			$column_name = 'Unit Cost';
+		
+			echo '<th>' . $column_name . '</th>';
+		}
+
+		public function cfws_admin_order_item_custom_value($_product, $item, $item_id = null) {
+			
+			$value = get_post_meta( $_product->post->ID, 'cfws_unit_cost', true );
+		
+			// display the value
+			echo '<td><input name="cfws_custom_unit_cost_of_' . $_product->post->ID . '" type="number" step="0.01" value="' . $value . '" style="display:none" id="custom_value_with_edit"/><span id="custom_value_without_edit">' . $value . '</span></td>';
+
+			
+			
+		}
+
 		public function cfws_wc_order_is_editable( $editable, $order ) {
 			// Compare
 			// print_r($order->get_status()); die();
-			if ( $order->get_status() == 'wc-pending-review' ) {
+			if ( $order->get_status() == 'pending-review' ) {
 				$editable = true;
 			}
 			
 			return $editable;
 		}
+
+		
 		public function cfws_pending_review_order_status() {
 			register_post_status(
 				'wc-pending-review',
