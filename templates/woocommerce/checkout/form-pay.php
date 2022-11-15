@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 $totals = $order->get_order_item_totals(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 ?>
-<form id="order_review" method="post">
+<form id="order_review" method="post" enctype="multipart/form-data">
 
 	<table class="shop_table">
 		<thead>
@@ -92,6 +92,7 @@ $totals = $order->get_order_item_totals(); // phpcs:ignore WordPress.WP.GlobalVa
 		<?php endif; ?>
 		<div class="form-row">
 			<input type="hidden" name="woocommerce_pay" value="1" />
+			<input type="hidden" id="order_id" value="<?= $order->id; ?>" />
 
 			<?php wc_get_template( 'checkout/terms.php' ); ?>
 

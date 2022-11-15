@@ -163,25 +163,63 @@ jQuery(document).ready(function ($) {
     if(payment_method == 'bacs'){
       $('#cfws_payment_file').attr('required',true);
       $('#cfws_payment').show();
+      $("#place_order").attr('type','button');
     }
     else{
       $('#cfws_payment_file').removeAttr('required');
       $('#cfws_payment').hide();
-      
+      $("#place_order").attr('type','submit');
     }
   });
-  $("#place_order").click(function (e) {
-    if($('#cfws_payment_file').is(':visible')){
-      if($('#cfws_payment_file').val() == ''){
-        alert('Must have to attach file to Pay for Order');
-        e.preventDefault();
-      }
-      else{
-        
-      }
-    }
+  // var payment_method = $("input[name=payment_method]").val();
+  // if(payment_method == 'bacs'){
+  //   $('#cfws_payment_file').attr('required',true);
+  //   $('#cfws_payment').show();
+  //   $("#place_order").attr('type','button');
+  // }
+  // else{
+  //   $('#cfws_payment_file').removeAttr('required');
+  //   $('#cfws_payment').hide();
+  //   $("#place_order").attr('type','submit');
+  // }
+  // $("#place_order").click(function (e) {
+  //   if($('#cfws_payment_file').is(':visible')){
+  //     if($('#cfws_payment_file').val() == ''){
+  //       alert('Must have to attach file to Pay for Order');
+  //       e.preventDefault();
+  //     }
+  //     else{
+  //       var cfws_payment_file = $('#cfws_payment_file')[0].files[0];
+  //       var order_id = $('#order_id').val();
+  //       jQuery.ajax({
+  //         url: cfws_obj.ajaxurl,
+  //         type: "get",
+  //         data: {
+  //           action: "cfws_place_order_with_slip",
+  //           order_id: order_id,
+  //           cfws_payment_file: cfws_payment_file,
+  //         },
+  //         success: function (result) {
+  //         },
+  //       }).done( function (response) {
+  //         console.log(response);
+    
+  //         // if( response.error != 'undefined' && response.error ){
+  //         //     //some kind of error processing or just redirect to link
+  //         //     // might be a good idea to link to the single product page in case JS is disabled
+  //         //   return true;
+  //         // } else {
+  //         //   // console.log('test');
+  //         //   console.log(response);
+  //         //   // $("#place_order").attr('type','submit');
+  //         //   // $( "#place_order" ).trigger( "click" );
+  //         // }
+  //       });
 
-  });
+  //     }
+  //   }
+
+  // });
   $("#cfws_place_order").click(function () {
     var billing_address = $("input[name='billing_address']:checked").val();
     var shippping_address = $("input[name='shippping_address']:checked").val();

@@ -27,7 +27,7 @@ if ( ! class_exists( 'CFWS_ADMIN_ORDER' ) ) {
 		public function cfws_wc_order_is_editable( $editable, $order ) {
 			// Compare
 			// print_r($order->get_status()); die();
-			if ( $order->get_status() == 'pending-review' ) {
+			if ( $order->get_status() == 'wc-pending-review' ) {
 				$editable = true;
 			}
 			

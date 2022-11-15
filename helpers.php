@@ -90,6 +90,13 @@ function cfws_check_offered_price_ajax() {
 
 	wp_die();
 }
+
+
+function my_custom_checkout_field_process() {
+    // Check if set, if its not set add an error.
+    if ( ! $_POST['my_field_name'] )
+        wc_add_notice( __( 'Please enter something into this new shiny field.' ), 'error' );
+}
 function cfws_check_offered_price($cart_item = array()) {
 	$product_id = isset( $cart_item['product_id'] ) ? $cart_item['product_id'] : false;
 	$quantity   = isset( $cart_item['quantity'] ) ? $cart_item['quantity'] : 1;

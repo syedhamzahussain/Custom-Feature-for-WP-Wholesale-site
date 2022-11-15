@@ -26,9 +26,16 @@ if ( ! class_exists( 'CFWS_ACCOUNT_ORDERS' ) ) {
 			add_action( 'wp_ajax_cfws_place_order', array( $this, 'cfws_place_order' ) );
 			add_action( 'wp_ajax_nopriv_cfws_place_order', array( $this, 'cfws_place_order' ) );
 
+			// add_action( 'wp_ajax_cfws_place_order_with_slip', array( $this, 'cfws_place_order_with_slip' ) );
+			// add_action( 'wp_ajax_nopriv_cfws_place_order_with_slip', array( $this, 'cfws_place_order_with_slip' ) );
+
 			// Add order item meta.
 			add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_order_item_meta' ),10, 3 );
-
+			
+			
+			// Add checkout process validation.
+			// add_action( 'woocommerce_checkout_process', array( $this, 'cfws_place_order_slip_validation' ),10, 3 );
+			add_action('woocommerce_checkout_process', 'my_custom_checkout_field_process');
 
 			add_filter( 'woocommerce_locate_template', array( $this, 'cfws_pay_for_order_override' ), 10, 3 );
 		}
@@ -90,6 +97,28 @@ if ( ! class_exists( 'CFWS_ACCOUNT_ORDERS' ) ) {
 
 			require_once CFWS_TEMP_DIR . '/my-orders-cards.php';
 
+		}
+		public function cfws_place_order_slip_validation() {
+			$order_id   = $_REQUEST['order_id']; 	
+			$order    = wc_get_order( $order_id );
+
+			if (empty( $_REQUEST['cfws_payment_file']['name'] ) ) {
+				wc_add_notice( __( 'Your phone number is wrong.' ), 'error' );
+			}
+			// return wp_send_json($_REQUEST['cfws_payment_file']['name']);
+
+			if ( ! empty( $_FILES['cfws_payment_file']['name'] ) ) {
+				require_once ABSPATH . 'wp-admin/includes/image.php';
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+				require_once ABSPATH . 'wp-admin/includes/media.php';
+				$file_id = media_handle_upload( 'cfws_payment_file', 0 );
+				$order->update_post_meta( 'cfws_payment_file', $file_id );
+				$order->save();
+
+				// update_post_meta( $order_id, 'cfws_payment_file', $file_id );
+				return wp_send_json(1);
+			}
+			return wp_send_json(0);
 		}
 		public function cfws_place_order() {
 
