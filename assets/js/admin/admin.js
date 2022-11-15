@@ -2,9 +2,18 @@ var $ = jQuery;
 jQuery(document).ready(function ($) {
   if (cfws_obj.is_product) {
     $("#post").submit(function (e) {
+      // alert($('input[name="cfws_unit_cost"]'));
       if ($('input[name="cfws_min_unit[]"]').length == 0) {
         e.preventDefault();
         alert("Please add atleast one package to continue");
+      }
+      if ($('input[name="cfws_unit_cost"]').val() == "") {
+        e.preventDefault();
+        alert("Please add unit cost to continue");
+      }
+      if ($('input[name="cfws_unit_quantity"]').val() == "") {
+        e.preventDefault();
+        alert("Please add unit quantity to continue");
       }
     });
   }
