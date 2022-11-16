@@ -60,6 +60,7 @@ if ( ! class_exists( 'CFWS_LOADER' ) ) {
 				'cfws_obj',
 				array(
 					'is_product' => $is_product,
+					'ajaxurl'    => admin_url( 'admin-ajax.php' ),
 
 				)
 			);

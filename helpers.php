@@ -198,6 +198,19 @@ function cfws_set_default_address_ajax() {
 	wp_die();
 
 }
+
+function cfws_update_order_item_unit_cost() {
+	$item_id    = $_REQUEST['item_id'];
+	$unit_cost      = $_REQUEST['unit_cost'];
+	
+	wc_update_order_item_meta($item_id, 'unit_cost', $unit_cost);
+
+	wp_send_json( 1 );
+
+	wp_die();
+
+}
+
 function cfws_delete_address_ajax() {
 
 	$id      = $_REQUEST['id'];

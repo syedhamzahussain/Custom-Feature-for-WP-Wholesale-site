@@ -110,7 +110,11 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 				if ( $completed_orders ) {
 					foreach ( $completed_orders as $key => $order ) {
 						foreach ( $order->get_items() as $item ) {
-							$cost    = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+							if(!empty($item->get_meta('unit_cost'))){
+								$cost = $item->get_meta('unit_cost');
+							}else{
+								$cost    = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+							}
 							$product = wc_get_product( $item['product_id'] );
 
 							$total += ( $product->get_price() - floatval( $cost ) ) * $item['quantity'];
@@ -120,8 +124,11 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			} else {
 				$order = wc_get_order( $order_id );
 				foreach ( $order->get_items() as $item ) {
-					$cost = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
-
+					if(!empty($item->get_meta('unit_cost'))){
+						$cost = $item->get_meta('unit_cost');
+					}else{
+						$cost = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+					}
 					$product = wc_get_product( $item['product_id'] );
 
 					$total += ( $product->get_price() - floatval( $cost ) ) * $item['quantity'];
@@ -158,7 +165,11 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 					foreach ( $completed_orders as $key => $order ) {
 
 						foreach ( $order->get_items() as $item ) {
-							$cost   = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+							if(!empty($item->get_meta('unit_cost'))){
+								$cost = $item->get_meta('unit_cost');
+							}else{
+								$cost   = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+							}
 							$total += floatval( $cost ) * $item['quantity'];
 						}
 					}
@@ -166,7 +177,11 @@ if ( ! class_exists( 'WC_Report_Sales_By_Cost_Revenue' ) && class_exists( 'WC_Ad
 			} else {
 				$order = wc_get_order( $order_id );
 				foreach ( $order->get_items() as $item ) {
-					$cost   = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+					if(!empty($item->get_meta('unit_cost'))){
+						$cost = $item->get_meta('unit_cost');
+					}else{
+						$cost   = get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) ? get_post_meta( $item['product_id'], 'cfws_unit_cost', true ) : 0;
+					}
 					$total += floatval( $cost ) * $item['quantity'];
 				}
 			}

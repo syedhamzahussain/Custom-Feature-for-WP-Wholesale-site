@@ -122,8 +122,29 @@ function addPackage() {
 
 jQuery(document).ready(function ($) {
   // working on first time click only, not working after canceling the edit.... Have to figure out
-  $(".edit-order-item").click(function (e) {
-    $("#custom_value_without_edit").hide();
-    $("#custom_value_with_edit").show();
+  $(".save-action").click(function (e) {
+    $.each(
+      $("#order_line_items > tr"),
+      function (indexInArray, valueOfElement) {
+        var item_id = $(this).attr("data-order_item_id");
+        var unit_cost = $(this).find("#custom_value_with_edit").val();
+        // console.log($(this).find("#custom_value_with_edit").val());
+        $.ajax({
+          url: cfws_obj.ajaxurl,
+          type: "get",
+          dataType: "json",
+          data: {
+            action: "cfws_update_order_item_unit_cost",
+            item_id: item_id,
+            unit_cost: unit_cost,
+          },
+          success: function (result) {
+            if (result == 1) {
+              $(this).find("#custom_value_with_edit").val(unit_cost);
+            }
+          },
+        });
+      }
+    );
   });
 });
