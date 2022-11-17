@@ -24,6 +24,7 @@ if ( isset( $packages ) && $packages != '' ) {
 	$price    = '';
 	$profit   = '';
 }
+$_SESSION['product_package_price'] = array();
 ?>
 <div class="cfws_wrapper">
 	<!-- <form class="cart" action="http://localhost/wordpress/product/hoodie-with-logo/" method="post" enctype="multipart/form-data"> -->
@@ -43,12 +44,16 @@ if ( isset( $packages ) && $packages != '' ) {
 					<?php
 
 					if ( $package['discount_type'] == 'percent' ) {
+						
 						$discount_price = $price - ( ( $profit / 100 ) * $package['discount'] );
 					} else {
 						$discount_price = $price - ( $profit - $package['discount'] );
 					}
 						$discount_price = number_format( (float) $discount_price, 2, '.', '' );
+						$_SESSION['product_package_price'][] = ['min'=>$package['min'], 'max' => $package['max'], 'discount_price' => $discount_price ];
+						// var_dump(json_encode($_SESSION['product_package_price']));die();
 					?>
+					
 					<div class="cfws_div_2 cfws_fs12"><strong class="cfws_font_bold cfws_fs18"><?php echo $discount_price; ?></strong> <?php echo get_option( 'woocommerce_currency' ); ?><br/>Per Package</div>
 					<div class="cfws_border_dot"></div>
 
@@ -78,6 +83,7 @@ if ( isset( $packages ) && $packages != '' ) {
 				<br>
 				<br>
 			</div>
+			<span id="cfws_package_price_list" style="display: none;"><?= json_encode($_SESSION['product_package_price']) ?></span>
 			<div class="cfws_div_1">Unit quantity Package</div>
 			<div class="cfws_div_2"><strong class="cfws_unit_quantity"><?php echo $unitQunatity; ?></strong></div>
 			<hr  class="mt10" />
